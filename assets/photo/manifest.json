@@ -3060,12 +3060,12 @@
   "desc": "шоу «Кажется, нащупал»: мама и ребёнок у коробки, живые эмоции",
   "src": "assets/photo/show-trash/01.webp",
   "w": 1400,
-  "h": 2100,
-  "kb": 191,
-  "q": 0,
+  "h": 1730,
+  "kb": 177,
+  "q": 86,
   "sm": "assets/photo/show-trash/01-sm.webp",
   "sm_w": 440,
-  "sm_h": 660
+  "sm_h": 544
  },
  {
   "n": 98,
@@ -3074,8 +3074,8 @@
   "src": "assets/photo/show-trash/02.webp",
   "w": 1400,
   "h": 2100,
-  "kb": 206,
-  "q": 0,
+  "kb": 191,
+  "q": 86,
   "sm": "assets/photo/show-trash/02-sm.webp",
   "sm_w": 440,
   "sm_h": 660
@@ -3086,12 +3086,12 @@
   "desc": "шоу «Кажется, нащупал»: мама и ребёнок у коробки, живые эмоции",
   "src": "assets/photo/show-trash/03.webp",
   "w": 1400,
-  "h": 1730,
-  "kb": 177,
-  "q": 0,
+  "h": 2100,
+  "kb": 206,
+  "q": 86,
   "sm": "assets/photo/show-trash/03-sm.webp",
   "sm_w": 440,
-  "sm_h": 544
+  "sm_h": 660
  },
  {
   "n": 97,
@@ -3101,7 +3101,7 @@
   "w": 1400,
   "h": 2100,
   "kb": 219,
-  "q": 0,
+  "q": 86,
   "sm": "assets/photo/show-trash/04-sm.webp",
   "sm_w": 440,
   "sm_h": 660
@@ -3114,7 +3114,7 @@
   "w": 1400,
   "h": 2078,
   "kb": 134,
-  "q": 0,
+  "q": 86,
   "sm": "assets/photo/show-trash/05-sm.webp",
   "sm_w": 440,
   "sm_h": 653
@@ -3127,7 +3127,7 @@
   "w": 1400,
   "h": 1322,
   "kb": 48,
-  "q": 0,
+  "q": 86,
   "sm": "assets/photo/show-trash/06-sm.webp",
   "sm_w": 440,
   "sm_h": 415
@@ -3205,7 +3205,7 @@
   "w": 1170,
   "h": 1642,
   "kb": 97,
-  "q": 86,
+  "q": 0,
   "sm": "assets/photo/team-detail/01-sm.webp",
   "sm_w": 440,
   "sm_h": 618
