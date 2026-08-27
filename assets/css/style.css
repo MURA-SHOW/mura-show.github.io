@@ -147,7 +147,7 @@ h1 .label {                       /* запросная строка внутр�
 }
 .nav-in { display: flex; align-items: center; gap: 16px; min-height: 68px; }
 .logo { display: flex; align-items: center; gap: 10px; padding: 4px 0; text-decoration: none; color: var(--ink); }
-.logo img { width: 42px; height: 42px; border-radius: 12px; }
+.logo img { width: 46px; height: 46px; }
 .logo b { font: 800 19px/1 'Unbounded', sans-serif; letter-spacing: -.02em; }
 .logo span { display: block; font-size: 12px; color: var(--ink-soft); letter-spacing: .04em; }
 .nav-links { display: flex; gap: 4px; margin-left: auto; }
@@ -258,6 +258,18 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); colo
 .card--violet::before { background: var(--violet); }
 .card--lime::before { background: var(--lime); }
 .card--orange::before { background: var(--orange); }
+
+/* карточка без своего кадра: цветная плашка вместо чужого фото */
+.card-flat { display: block; width: 100%; aspect-ratio: 4 / 3; background:
+  repeating-linear-gradient(135deg, var(--paper-warm) 0 18px, #FFF1CF 18px 36px); }
+.card--cyan .card-flat { background:
+  repeating-linear-gradient(135deg, #E6F8FC 0 18px, #D2F1F8 18px 36px); }
+.card--magenta .card-flat { background:
+  repeating-linear-gradient(135deg, #FDE9F3 0 18px, #FAD9EA 18px 36px); }
+.card--violet .card-flat { background:
+  repeating-linear-gradient(135deg, #F1E6EF 0 18px, #E7D7E4 18px 36px); }
+.card--lime .card-flat { background:
+  repeating-linear-gradient(135deg, #F4F6DC 0 18px, #EAEFC4 18px 36px); }
 .tag {
   align-self: flex-start;
   border-radius: var(--r-pill);

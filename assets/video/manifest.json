@@ -52,5 +52,14 @@
   "mp4": "assets/video/tort.mp4",
   "poster": "assets/video/tort.webp",
   "kb": 603
+ },
+ {
+  "name": "krio-drakon",
+  "clip": 60,
+  "cap": "Столб азотного дыма и ребёнок выдыхает пар как дракон",
+  "dur": 10,
+  "mp4": "assets/video/krio-drakon.mp4",
+  "poster": "assets/video/krio-drakon.webp",
+  "kb": 822
  }
 ]
