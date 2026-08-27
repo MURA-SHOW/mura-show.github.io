@@ -1,21 +1,12 @@
 [
  {
-  "name": "hero-pena",
-  "clip": 77,
-  "cap": "Пенная пушка-акула даёт струю пены во дворе",
-  "dur": 10,
-  "mp4": "assets/video/hero-pena.mp4",
-  "poster": "assets/video/hero-pena.webp",
-  "kb": 1954
- },
- {
   "name": "pena-pushka",
   "clip": 77,
-  "cap": "Фирменная пушка в виде акулы работает на полную",
-  "dur": 8,
+  "cap": "Фирменная пушка в виде акулы даёт струю пены во двор",
+  "dur": 4,
   "mp4": "assets/video/pena-pushka.mp4",
   "poster": "assets/video/pena-pushka.webp",
-  "kb": 1456
+  "kb": 544
  },
  {
   "name": "krio-azot",
