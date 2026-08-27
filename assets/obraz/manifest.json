@@ -1,0 +1,338 @@
+[
+ {
+  "slug": "logo",
+  "cap": "Логотип MURA SHOW: акула в золотой цепи",
+  "src": "assets/obraz/logo.webp",
+  "w": 900,
+  "h": 900,
+  "kb": 177
+ },
+ {
+  "slug": "logo-krug",
+  "cap": "Логотип MURA SHOW из букв-шариков",
+  "src": "assets/obraz/logo-krug.webp",
+  "w": 900,
+  "h": 900,
+  "kb": 121
+ },
+ {
+  "slug": "cifrovoy-cirk",
+  "cap": "Помни из «Цифрового цирка»",
+  "src": "assets/obraz/cifrovoy-cirk-1.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 169
+ },
+ {
+  "slug": "cifrovoy-cirk",
+  "cap": "Джекс из «Цифрового цирка»",
+  "src": "assets/obraz/cifrovoy-cirk-2.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 174
+ },
+ {
+  "slug": "cifrovoy-cirk",
+  "cap": "Герой «Цифрового цирка»",
+  "src": "assets/obraz/cifrovoy-cirk-3.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 179
+ },
+ {
+  "slug": "haggi-vaggi",
+  "cap": "Хагги Вагги, VIP-костюм",
+  "src": "assets/obraz/haggi-vaggi-1.webp",
+  "w": 900,
+  "h": 675,
+  "kb": 103
+ },
+ {
+  "slug": "princessy",
+  "cap": "Белоснежка",
+  "src": "assets/obraz/princessy-1.webp",
+  "w": 900,
+  "h": 1349,
+  "kb": 167
+ },
+ {
+  "slug": "princessy",
+  "cap": "Рапунцель",
+  "src": "assets/obraz/princessy-2.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 186
+ },
+ {
+  "slug": "vensdey",
+  "cap": "Венсдей и Энид Синклер",
+  "src": "assets/obraz/vensdey-1.webp",
+  "w": 900,
+  "h": 1350,
+  "kb": 144
+ },
+ {
+  "slug": "geymer",
+  "cap": "Геймер",
+  "src": "assets/obraz/geymer-1.webp",
+  "w": 900,
+  "h": 1350,
+  "kb": 158
+ },
+ {
+  "slug": "geymer",
+  "cap": "Геймер, вторая версия костюма",
+  "src": "assets/obraz/geymer-2.webp",
+  "w": 900,
+  "h": 1350,
+  "kb": 189
+ },
+ {
+  "slug": "geymer",
+  "cap": "Геймер с реквизитом",
+  "src": "assets/obraz/geymer-3.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 194
+ },
+ {
+  "slug": "ded-moroz",
+  "cap": "Дед Мороз",
+  "src": "assets/obraz/ded-moroz-1.webp",
+  "w": 900,
+  "h": 1350,
+  "kb": 175
+ },
+ {
+  "slug": "ded-moroz",
+  "cap": "Эльфы Деда Мороза",
+  "src": "assets/obraz/ded-moroz-2.webp",
+  "w": 900,
+  "h": 1350,
+  "kb": 195
+ },
+ {
+  "slug": "tri-kota",
+  "cap": "Карамелька из «Трёх котов»",
+  "src": "assets/obraz/tri-kota-1.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 163
+ },
+ {
+  "slug": "tri-kota",
+  "cap": "Коржик из «Трёх котов»",
+  "src": "assets/obraz/tri-kota-2.webp",
+  "w": 900,
+  "h": 1350,
+  "kb": 146
+ },
+ {
+  "slug": "lol",
+  "cap": "Куколка ЛОЛ Единорожка",
+  "src": "assets/obraz/lol-1.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 193
+ },
+ {
+  "slug": "lol",
+  "cap": "Куколка ЛОЛ Пчёлка",
+  "src": "assets/obraz/lol-2.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 175
+ },
+ {
+  "slug": "lol",
+  "cap": "Куколки ЛОЛ вдвоём",
+  "src": "assets/obraz/lol-3.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 197
+ },
+ {
+  "slug": "lol",
+  "cap": "Куколка ЛОЛ Единорожка, вторая версия",
+  "src": "assets/obraz/lol-4.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 193
+ },
+ {
+  "slug": "lol",
+  "cap": "Куколка ЛОЛ крупным планом",
+  "src": "assets/obraz/lol-5.webp",
+  "w": 900,
+  "h": 900,
+  "kb": 106
+ },
+ {
+  "slug": "maynkraft",
+  "cap": "Майнкрафт, женский образ",
+  "src": "assets/obraz/maynkraft-1.webp",
+  "w": 900,
+  "h": 1350,
+  "kb": 183
+ },
+ {
+  "slug": "maynkraft",
+  "cap": "Майнкрафт, мужской образ",
+  "src": "assets/obraz/maynkraft-2.webp",
+  "w": 900,
+  "h": 1350,
+  "kb": 163
+ },
+ {
+  "slug": "maynkraft",
+  "cap": "Майнкрафт с динамитом",
+  "src": "assets/obraz/maynkraft-3.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 170
+ },
+ {
+  "slug": "maynkraft",
+  "cap": "Майнкрафт, версия с TNT",
+  "src": "assets/obraz/maynkraft-4.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 173
+ },
+ {
+  "slug": "shchenyachiy-patrul",
+  "cap": "Скай из «Щенячьего патруля»",
+  "src": "assets/obraz/shchenyachiy-patrul-1.webp",
+  "w": 900,
+  "h": 1125,
+  "kb": 165
+ },
+ {
+  "slug": "shchenyachiy-patrul",
+  "cap": "Эверест из «Щенячьего патруля»",
+  "src": "assets/obraz/shchenyachiy-patrul-2.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 166
+ },
+ {
+  "slug": "sonik",
+  "cap": "Соник",
+  "src": "assets/obraz/sonik-1.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 191
+ },
+ {
+  "slug": "sonik",
+  "cap": "Соник, вторая версия костюма",
+  "src": "assets/obraz/sonik-2.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 180
+ },
+ {
+  "slug": "sonik",
+  "cap": "Соник, третья версия костюма",
+  "src": "assets/obraz/sonik-3.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 187
+ },
+ {
+  "slug": "fiksiki",
+  "cap": "Нолик и Симка из «Фиксиков»",
+  "src": "assets/obraz/fiksiki-1.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 181
+ },
+ {
+  "slug": "himiki",
+  "cap": "Яркие химики — ведущие крио-шоу",
+  "src": "assets/obraz/himiki-1.webp",
+  "w": 900,
+  "h": 1350,
+  "kb": 189
+ },
+ {
+  "slug": "leon",
+  "cap": "Леон из Brawl Stars",
+  "src": "assets/obraz/leon-1.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 190
+ },
+ {
+  "slug": "leon",
+  "cap": "Леон из Brawl Stars, вторая версия",
+  "src": "assets/obraz/leon-2.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 159
+ },
+ {
+  "slug": "pirat",
+  "cap": "Пират Весельчак Билли",
+  "src": "assets/obraz/pirat-1.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 169
+ },
+ {
+  "slug": "pirat",
+  "cap": "Пират с картой сокровищ",
+  "src": "assets/obraz/pirat-2.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 168
+ },
+ {
+  "slug": "pirat",
+  "cap": "Пират у штурвала",
+  "src": "assets/obraz/pirat-3.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 172
+ },
+ {
+  "slug": "pirat",
+  "cap": "Пиратская команда",
+  "src": "assets/obraz/pirat-4.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 176
+ },
+ {
+  "slug": "barbi",
+  "cap": "Барби",
+  "src": "assets/obraz/barbi-1.webp",
+  "w": 900,
+  "h": 1125,
+  "kb": 195
+ },
+ {
+  "slug": "barbi",
+  "cap": "Барби, дубль",
+  "src": "assets/obraz/barbi-2.webp",
+  "w": 900,
+  "h": 1125,
+  "kb": 195
+ },
+ {
+  "slug": "barbi",
+  "cap": "Барби в розовом",
+  "src": "assets/obraz/barbi-3.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 182
+ },
+ {
+  "slug": "graviti-folz",
+  "cap": "Диппер и Мейбл из «Гравити Фолз»",
+  "src": "assets/obraz/graviti-folz-1.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 194
+ }
+]

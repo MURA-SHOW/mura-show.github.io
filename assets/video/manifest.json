@@ -1,0 +1,65 @@
+[
+ {
+  "name": "hero-pena",
+  "clip": 77,
+  "cap": "Пенная пушка-акула даёт струю пены во дворе",
+  "dur": 10,
+  "mp4": "assets/video/hero-pena.mp4",
+  "poster": "assets/video/hero-pena.webp",
+  "kb": 1954
+ },
+ {
+  "name": "pena-pushka",
+  "clip": 77,
+  "cap": "Фирменная пушка в виде акулы работает на полную",
+  "dur": 8,
+  "mp4": "assets/video/pena-pushka.mp4",
+  "poster": "assets/video/pena-pushka.webp",
+  "kb": 1456
+ },
+ {
+  "name": "krio-azot",
+  "clip": 51,
+  "cap": "Жидкий азот льётся из бутыли, облако стелется по траве",
+  "dur": 10,
+  "mp4": "assets/video/krio-azot.mp4",
+  "poster": "assets/video/krio-azot.webp",
+  "kb": 1179
+ },
+ {
+  "name": "krio-kuhnya",
+  "clip": 76,
+  "cap": "Молекулярная кухня: ведущий раздаёт мороженое из азота",
+  "dur": 10,
+  "mp4": "assets/video/krio-kuhnya.mp4",
+  "poster": "assets/video/krio-kuhnya.webp",
+  "kb": 939
+ },
+ {
+  "name": "programma",
+  "clip": 3,
+  "cap": "Человек-паук и дети складывают руки в центр круга",
+  "dur": 10,
+  "mp4": "assets/video/programma.mp4",
+  "poster": "assets/video/programma.webp",
+  "kb": 740
+ },
+ {
+  "name": "silomer",
+  "clip": 37,
+  "cap": "Ребёнок бьёт молотом по силомеру, очередь болеет",
+  "dur": 10,
+  "mp4": "assets/video/silomer.mp4",
+  "poster": "assets/video/silomer.webp",
+  "kb": 811
+ },
+ {
+  "name": "tort",
+  "clip": 91,
+  "cap": "Ведущий выносит торт со свечами прямо в пену",
+  "dur": 8,
+  "mp4": "assets/video/tort.mp4",
+  "poster": "assets/video/tort.webp",
+  "kb": 951
+ }
+]
