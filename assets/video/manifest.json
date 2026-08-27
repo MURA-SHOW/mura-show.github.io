@@ -6,7 +6,7 @@
   "dur": 4,
   "mp4": "assets/video/pena-pushka.mp4",
   "poster": "assets/video/pena-pushka.webp",
-  "kb": 544
+  "kb": 341
  },
  {
   "name": "krio-azot",
@@ -15,7 +15,7 @@
   "dur": 10,
   "mp4": "assets/video/krio-azot.mp4",
   "poster": "assets/video/krio-azot.webp",
-  "kb": 1179
+  "kb": 697
  },
  {
   "name": "krio-kuhnya",
@@ -24,7 +24,7 @@
   "dur": 10,
   "mp4": "assets/video/krio-kuhnya.mp4",
   "poster": "assets/video/krio-kuhnya.webp",
-  "kb": 939
+  "kb": 597
  },
  {
   "name": "programma",
@@ -33,7 +33,7 @@
   "dur": 10,
   "mp4": "assets/video/programma.mp4",
   "poster": "assets/video/programma.webp",
-  "kb": 740
+  "kb": 454
  },
  {
   "name": "silomer",
@@ -42,7 +42,7 @@
   "dur": 10,
   "mp4": "assets/video/silomer.mp4",
   "poster": "assets/video/silomer.webp",
-  "kb": 811
+  "kb": 504
  },
  {
   "name": "tort",
@@ -51,6 +51,6 @@
   "dur": 8,
   "mp4": "assets/video/tort.mp4",
   "poster": "assets/video/tort.webp",
-  "kb": 951
+  "kb": 603
  }
 ]

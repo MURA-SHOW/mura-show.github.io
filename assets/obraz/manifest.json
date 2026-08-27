@@ -5,7 +5,10 @@
   "src": "assets/obraz/logo.webp",
   "w": 900,
   "h": 900,
-  "kb": 177
+  "kb": 177,
+  "sm": "assets/obraz/logo-sm.webp",
+  "sm_w": 520,
+  "sm_h": 520
  },
  {
   "slug": "logo-krug",
@@ -13,7 +16,10 @@
   "src": "assets/obraz/logo-krug.webp",
   "w": 900,
   "h": 900,
-  "kb": 121
+  "kb": 121,
+  "sm": "assets/obraz/logo-krug-sm.webp",
+  "sm_w": 520,
+  "sm_h": 520
  },
  {
   "slug": "cifrovoy-cirk",
@@ -21,7 +27,10 @@
   "src": "assets/obraz/cifrovoy-cirk-1.webp",
   "w": 900,
   "h": 1200,
-  "kb": 169
+  "kb": 169,
+  "sm": "assets/obraz/cifrovoy-cirk-1-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "cifrovoy-cirk",
@@ -29,7 +38,10 @@
   "src": "assets/obraz/cifrovoy-cirk-2.webp",
   "w": 900,
   "h": 1200,
-  "kb": 174
+  "kb": 174,
+  "sm": "assets/obraz/cifrovoy-cirk-2-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "cifrovoy-cirk",
@@ -37,7 +49,10 @@
   "src": "assets/obraz/cifrovoy-cirk-3.webp",
   "w": 900,
   "h": 1200,
-  "kb": 179
+  "kb": 179,
+  "sm": "assets/obraz/cifrovoy-cirk-3-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "haggi-vaggi",
@@ -45,7 +60,10 @@
   "src": "assets/obraz/haggi-vaggi-1.webp",
   "w": 900,
   "h": 675,
-  "kb": 103
+  "kb": 103,
+  "sm": "assets/obraz/haggi-vaggi-1-sm.webp",
+  "sm_w": 520,
+  "sm_h": 390
  },
  {
   "slug": "princessy",
@@ -53,7 +71,10 @@
   "src": "assets/obraz/princessy-1.webp",
   "w": 900,
   "h": 1349,
-  "kb": 167
+  "kb": 167,
+  "sm": "assets/obraz/princessy-1-sm.webp",
+  "sm_w": 520,
+  "sm_h": 779
  },
  {
   "slug": "princessy",
@@ -61,7 +82,10 @@
   "src": "assets/obraz/princessy-2.webp",
   "w": 900,
   "h": 1200,
-  "kb": 186
+  "kb": 186,
+  "sm": "assets/obraz/princessy-2-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "vensdey",
@@ -69,7 +93,10 @@
   "src": "assets/obraz/vensdey-1.webp",
   "w": 900,
   "h": 1350,
-  "kb": 144
+  "kb": 144,
+  "sm": "assets/obraz/vensdey-1-sm.webp",
+  "sm_w": 520,
+  "sm_h": 780
  },
  {
   "slug": "geymer",
@@ -77,7 +104,10 @@
   "src": "assets/obraz/geymer-1.webp",
   "w": 900,
   "h": 1350,
-  "kb": 158
+  "kb": 158,
+  "sm": "assets/obraz/geymer-1-sm.webp",
+  "sm_w": 520,
+  "sm_h": 780
  },
  {
   "slug": "geymer",
@@ -85,7 +115,10 @@
   "src": "assets/obraz/geymer-2.webp",
   "w": 900,
   "h": 1350,
-  "kb": 189
+  "kb": 189,
+  "sm": "assets/obraz/geymer-2-sm.webp",
+  "sm_w": 520,
+  "sm_h": 780
  },
  {
   "slug": "geymer",
@@ -93,7 +126,10 @@
   "src": "assets/obraz/geymer-3.webp",
   "w": 900,
   "h": 1200,
-  "kb": 194
+  "kb": 194,
+  "sm": "assets/obraz/geymer-3-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "ded-moroz",
@@ -101,7 +137,10 @@
   "src": "assets/obraz/ded-moroz-1.webp",
   "w": 900,
   "h": 1350,
-  "kb": 175
+  "kb": 175,
+  "sm": "assets/obraz/ded-moroz-1-sm.webp",
+  "sm_w": 520,
+  "sm_h": 780
  },
  {
   "slug": "ded-moroz",
@@ -109,7 +148,10 @@
   "src": "assets/obraz/ded-moroz-2.webp",
   "w": 900,
   "h": 1350,
-  "kb": 195
+  "kb": 195,
+  "sm": "assets/obraz/ded-moroz-2-sm.webp",
+  "sm_w": 520,
+  "sm_h": 780
  },
  {
   "slug": "tri-kota",
@@ -117,7 +159,10 @@
   "src": "assets/obraz/tri-kota-1.webp",
   "w": 900,
   "h": 1200,
-  "kb": 163
+  "kb": 163,
+  "sm": "assets/obraz/tri-kota-1-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "tri-kota",
@@ -125,7 +170,10 @@
   "src": "assets/obraz/tri-kota-2.webp",
   "w": 900,
   "h": 1350,
-  "kb": 146
+  "kb": 146,
+  "sm": "assets/obraz/tri-kota-2-sm.webp",
+  "sm_w": 520,
+  "sm_h": 780
  },
  {
   "slug": "lol",
@@ -133,7 +181,10 @@
   "src": "assets/obraz/lol-1.webp",
   "w": 900,
   "h": 1200,
-  "kb": 193
+  "kb": 193,
+  "sm": "assets/obraz/lol-1-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "lol",
@@ -141,7 +192,10 @@
   "src": "assets/obraz/lol-2.webp",
   "w": 900,
   "h": 1200,
-  "kb": 175
+  "kb": 175,
+  "sm": "assets/obraz/lol-2-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "lol",
@@ -149,7 +203,10 @@
   "src": "assets/obraz/lol-3.webp",
   "w": 900,
   "h": 1200,
-  "kb": 197
+  "kb": 197,
+  "sm": "assets/obraz/lol-3-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "lol",
@@ -157,7 +214,10 @@
   "src": "assets/obraz/lol-4.webp",
   "w": 900,
   "h": 1200,
-  "kb": 193
+  "kb": 193,
+  "sm": "assets/obraz/lol-4-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "lol",
@@ -165,7 +225,10 @@
   "src": "assets/obraz/lol-5.webp",
   "w": 900,
   "h": 900,
-  "kb": 106
+  "kb": 106,
+  "sm": "assets/obraz/lol-5-sm.webp",
+  "sm_w": 520,
+  "sm_h": 520
  },
  {
   "slug": "maynkraft",
@@ -173,7 +236,10 @@
   "src": "assets/obraz/maynkraft-1.webp",
   "w": 900,
   "h": 1350,
-  "kb": 183
+  "kb": 183,
+  "sm": "assets/obraz/maynkraft-1-sm.webp",
+  "sm_w": 520,
+  "sm_h": 780
  },
  {
   "slug": "maynkraft",
@@ -181,7 +247,10 @@
   "src": "assets/obraz/maynkraft-2.webp",
   "w": 900,
   "h": 1350,
-  "kb": 163
+  "kb": 163,
+  "sm": "assets/obraz/maynkraft-2-sm.webp",
+  "sm_w": 520,
+  "sm_h": 780
  },
  {
   "slug": "maynkraft",
@@ -189,7 +258,10 @@
   "src": "assets/obraz/maynkraft-3.webp",
   "w": 900,
   "h": 1200,
-  "kb": 170
+  "kb": 170,
+  "sm": "assets/obraz/maynkraft-3-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "maynkraft",
@@ -197,7 +269,10 @@
   "src": "assets/obraz/maynkraft-4.webp",
   "w": 900,
   "h": 1200,
-  "kb": 173
+  "kb": 173,
+  "sm": "assets/obraz/maynkraft-4-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "shchenyachiy-patrul",
@@ -205,7 +280,10 @@
   "src": "assets/obraz/shchenyachiy-patrul-1.webp",
   "w": 900,
   "h": 1125,
-  "kb": 165
+  "kb": 165,
+  "sm": "assets/obraz/shchenyachiy-patrul-1-sm.webp",
+  "sm_w": 520,
+  "sm_h": 650
  },
  {
   "slug": "shchenyachiy-patrul",
@@ -213,7 +291,10 @@
   "src": "assets/obraz/shchenyachiy-patrul-2.webp",
   "w": 900,
   "h": 1200,
-  "kb": 166
+  "kb": 166,
+  "sm": "assets/obraz/shchenyachiy-patrul-2-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "sonik",
@@ -221,7 +302,10 @@
   "src": "assets/obraz/sonik-1.webp",
   "w": 900,
   "h": 1200,
-  "kb": 191
+  "kb": 191,
+  "sm": "assets/obraz/sonik-1-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "sonik",
@@ -229,7 +313,10 @@
   "src": "assets/obraz/sonik-2.webp",
   "w": 900,
   "h": 1200,
-  "kb": 180
+  "kb": 180,
+  "sm": "assets/obraz/sonik-2-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "sonik",
@@ -237,7 +324,10 @@
   "src": "assets/obraz/sonik-3.webp",
   "w": 900,
   "h": 1200,
-  "kb": 187
+  "kb": 187,
+  "sm": "assets/obraz/sonik-3-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "fiksiki",
@@ -245,7 +335,10 @@
   "src": "assets/obraz/fiksiki-1.webp",
   "w": 900,
   "h": 1200,
-  "kb": 181
+  "kb": 181,
+  "sm": "assets/obraz/fiksiki-1-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "himiki",
@@ -253,7 +346,10 @@
   "src": "assets/obraz/himiki-1.webp",
   "w": 900,
   "h": 1350,
-  "kb": 189
+  "kb": 189,
+  "sm": "assets/obraz/himiki-1-sm.webp",
+  "sm_w": 520,
+  "sm_h": 780
  },
  {
   "slug": "leon",
@@ -261,7 +357,10 @@
   "src": "assets/obraz/leon-1.webp",
   "w": 900,
   "h": 1200,
-  "kb": 190
+  "kb": 190,
+  "sm": "assets/obraz/leon-1-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "leon",
@@ -269,7 +368,10 @@
   "src": "assets/obraz/leon-2.webp",
   "w": 900,
   "h": 1200,
-  "kb": 159
+  "kb": 159,
+  "sm": "assets/obraz/leon-2-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "pirat",
@@ -277,7 +379,10 @@
   "src": "assets/obraz/pirat-1.webp",
   "w": 900,
   "h": 1200,
-  "kb": 169
+  "kb": 169,
+  "sm": "assets/obraz/pirat-1-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "pirat",
@@ -285,7 +390,10 @@
   "src": "assets/obraz/pirat-2.webp",
   "w": 900,
   "h": 1200,
-  "kb": 168
+  "kb": 168,
+  "sm": "assets/obraz/pirat-2-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "pirat",
@@ -293,7 +401,10 @@
   "src": "assets/obraz/pirat-3.webp",
   "w": 900,
   "h": 1200,
-  "kb": 172
+  "kb": 172,
+  "sm": "assets/obraz/pirat-3-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "pirat",
@@ -301,7 +412,10 @@
   "src": "assets/obraz/pirat-4.webp",
   "w": 900,
   "h": 1200,
-  "kb": 176
+  "kb": 176,
+  "sm": "assets/obraz/pirat-4-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "barbi",
@@ -309,7 +423,10 @@
   "src": "assets/obraz/barbi-1.webp",
   "w": 900,
   "h": 1125,
-  "kb": 195
+  "kb": 195,
+  "sm": "assets/obraz/barbi-1-sm.webp",
+  "sm_w": 520,
+  "sm_h": 650
  },
  {
   "slug": "barbi",
@@ -317,7 +434,10 @@
   "src": "assets/obraz/barbi-2.webp",
   "w": 900,
   "h": 1125,
-  "kb": 195
+  "kb": 195,
+  "sm": "assets/obraz/barbi-2-sm.webp",
+  "sm_w": 520,
+  "sm_h": 650
  },
  {
   "slug": "barbi",
@@ -325,7 +445,10 @@
   "src": "assets/obraz/barbi-3.webp",
   "w": 900,
   "h": 1200,
-  "kb": 182
+  "kb": 182,
+  "sm": "assets/obraz/barbi-3-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  },
  {
   "slug": "graviti-folz",
@@ -333,6 +456,9 @@
   "src": "assets/obraz/graviti-folz-1.webp",
   "w": 900,
   "h": 1200,
-  "kb": 194
+  "kb": 194,
+  "sm": "assets/obraz/graviti-folz-1-sm.webp",
+  "sm_w": 520,
+  "sm_h": 693
  }
 ]

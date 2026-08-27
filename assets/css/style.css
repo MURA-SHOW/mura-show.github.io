@@ -386,6 +386,7 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); colo
 }
 .form textarea { min-height: 96px; resize: vertical; }
 .form input:focus, .form textarea:focus, .form select:focus { border-color: var(--cyan); outline: none; }
+.form .btn { justify-self: start; }
 .form-note { font-size: 14px; color: var(--ink-faint); }
 .form-error { color: var(--magenta); font-size: 15px; font-weight: 600; }
 
