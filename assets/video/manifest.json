@@ -6,7 +6,7 @@
   "dur": 4,
   "mp4": "assets/video/pena-pushka.mp4",
   "poster": "assets/video/pena-pushka.webp",
-  "kb": 341
+  "kb": 305
  },
  {
   "name": "krio-azot",
@@ -15,7 +15,7 @@
   "dur": 10,
   "mp4": "assets/video/krio-azot.mp4",
   "poster": "assets/video/krio-azot.webp",
-  "kb": 697
+  "kb": 625
  },
  {
   "name": "krio-kuhnya",
@@ -24,7 +24,7 @@
   "dur": 10,
   "mp4": "assets/video/krio-kuhnya.mp4",
   "poster": "assets/video/krio-kuhnya.webp",
-  "kb": 597
+  "kb": 540
  },
  {
   "name": "programma",
@@ -33,7 +33,7 @@
   "dur": 10,
   "mp4": "assets/video/programma.mp4",
   "poster": "assets/video/programma.webp",
-  "kb": 454
+  "kb": 408
  },
  {
   "name": "silomer",
@@ -42,16 +42,16 @@
   "dur": 10,
   "mp4": "assets/video/silomer.mp4",
   "poster": "assets/video/silomer.webp",
-  "kb": 504
+  "kb": 455
  },
  {
   "name": "tort",
   "clip": 91,
   "cap": "Ведущий выносит торт со свечами прямо в пену",
-  "dur": 8,
+  "dur": 6,
   "mp4": "assets/video/tort.mp4",
   "poster": "assets/video/tort.webp",
-  "kb": 603
+  "kb": 421
  },
  {
   "name": "krio-drakon",
@@ -60,6 +60,6 @@
   "dur": 10,
   "mp4": "assets/video/krio-drakon.mp4",
   "poster": "assets/video/krio-drakon.webp",
-  "kb": 822
+  "kb": 735
  }
 ]
