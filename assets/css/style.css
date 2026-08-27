@@ -126,6 +126,27 @@ h1 .label {                       /* запросная строка внутр�
 }
 .btn--wa:active { box-shadow: 0 2px 0 var(--cyan-dark); }
 .btn--wa:hover { color: #08303a; }
+.btn--tg {
+  background: var(--blue);
+  color: #fff;
+  box-shadow: 0 4px 0 #175f9f;
+}
+.btn--tg:hover, .btn--tg:active { color: #fff; }
+.btn--tg:active { box-shadow: 0 2px 0 #175f9f; }
+.btn--vk {
+  background: var(--violet);
+  color: #fff;
+  box-shadow: 0 4px 0 #57204c;
+}
+.btn--vk:hover, .btn--vk:active { color: #fff; }
+.btn--vk:active { box-shadow: 0 2px 0 #57204c; }
+.btn--max {
+  background: var(--orange);
+  color: #3a2100;
+  box-shadow: 0 4px 0 #c26e08;
+}
+.btn--max:hover, .btn--max:active { color: #3a2100; }
+.btn--max:active { box-shadow: 0 2px 0 #c26e08; }
 .btn--ghost {
   background: transparent;
   color: var(--ink);
@@ -209,6 +230,8 @@ h1 .label {                       /* запросная строка внутр�
   aspect-ratio: 3 / 4;
 }
 .hero-video video { width: 100%; height: 100%; object-fit: cover; }
+/* лид-кадр: рамка по кадру, иначе портрет тянется под 3/4 видео */
+img.hero-video { display: block; width: 100%; height: auto; aspect-ratio: auto; }
 .price-badge {
   position: absolute;
   left: 16px;
@@ -238,8 +261,9 @@ h1 .label {                       /* запросная строка внутр�
   transition: transform .15s cubic-bezier(.23, 1, .32, 1), box-shadow .15s;
 }
 a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); color: inherit; }
-.card img { flex: none; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--paper-warm); }
-.card--tall img { aspect-ratio: 4 / 5; }
+.card img { flex: none; width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+  object-position: center 30%; background: var(--paper-warm); }   /* лица в верхней трети */
+.card--tall img { aspect-ratio: 3 / 4; }                          /* студийные карточки ровно 3:4 */
 .card-body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .card-body h3 { margin: 0; font-size: 21px; }
 .card-body p { margin: 0; color: var(--ink-soft); font-size: 16px; }
@@ -261,7 +285,7 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); colo
 
 /* карточка без своего кадра: цветная плашка вместо чужого фото */
 .cta-band .hero-video { aspect-ratio: 4 / 3; object-fit: cover; }
-.card-flat { display: block; width: 100%; aspect-ratio: 4 / 3; background:
+.card-flat { display: block; width: 100%; aspect-ratio: 4 / 5; background:
   repeating-linear-gradient(135deg, var(--paper-warm) 0 18px, #FFF1CF 18px 36px); }
 .card--cyan .card-flat { background:
   repeating-linear-gradient(135deg, #E6F8FC 0 18px, #D2F1F8 18px 36px); }
@@ -329,9 +353,20 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); colo
 .step p { margin: 0; color: var(--ink-soft); font-size: 16px; }
 
 /* ── галерея ── */
-.gallery { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); }
-.gallery img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 16px; background: var(--paper-warm); }
-.gallery--tall img { aspect-ratio: 4 / 5; }
+.gallery { display: flex; gap: 12px; align-items: flex-start; }
+.gcol { flex: 1 1 0; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.gallery img {
+  display: block;
+  width: 100%;
+  border-radius: 16px;
+  background: var(--paper-warm);
+}
+/* кадр-столб (сторис 9:16) целиком превращается в узкую колонку — только он и кропается */
+.gallery img.crop { aspect-ratio: 4 / 5; object-fit: cover; object-position: center 30%; }
+@media (max-width: 700px) {
+  .gallery { flex-wrap: wrap; }
+  .gcol { flex: 1 1 calc(50% - 6px); }
+}
 
 /* ── отзывы ── */
 .quotes { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
@@ -400,6 +435,9 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); colo
 .form textarea { min-height: 96px; resize: vertical; }
 .form input:focus, .form textarea:focus, .form select:focus { border-color: var(--cyan); outline: none; }
 .form .btn { justify-self: start; }
+.form-label { font-weight: 600; font-size: 16px; margin-top: 2px; }
+.form-send { display: flex; flex-wrap: wrap; gap: 10px; }
+.form-send .btn { flex: 0 0 auto; padding-left: 18px; padding-right: 18px; }
 .form-note { font-size: 14px; color: var(--ink-faint); }
 .form-error { color: var(--magenta); font-size: 15px; font-weight: 600; }
 

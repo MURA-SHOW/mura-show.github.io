@@ -43,7 +43,7 @@
   <p class="lead">Вместо героя из мультфильма — тема, в которую одеваются и играют все.
      Стоят столько же, сколько обычная анимационная программа: 5 500 ₽ в час.</p>
   <div class="cards mt-l"><div class="card card--cyan"><div class="card-body"><h3>Гавайская вечеринка</h3><p>гирлянды, венки, лимбо и пляжная музыка</p><span class="card-price">5 500 ₽ <small>/ час</small></span></div></div><div class="card card--magenta"><div class="card-body"><h3>Вечеринка в стиле 90-х</h3><p>кассеты, дискотека и конкурсы из детства родителей</p><span class="card-price">5 500 ₽ <small>/ час</small></span></div></div><div class="card card--yellow"><div class="card-body"><h3>Футбольная вечеринка</h3><p>разминка, эстафеты с мячом и матч на две команды</p><span class="card-price">5 500 ₽ <small>/ час</small></span></div></div></div>
-  <div class="mt-l"><div class="gallery"><img src="../assets/photo/party-gavayskaya/01-sm.webp" alt="гавайская вечеринка: рубашка, декор" width="440" height="587" loading="lazy"><img src="../assets/photo/party-gavayskaya/02-sm.webp" alt="гавайская вечеринка: рубашка, декор" width="440" height="587" loading="lazy"><img src="../assets/photo/event-venue/01-sm.webp" alt="игровой центр: батут, сухой бассейн, Человек-паук" width="440" height="330" loading="lazy"><img src="../assets/photo/event-venue/02-sm.webp" alt="игровой центр: батут, сухой бассейн, Человек-паук" width="440" height="587" loading="lazy"><img src="../assets/photo/event-venue/03-sm.webp" alt="игровые центры: бассейн с шарами, горка" width="440" height="330" loading="lazy"><img src="../assets/photo/event-venue/04-sm.webp" alt="ТЦ: Соник, игровая" width="440" height="330" loading="lazy"></div></div>
+  <div class="mt-l"><div class="gallery"><div class="gcol"><img src="../assets/photo/party-gavayskaya/01-sm.webp" alt="гавайская вечеринка: рубашка, декор" width="440" height="587" loading="lazy"><img src="../assets/photo/event-venue/03-sm.webp" alt="игровые центры: бассейн с шарами, горка" width="440" height="330" loading="lazy"></div><div class="gcol"><img src="../assets/photo/party-gavayskaya/02-sm.webp" alt="гавайская вечеринка: рубашка, декор" width="440" height="587" loading="lazy"><img src="../assets/photo/event-venue/04-sm.webp" alt="ТЦ: Соник, игровая" width="440" height="330" loading="lazy"></div><div class="gcol"><img src="../assets/photo/event-venue/01-sm.webp" alt="игровой центр: батут, сухой бассейн, Человек-паук" width="440" height="330" loading="lazy"><img src="../assets/photo/event-venue/02-sm.webp" alt="игровой центр: батут, сухой бассейн, Человек-паук" width="440" height="587" loading="lazy"></div></div></div>
   <p class="mt-l"><small>Гавайская вечеринка, вечеринка 90-х и футбольная продаются в каталоге студии
      во ВКонтакте. Состав реквизита под конкретную дату уточняйте по телефону.</small></p>
 </div>
@@ -66,9 +66,16 @@
   <label>Что за праздник и когда
     <textarea name="about" placeholder="6 лет сыну, 12 октября, дома. Хотим Человека-паука и что-нибудь с дымом"></textarea>
   </label>
-  <button class="btn btn--cta" type="submit">Отправить в WhatsApp</button>
-  <p class="form-note">Кнопка откроет WhatsApp с готовым текстом — останется нажать «отправить».
-     Не пользуетесь WhatsApp? Позвоните: <a href="tel:+79252081419">+7 (925) 208-14-19</a></p>
+  <span class="form-label">Куда отправить заявку</span>
+  <div class="form-send">
+    <button class="btn btn--wa" type="submit" data-to="wa">WhatsApp</button>
+    <button class="btn btn--tg" type="submit" data-to="tg">Telegram</button>
+    <button class="btn btn--vk" type="submit" data-to="vk">ВКонтакте</button>
+    <button class="btn btn--max" type="submit" data-to="max">МАКС</button>
+  </div>
+  <p class="form-note" data-lead-note>Текст заявки соберётся сам. В Telegram и ВКонтакте он
+     скопируется в буфер — останется вставить в чат.
+     Не любите переписку? Позвоните: <a href="tel:+79252081419">+7 (925) 208-14-19</a></p>
 </form>
   </div>
 </div>
@@ -82,7 +89,8 @@
       <p><a href="tel:+79252081419"><b>+7 (925) 208-14-19</b></a><br>
          <a href="https://wa.me/79252081419" target="_blank" rel="noopener">WhatsApp</a> ·
          <a href="https://t.me/MURA_PRODUCTION" target="_blank" rel="noopener">Telegram</a> ·
-         <a href="https://vk.ru/mura_show" target="_blank" rel="noopener">ВКонтакте</a></p>
+         <a href="https://vk.ru/mura__show" target="_blank" rel="noopener">ВКонтакте</a> ·
+         МАКС по номеру телефона</p>
       <p>Наро-Фоминск, Площадь Свободы, 1А<br>Приём заказов на площадке «Скворечник»: +7 (977) 704-71-62</p>
     </div>
     <div><h4>Шоу</h4><ul><li><a href="../shows/krio-shou.html">Крио-шоу</a></li><li><a href="../shows/pennaya-vecherinka.html">Пенная вечеринка</a></li><li><a href="../shows/lukotag.html">Лукотаг</a></li><li><a href="../shows/puzyrnoe-shou.html">Пузырное шоу</a></li><li><a href="../shows/kazhetsya-nashchupal.html">«Кажется, нащупал»</a></li><li><a href="../shows/shou-napitkov.html">Шоу напитков</a></li><li><a href="../shows/">Все шоу</a></li></ul></div>

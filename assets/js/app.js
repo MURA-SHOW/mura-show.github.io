@@ -36,8 +36,19 @@
     });
   }
 
-  // заявка уходит в WhatsApp готовым текстом: своего сервера у сайта нет
+  // заявка уходит в тот мессенджер, который выбрал человек: сервера у сайта нет
+  var LINKS = {
+    wa: function (t) { return 'https://wa.me/79252081419?text=' + encodeURIComponent(t); },
+    max: function (t) { return 'https://max.ru/:share?text=' + encodeURIComponent(t); },
+    tg: function () { return 'https://t.me/MURA_PRODUCTION'; },      // текст в личный чат не передаётся
+    vk: function () { return 'https://vk.me/mura__show'; }
+  };
+
   Array.prototype.forEach.call(document.querySelectorAll('[data-lead]'), function (f) {
+    var to = 'wa';
+    Array.prototype.forEach.call(f.querySelectorAll('[data-to]'), function (b) {
+      b.addEventListener('click', function () { to = b.getAttribute('data-to'); });
+    });
     f.addEventListener('submit', function (e) {
       e.preventDefault();
       var name = (f.name.value || '').trim();
@@ -52,7 +63,13 @@
         'Связь: ' + contact +
         (about ? '\nПраздник: ' + about : '') +
         (f.dataset.subject ? '\nРаздел: ' + f.dataset.subject : '');
-      window.open('https://wa.me/79252081419?text=' + encodeURIComponent(text), '_blank', 'noopener');
+      var note = f.querySelector('[data-lead-note]');
+      if ((to === 'tg' || to === 'vk') && navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(function () {
+          if (note) { note.textContent = 'Заявка скопирована — вставьте её в чат, который сейчас откроется.'; }
+        });
+      }
+      window.open(LINKS[to](text), '_blank', 'noopener');
     });
   });
 })();

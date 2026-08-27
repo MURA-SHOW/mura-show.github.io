@@ -34,7 +34,7 @@
  },
  {
   "slug": "cifrovoy-cirk",
-  "cap": "Джекс из «Цифрового цирка»",
+  "cap": "Герой «Цифрового цирка» на арене",
   "src": "assets/obraz/cifrovoy-cirk-2.webp",
   "w": 900,
   "h": 1200,
@@ -45,11 +45,11 @@
  },
  {
   "slug": "cifrovoy-cirk",
-  "cap": "Герой «Цифрового цирка»",
+  "cap": "Герой «Цифрового цирка» среди артистов",
   "src": "assets/obraz/cifrovoy-cirk-3.webp",
   "w": 900,
   "h": 1200,
-  "kb": 179,
+  "kb": 170,
   "sm": "assets/obraz/cifrovoy-cirk-3-sm.webp",
   "sm_w": 440,
   "sm_h": 587
@@ -66,28 +66,6 @@
   "sm_h": 330
  },
  {
-  "slug": "princessy",
-  "cap": "Белоснежка",
-  "src": "assets/obraz/princessy-1.webp",
-  "w": 900,
-  "h": 1349,
-  "kb": 167,
-  "sm": "assets/obraz/princessy-1-sm.webp",
-  "sm_w": 440,
-  "sm_h": 660
- },
- {
-  "slug": "princessy",
-  "cap": "Рапунцель",
-  "src": "assets/obraz/princessy-2.webp",
-  "w": 900,
-  "h": 1200,
-  "kb": 186,
-  "sm": "assets/obraz/princessy-2-sm.webp",
-  "sm_w": 440,
-  "sm_h": 587
- },
- {
   "slug": "vensdey",
   "cap": "Венсдей и Энид Синклер",
   "src": "assets/obraz/vensdey-1.webp",
@@ -97,6 +75,28 @@
   "sm": "assets/obraz/vensdey-1-sm.webp",
   "sm_w": 440,
   "sm_h": 660
+ },
+ {
+  "slug": "belosnezhka",
+  "cap": "Белоснежка",
+  "src": "assets/obraz/belosnezhka-1.webp",
+  "w": 900,
+  "h": 1349,
+  "kb": 167,
+  "sm": "assets/obraz/belosnezhka-1-sm.webp",
+  "sm_w": 440,
+  "sm_h": 660
+ },
+ {
+  "slug": "rapuncel",
+  "cap": "Рапунцель",
+  "src": "assets/obraz/rapuncel-1.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 186,
+  "sm": "assets/obraz/rapuncel-1-sm.webp",
+  "sm_w": 440,
+  "sm_h": 587
  },
  {
   "slug": "geymer",
@@ -121,19 +121,30 @@
   "sm_h": 660
  },
  {
-  "slug": "geymer",
-  "cap": "Геймер с реквизитом",
-  "src": "assets/obraz/geymer-3.webp",
+  "slug": "leon",
+  "cap": "Леон из Brawl Stars в маске",
+  "src": "assets/obraz/leon-1.webp",
   "w": 900,
   "h": 1200,
   "kb": 194,
-  "sm": "assets/obraz/geymer-3-sm.webp",
+  "sm": "assets/obraz/leon-1-sm.webp",
+  "sm_w": 440,
+  "sm_h": 587
+ },
+ {
+  "slug": "leon",
+  "cap": "Леон из Brawl Stars",
+  "src": "assets/obraz/leon-2.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 179,
+  "sm": "assets/obraz/leon-2-sm.webp",
   "sm_w": 440,
   "sm_h": 587
  },
  {
   "slug": "ded-moroz",
-  "cap": "Дед Мороз",
+  "cap": "Дед Мороз и Снегурочка",
   "src": "assets/obraz/ded-moroz-1.webp",
   "w": 900,
   "h": 1350,
@@ -187,52 +198,41 @@
   "sm_h": 587
  },
  {
-  "slug": "lol",
+  "slug": "lol-pchelka",
   "cap": "Куколка ЛОЛ Пчёлка",
-  "src": "assets/obraz/lol-2.webp",
+  "src": "assets/obraz/lol-pchelka-1.webp",
   "w": 900,
   "h": 1200,
   "kb": 175,
+  "sm": "assets/obraz/lol-pchelka-1-sm.webp",
+  "sm_w": 440,
+  "sm_h": 587
+ },
+ {
+  "slug": "lol",
+  "cap": "Куколки ЛОЛ вдвоём: Единорожка и Пчёлка",
+  "src": "assets/obraz/lol-2.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 197,
   "sm": "assets/obraz/lol-2-sm.webp",
   "sm_w": 440,
   "sm_h": 587
  },
  {
   "slug": "lol",
-  "cap": "Куколки ЛОЛ вдвоём",
+  "cap": "Куколка ЛОЛ Единорожка в комнате единорогов",
   "src": "assets/obraz/lol-3.webp",
   "w": 900,
   "h": 1200,
-  "kb": 197,
+  "kb": 193,
   "sm": "assets/obraz/lol-3-sm.webp",
   "sm_w": 440,
   "sm_h": 587
  },
  {
-  "slug": "lol",
-  "cap": "Куколка ЛОЛ Единорожка, вторая версия",
-  "src": "assets/obraz/lol-4.webp",
-  "w": 900,
-  "h": 1200,
-  "kb": 193,
-  "sm": "assets/obraz/lol-4-sm.webp",
-  "sm_w": 440,
-  "sm_h": 587
- },
- {
-  "slug": "lol",
-  "cap": "Куколка ЛОЛ крупным планом",
-  "src": "assets/obraz/lol-5.webp",
-  "w": 900,
-  "h": 900,
-  "kb": 106,
-  "sm": "assets/obraz/lol-5-sm.webp",
-  "sm_w": 440,
-  "sm_h": 440
- },
- {
   "slug": "maynkraft",
-  "cap": "Майнкрафт, женский образ",
+  "cap": "Крипер, женский образ",
   "src": "assets/obraz/maynkraft-1.webp",
   "w": 900,
   "h": 1350,
@@ -243,7 +243,7 @@
  },
  {
   "slug": "maynkraft",
-  "cap": "Майнкрафт, мужской образ",
+  "cap": "Крипер, мужской образ",
   "src": "assets/obraz/maynkraft-2.webp",
   "w": 900,
   "h": 1350,
@@ -254,22 +254,33 @@
  },
  {
   "slug": "maynkraft",
-  "cap": "Майнкрафт с динамитом",
+  "cap": "Крипер с динамитом",
   "src": "assets/obraz/maynkraft-3.webp",
   "w": 900,
   "h": 1200,
-  "kb": 170,
+  "kb": 166,
   "sm": "assets/obraz/maynkraft-3-sm.webp",
   "sm_w": 440,
   "sm_h": 587
  },
  {
-  "slug": "maynkraft",
-  "cap": "Майнкрафт, версия с TNT",
-  "src": "assets/obraz/maynkraft-4.webp",
+  "slug": "barbi",
+  "cap": "Барби у розового дома",
+  "src": "assets/obraz/barbi-1.webp",
   "w": 900,
   "h": 1200,
   "kb": 173,
+  "sm": "assets/obraz/barbi-1-sm.webp",
+  "sm_w": 440,
+  "sm_h": 587
+ },
+ {
+  "slug": "maynkraft",
+  "cap": "Крипер и ящики с TNT",
+  "src": "assets/obraz/maynkraft-4.webp",
+  "w": 900,
+  "h": 1200,
+  "kb": 176,
   "sm": "assets/obraz/maynkraft-4-sm.webp",
   "sm_w": 440,
   "sm_h": 587
@@ -286,13 +297,13 @@
   "sm_h": 550
  },
  {
-  "slug": "shchenyachiy-patrul",
+  "slug": "everest",
   "cap": "Эверест из «Щенячьего патруля»",
-  "src": "assets/obraz/shchenyachiy-patrul-2.webp",
+  "src": "assets/obraz/everest-1.webp",
   "w": 900,
   "h": 1200,
-  "kb": 166,
-  "sm": "assets/obraz/shchenyachiy-patrul-2-sm.webp",
+  "kb": 182,
+  "sm": "assets/obraz/everest-1-sm.webp",
   "sm_w": 440,
   "sm_h": 587
  },
@@ -352,45 +363,45 @@
   "sm_h": 660
  },
  {
-  "slug": "leon",
-  "cap": "Леон из Brawl Stars",
-  "src": "assets/obraz/leon-1.webp",
+  "slug": "barbi",
+  "cap": "Барби в розовой комнате",
+  "src": "assets/obraz/barbi-2.webp",
   "w": 900,
   "h": 1200,
   "kb": 190,
-  "sm": "assets/obraz/leon-1-sm.webp",
+  "sm": "assets/obraz/barbi-2-sm.webp",
   "sm_w": 440,
   "sm_h": 587
  },
  {
-  "slug": "leon",
-  "cap": "Леон из Brawl Stars, вторая версия",
-  "src": "assets/obraz/leon-2.webp",
+  "slug": "neonovyy-vedushchiy",
+  "cap": "Неоновые ведущие",
+  "src": "assets/obraz/neonovyy-vedushchiy-1.webp",
   "w": 900,
   "h": 1200,
-  "kb": 159,
-  "sm": "assets/obraz/leon-2-sm.webp",
+  "kb": 169,
+  "sm": "assets/obraz/neonovyy-vedushchiy-1-sm.webp",
   "sm_w": 440,
   "sm_h": 587
  },
  {
   "slug": "pirat",
-  "cap": "Пират Весельчак Билли",
+  "cap": "Пират с абордажной саблей",
   "src": "assets/obraz/pirat-1.webp",
   "w": 900,
   "h": 1200,
-  "kb": 169,
+  "kb": 168,
   "sm": "assets/obraz/pirat-1-sm.webp",
   "sm_w": 440,
   "sm_h": 587
  },
  {
   "slug": "pirat",
-  "cap": "Пират с картой сокровищ",
+  "cap": "Пират Весельчак Билли",
   "src": "assets/obraz/pirat-2.webp",
   "w": 900,
   "h": 1200,
-  "kb": 168,
+  "kb": 159,
   "sm": "assets/obraz/pirat-2-sm.webp",
   "sm_w": 440,
   "sm_h": 587
@@ -401,52 +412,19 @@
   "src": "assets/obraz/pirat-3.webp",
   "w": 900,
   "h": 1200,
-  "kb": 172,
+  "kb": 194,
   "sm": "assets/obraz/pirat-3-sm.webp",
   "sm_w": 440,
   "sm_h": 587
  },
  {
-  "slug": "pirat",
-  "cap": "Пиратская команда",
-  "src": "assets/obraz/pirat-4.webp",
+  "slug": "neonovyy-vedushchiy",
+  "cap": "Неоновые ведущие с реквизитом",
+  "src": "assets/obraz/neonovyy-vedushchiy-2.webp",
   "w": 900,
   "h": 1200,
-  "kb": 176,
-  "sm": "assets/obraz/pirat-4-sm.webp",
-  "sm_w": 440,
-  "sm_h": 587
- },
- {
-  "slug": "barbi",
-  "cap": "Барби",
-  "src": "assets/obraz/barbi-1.webp",
-  "w": 900,
-  "h": 1125,
-  "kb": 195,
-  "sm": "assets/obraz/barbi-1-sm.webp",
-  "sm_w": 440,
-  "sm_h": 550
- },
- {
-  "slug": "barbi",
-  "cap": "Барби, дубль",
-  "src": "assets/obraz/barbi-2.webp",
-  "w": 900,
-  "h": 1125,
-  "kb": 195,
-  "sm": "assets/obraz/barbi-2-sm.webp",
-  "sm_w": 440,
-  "sm_h": 550
- },
- {
-  "slug": "barbi",
-  "cap": "Барби в розовом",
-  "src": "assets/obraz/barbi-3.webp",
-  "w": 900,
-  "h": 1200,
-  "kb": 182,
-  "sm": "assets/obraz/barbi-3-sm.webp",
+  "kb": 172,
+  "sm": "assets/obraz/neonovyy-vedushchiy-2-sm.webp",
   "sm_w": 440,
   "sm_h": 587
  },
@@ -455,10 +433,10 @@
   "cap": "Диппер и Мейбл из «Гравити Фолз»",
   "src": "assets/obraz/graviti-folz-1.webp",
   "w": 900,
-  "h": 1200,
-  "kb": 194,
+  "h": 1125,
+  "kb": 195,
   "sm": "assets/obraz/graviti-folz-1-sm.webp",
   "sm_w": 440,
-  "sm_h": 587
+  "sm_h": 550
  }
 ]
