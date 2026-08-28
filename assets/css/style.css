@@ -434,10 +434,16 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); colo
 }
 
 /* ── отзывы ── */
-.quotes { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
-/* Четвёрка отзывов на главной — в две колонки: в трёх колонках четвёртая карточка висела
-   одна в новом ряду, а строка в 380 px рвёт длинный отзыв на обрывки по три слова. */
-@media (min-width: 900px) { .quotes--duo { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* Отзывы — кладка, а не сетка: в сетке ряд тянется по самому длинному тексту, и под
+   коротким отзывом оставалась дыра в полкарточки, а 10 отзывов на странице кончались
+   одиноким одиннадцатым. В колонках карточки идут вплотную и колонки выходят вровень. */
+.quotes { columns: 3; column-gap: 18px; }
+.quotes .quote { break-inside: avoid; margin-bottom: 18px; }
+/* Четвёрка отзывов на главной — в две колонки: строка в 380 px рвёт длинный отзыв
+   на обрывки по три слова. */
+.quotes--duo { columns: 2; }
+@media (max-width: 900px) { .quotes { columns: 2; } }
+@media (max-width: 640px) { .quotes, .quotes--duo { columns: 1; } }
 .quote {
   background: #fff;
   border: 1px solid var(--line-soft);
