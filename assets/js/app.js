@@ -34,6 +34,27 @@
     });
   });
 
+  // «Написать» в шапке: выбор мессенджера вместо прыжка сразу в WhatsApp
+  var write = document.querySelector('[data-write]');
+  if (write) {
+    var wBtn = write.querySelector('[data-write-toggle]');
+    var wMenu = write.querySelector('[data-write-menu]');
+    var setWrite = function (open) {
+      wMenu.hidden = !open;
+      wBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+    wBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setWrite(wMenu.hidden);
+    });
+    document.addEventListener('click', function (e) {
+      if (!write.contains(e.target)) { setWrite(false); }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { setWrite(false); }
+    });
+  }
+
   // мобильное меню
   var burger = document.querySelector('[data-burger]');
   var menu = document.querySelector('[data-menu]');

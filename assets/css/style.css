@@ -630,3 +630,28 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); colo
 .mascot--footer { width: 92px; margin-bottom: 12px; }
 .mascot--404 { width: min(280px, 62vw); margin: 0 auto 8px; }
 .split img.mascot--about { width: min(300px, 70%); justify-self: center; border-radius: 0; }
+
+/* ── «Написать» в шапке: выбор мессенджера, а не сразу WhatsApp ── */
+.nav-write { position: relative; }
+.write-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  z-index: 60;
+  display: grid;
+  gap: 8px;
+  min-width: 236px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid var(--line-soft);
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(22, 35, 58, .16);
+}
+.write-menu[hidden] { display: none; }
+.write-menu .btn--msg { justify-content: flex-start; width: 100%; }
+@media (max-width: 1080px) { .nav-write { display: none; } }
+.nav-msgs { display: none; }
+@media (max-width: 1080px) {                     /* в бургере тоже нужен выбор мессенджера */
+  .nav-msgs { display: grid; gap: 8px; margin-top: 12px; }
+  .nav-links .nav-msgs .btn--msg { display: flex; justify-content: flex-start; }
+}
