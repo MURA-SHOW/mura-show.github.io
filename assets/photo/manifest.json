@@ -397,7 +397,7 @@
   "w": 1280,
   "h": 960,
   "kb": 286,
-  "q": 80,
+  "q": 0,
   "sm": "assets/photo/event-home/11-sm.webp",
   "sm_w": 440,
   "sm_h": 330
@@ -410,7 +410,7 @@
   "w": 1400,
   "h": 1867,
   "kb": 290,
-  "q": 80,
+  "q": 0,
   "sm": "assets/photo/event-home/12-sm.webp",
   "sm_w": 440,
   "sm_h": 587
@@ -592,7 +592,7 @@
   "w": 1400,
   "h": 934,
   "kb": 167,
-  "q": 86,
+  "q": 0,
   "sm": "assets/photo/event-quest/04-sm.webp",
   "sm_w": 440,
   "sm_h": 294
@@ -605,7 +605,7 @@
   "w": 1400,
   "h": 934,
   "kb": 102,
-  "q": 86,
+  "q": 0,
   "sm": "assets/photo/event-quest/05-sm.webp",
   "sm_w": 440,
   "sm_h": 294
@@ -1183,19 +1183,6 @@
   "sm_h": 550
  },
  {
-  "n": 12,
-  "cat": "obraz/kalmar",
-  "desc": "Игра в кальмара: стражники в красном",
-  "src": "assets/photo/obraz-kalmar/02.webp",
-  "w": 1400,
-  "h": 1750,
-  "kb": 189,
-  "q": 0,
-  "sm": "assets/photo/obraz-kalmar/02-sm.webp",
-  "sm_w": 440,
-  "sm_h": 550
- },
- {
   "n": 324,
   "cat": "obraz/kriper",
   "desc": "Крипер (Майнкрафт) в игровом центре",
@@ -1352,28 +1339,15 @@
   "sm_h": 660
  },
  {
-  "n": 463,
+  "n": 464,
   "cat": "obraz/medved",
   "desc": "Белые медведи (ростовые) на свадьбе и с детьми",
   "src": "assets/photo/obraz-medved/02.webp",
   "w": 1400,
   "h": 2100,
-  "kb": 124,
-  "q": 0,
-  "sm": "assets/photo/obraz-medved/02-sm.webp",
-  "sm_w": 440,
-  "sm_h": 660
- },
- {
-  "n": 464,
-  "cat": "obraz/medved",
-  "desc": "Белые медведи (ростовые) на свадьбе и с детьми",
-  "src": "assets/photo/obraz-medved/03.webp",
-  "w": 1400,
-  "h": 2100,
   "kb": 140,
-  "q": 0,
-  "sm": "assets/photo/obraz-medved/03-sm.webp",
+  "q": 86,
+  "sm": "assets/photo/obraz-medved/02-sm.webp",
   "sm_w": 440,
   "sm_h": 660
  },
@@ -1381,12 +1355,12 @@
   "n": 462,
   "cat": "obraz/medved",
   "desc": "Белые медведи (ростовые) на свадьбе и с детьми",
-  "src": "assets/photo/obraz-medved/04.webp",
+  "src": "assets/photo/obraz-medved/03.webp",
   "w": 1400,
   "h": 2101,
   "kb": 166,
-  "q": 0,
-  "sm": "assets/photo/obraz-medved/04-sm.webp",
+  "q": 86,
+  "sm": "assets/photo/obraz-medved/03-sm.webp",
   "sm_w": 440,
   "sm_h": 660
  },
@@ -2429,19 +2403,6 @@
   "sm": "assets/photo/show-neon/06-sm.webp",
   "sm_w": 440,
   "sm_h": 660
- },
- {
-  "n": 449,
-  "cat": "show/neon",
-  "desc": "неоновая дискотека: ультрафиолет, костюмы, аквагрим",
-  "src": "assets/photo/show-neon/07.webp",
-  "w": 960,
-  "h": 1280,
-  "kb": 160,
-  "q": 0,
-  "sm": "assets/photo/show-neon/07-sm.webp",
-  "sm_w": 440,
-  "sm_h": 587
  },
  {
   "n": 270,

@@ -485,7 +485,9 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); colo
 .faq p { margin: 0 0 16px; color: var(--ink-soft); font-size: 17px; }
 
 /* ── прайс ── */
-.price-table { width: 100%; border-collapse: collapse; font-size: 17px; }
+/* На 1180 px между названием услуги и ценой оставалась полоса пустоты в пол-экрана,
+   и глаз терял строку по дороге к сумме. Прайс живёт в колонке читаемой длины. */
+.price-table { width: 100%; max-width: 880px; border-collapse: collapse; font-size: 17px; }
 .price-table th, .price-table td { text-align: left; padding: 14px 12px; border-bottom: 1px solid var(--line-soft); }
 .price-table th { font: 700 14px/1.3 'Onest', sans-serif; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-faint); }
 .price-table td:last-child, .price-table th:last-child { text-align: right; white-space: nowrap; }
