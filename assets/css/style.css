@@ -583,14 +583,25 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); colo
 .hero > .wrap { position: relative; }
 
 .confetti { position: relative; }
-.confetti::after {                               /* россыпь шариков по краям блока */
+.confetti > .wrap { position: relative; z-index: 1; }
+.confetti::after {                               /* шарики по углам, за контентом */
   content: '';
   position: absolute;
   inset: 0;
+  z-index: 0;
   pointer-events: none;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 620' preserveAspectRatio='none'%3E%3Cg fill-opacity='.85'%3E%3Ccircle cx='58' cy='72' r='13' fill='%23F0C913'/%3E%3Ccircle cx='150' cy='40' r='8' fill='%23FF72B6'/%3E%3Ccircle cx='36' cy='300' r='10' fill='%2319BFDE'/%3E%3Ccircle cx='1142' cy='96' r='14' fill='%23C2CB1B'/%3E%3Ccircle cx='1064' cy='38' r='8' fill='%23E02C83'/%3E%3Ccircle cx='1170' cy='330' r='9' fill='%23EF8911'/%3E%3Ccircle cx='96' cy='560' r='11' fill='%23E02C83'/%3E%3Ccircle cx='1116' cy='548' r='12' fill='%2319BFDE'/%3E%3Ccircle cx='980' cy='596' r='7' fill='%23F0C913'/%3E%3Ccircle cx='260' cy='592' r='8' fill='%23C2CB1B'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat, no-repeat;
+  background-position: left -14px top 8px, right -10px bottom 14px;
+  background-size: 168px 210px, 150px 190px;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 168 210'%3E%3Ccircle cx='30' cy='28' r='13' fill='%23F0C913'/%3E%3Ccircle cx='96' cy='14' r='8' fill='%23FF72B6'/%3E%3Ccircle cx='14' cy='108' r='10' fill='%2319BFDE'/%3E%3Ccircle cx='74' cy='168' r='9' fill='%23C2CB1B'/%3E%3Ccircle cx='24' cy='196' r='7' fill='%23E02C83'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 190'%3E%3Ccircle cx='120' cy='26' r='14' fill='%23C2CB1B'/%3E%3Ccircle cx='56' cy='58' r='8' fill='%23E02C83'/%3E%3Ccircle cx='136' cy='118' r='9' fill='%23EF8911'/%3E%3Ccircle cx='84' cy='166' r='12' fill='%2319BFDE'/%3E%3Ccircle cx='30' cy='140' r='7' fill='%23F0C913'/%3E%3C/svg%3E");
+}
+@media (max-width: 820px) {                      /* на узком экране точки уходят от текста */
+  .confetti::after {
+    background-size: 104px 132px, 96px 124px;
+    background-position: left -34px top 64px, right -30px bottom 8px;
+  }
 }
 
 .section--warm, .section--violet { position: relative; }
