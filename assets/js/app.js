@@ -26,6 +26,13 @@
   }
   if (document.readyState === 'complete') { initVideo(); }
   else { window.addEventListener('load', initVideo); }
+  // вкладку открыли в фоне — браузер ставит петлю на паузу, возвращаем при показе
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) { return; }
+    Array.prototype.forEach.call(document.querySelectorAll('video[data-src]'), function (v) {
+      if (v.src && v.paused) { var p = v.play(); if (p && p.catch) { p.catch(function () {}); } }
+    });
+  });
 
   // мобильное меню
   var burger = document.querySelector('[data-burger]');
