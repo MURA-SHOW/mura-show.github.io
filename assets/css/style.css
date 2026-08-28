@@ -126,27 +126,21 @@ h1 .label {                       /* запросная строка внутр�
 }
 .btn--wa:active { box-shadow: 0 2px 0 var(--cyan-dark); }
 .btn--wa:hover { color: #08303a; }
-.btn--tg {
-  background: var(--blue);
-  color: #fff;
-  box-shadow: 0 4px 0 #175f9f;
+
+/* кнопки мессенджеров: плашка одна на всех, различает знак — ряд из четырёх
+   кислотных кнопок рябил и спорил с фирменной палитрой (docs/BRAND.md) */
+.btn--msg {
+  background: #fff;
+  color: var(--ink);
+  border: 2px solid var(--line);
+  box-shadow: 0 4px 0 var(--line-soft);
+  padding-left: 16px;
+  padding-right: 20px;
 }
-.btn--tg:hover, .btn--tg:active { color: #fff; }
-.btn--tg:active { box-shadow: 0 2px 0 #175f9f; }
-.btn--vk {
-  background: var(--violet);
-  color: #fff;
-  box-shadow: 0 4px 0 #57204c;
-}
-.btn--vk:hover, .btn--vk:active { color: #fff; }
-.btn--vk:active { box-shadow: 0 2px 0 #57204c; }
-.btn--max {
-  background: var(--orange);
-  color: #3a2100;
-  box-shadow: 0 4px 0 #c26e08;
-}
-.btn--max:hover, .btn--max:active { color: #3a2100; }
-.btn--max:active { box-shadow: 0 2px 0 #c26e08; }
+.btn--msg:hover { color: var(--ink); border-color: var(--cyan); }
+.btn--msg:active { box-shadow: 0 2px 0 var(--line-soft); }
+.btn--msg .mi { width: 24px; height: 24px; flex: none; }
+.footer .btn--msg, .section--violet .btn--msg { background: #fff; color: var(--ink); }
 .btn--ghost {
   background: transparent;
   color: var(--ink);
@@ -439,6 +433,17 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); colo
 .form-send { display: flex; flex-wrap: wrap; gap: 10px; }
 .form-send .btn { flex: 0 0 auto; padding-left: 18px; padding-right: 18px; }
 .form-note { font-size: 14px; color: var(--ink-faint); }
+.form-note:empty { display: none; }
+/* строка под условиями шоу: что именно уточняется у Андрея, а не обещается сайтом */
+.note {
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-left: 4px solid var(--cyan);
+  background: #fff;
+  border-radius: 0 12px 12px 0;
+  font-size: 15px;
+  color: var(--ink-soft);
+}
 .form-error { color: var(--magenta); font-size: 15px; font-weight: 600; }
 
 /* ── подвал ── */

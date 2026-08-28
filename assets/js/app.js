@@ -68,18 +68,36 @@
     });
   }
 
+  // номер копируется в буфер: в MAX чат ищут по номеру, ссылки на него мессенджер не даёт
+  Array.prototype.forEach.call(document.querySelectorAll('[data-copy]'), function (b) {
+    b.addEventListener('click', function () {
+      var val = b.getAttribute('data-copy');
+      var note = document.querySelector('[data-copy-note]');
+      function said(text) { if (note) { note.textContent = text; } }
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(val).then(
+          function () { said('Номер ' + val + ' скопирован — вставьте его в поиск MAX.'); },
+          function () { said('Номер для MAX: ' + val); });
+      } else {
+        said('Номер для MAX: ' + val);
+      }
+    });
+  });
+
   // заявка уходит в тот мессенджер, который выбрал человек: сервера у сайта нет
   var LINKS = {
     wa: function (t) { return 'https://wa.me/79252081419?text=' + encodeURIComponent(t); },
-    max: function (t) { return 'https://max.ru/:share?text=' + encodeURIComponent(t); },
     tg: function () { return 'https://t.me/MURA_PRODUCTION'; },      // текст в личный чат не передаётся
     vk: function () { return 'https://vk.me/mura__show'; }
   };
 
   Array.prototype.forEach.call(document.querySelectorAll('[data-lead]'), function (f) {
     var to = 'wa';
+    var urls = {};
     Array.prototype.forEach.call(f.querySelectorAll('[data-to]'), function (b) {
-      b.addEventListener('click', function () { to = b.getAttribute('data-to'); });
+      var kind = b.getAttribute('data-to');
+      if (b.getAttribute('data-url')) { urls[kind] = b.getAttribute('data-url'); }
+      b.addEventListener('click', function () { to = kind; });
     });
     f.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -96,12 +114,13 @@
         (about ? '\nПраздник: ' + about : '') +
         (f.dataset.subject ? '\nРаздел: ' + f.dataset.subject : '');
       var note = f.querySelector('[data-lead-note]');
-      if ((to === 'tg' || to === 'vk') && navigator.clipboard) {
+      if (to !== 'wa' && navigator.clipboard) {
         navigator.clipboard.writeText(text).then(function () {
           if (note) { note.textContent = 'Заявка скопирована — вставьте её в чат, который сейчас откроется.'; }
         });
       }
-      window.open(LINKS[to](text), '_blank', 'noopener');
+      var url = LINKS[to] ? LINKS[to](text) : urls[to];
+      if (url) { window.open(url, '_blank', 'noopener'); }
     });
   });
 })();
