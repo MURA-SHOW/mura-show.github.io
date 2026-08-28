@@ -4,62 +4,87 @@
   "clip": 77,
   "cap": "Фирменная пушка в виде акулы даёт струю пены во двор",
   "dur": 4,
+  "kb": 866,
+  "kb_sm": 387,
   "mp4": "assets/video/pena-pushka.mp4",
-  "poster": "assets/video/pena-pushka.webp",
-  "kb": 305
+  "mp4_sm": "assets/video/pena-pushka-sm.mp4",
+  "poster": "assets/video/pena-pushka.webp"
  },
  {
   "name": "krio-azot",
   "clip": 51,
   "cap": "Жидкий азот льётся из бутыли, облако стелется по траве",
   "dur": 10,
+  "kb": 2042,
+  "kb_sm": 856,
   "mp4": "assets/video/krio-azot.mp4",
-  "poster": "assets/video/krio-azot.webp",
-  "kb": 625
+  "mp4_sm": "assets/video/krio-azot-sm.mp4",
+  "poster": "assets/video/krio-azot.webp"
  },
  {
   "name": "krio-kuhnya",
   "clip": 76,
   "cap": "Молекулярная кухня: ведущий раздаёт мороженое из азота",
   "dur": 10,
+  "kb": 1619,
+  "kb_sm": 748,
   "mp4": "assets/video/krio-kuhnya.mp4",
-  "poster": "assets/video/krio-kuhnya.webp",
-  "kb": 540
+  "mp4_sm": "assets/video/krio-kuhnya-sm.mp4",
+  "poster": "assets/video/krio-kuhnya.webp"
  },
  {
   "name": "programma",
   "clip": 3,
   "cap": "Человек-паук и дети складывают руки в центр круга",
   "dur": 10,
+  "kb": 1329,
+  "kb_sm": 590,
   "mp4": "assets/video/programma.mp4",
-  "poster": "assets/video/programma.webp",
-  "kb": 408
+  "mp4_sm": "assets/video/programma-sm.mp4",
+  "poster": "assets/video/programma.webp"
  },
  {
   "name": "silomer",
   "clip": 37,
   "cap": "Ребёнок бьёт молотом по силомеру, очередь болеет",
   "dur": 10,
+  "kb": 1402,
+  "kb_sm": 635,
   "mp4": "assets/video/silomer.mp4",
-  "poster": "assets/video/silomer.webp",
-  "kb": 455
+  "mp4_sm": "assets/video/silomer-sm.mp4",
+  "poster": "assets/video/silomer.webp"
  },
  {
   "name": "tort",
   "clip": 91,
   "cap": "Ведущий выносит торт со свечами прямо в пену",
   "dur": 6,
+  "kb": 1204,
+  "kb_sm": 543,
   "mp4": "assets/video/tort.mp4",
-  "poster": "assets/video/tort.webp",
-  "kb": 421
+  "mp4_sm": "assets/video/tort-sm.mp4",
+  "poster": "assets/video/tort.webp"
  },
  {
   "name": "krio-drakon",
   "clip": 60,
   "cap": "Столб азотного дыма и ребёнок выдыхает пар как дракон",
   "dur": 10,
+  "kb": 2334,
+  "kb_sm": 982,
   "mp4": "assets/video/krio-drakon.mp4",
-  "poster": "assets/video/krio-drakon.webp",
-  "kb": 735
+  "mp4_sm": "assets/video/krio-drakon-sm.mp4",
+  "poster": "assets/video/krio-drakon.webp"
+ },
+ {
+  "name": "reel",
+  "clip": 0,
+  "dur": 12.4,
+  "kb": 2763,
+  "kb_sm": 1175,
+  "cap": "Моменты праздника: программа, силомер, крио-шоу, пена и вынос торта",
+  "mp4": "assets/video/reel.mp4",
+  "mp4_sm": "assets/video/reel-sm.mp4",
+  "poster": "assets/video/reel.webp"
  }
 ]

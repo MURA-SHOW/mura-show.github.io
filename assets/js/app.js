@@ -1,6 +1,31 @@
-// MURA SHOW — три мелочи, ради которых не нужен фреймворк.
+// MURA SHOW — четыре мелочи, ради которых не нужен фреймворк.
 (function () {
   'use strict';
+
+  // видео подключается после текста и картинок: первый экран не ждёт мегабайты,
+  // а то, что ниже сгиба, грузится, только когда до него доскроллили
+  function playVideo(v) {
+    if (v.src) { return; }
+    var sm = v.getAttribute('data-src-sm');
+    v.src = (sm && window.innerWidth < 800) ? sm : v.getAttribute('data-src');
+    var p = v.play();
+    if (p && p.catch) { p.catch(function () {}); }
+  }
+  function initVideo() {
+    var all = document.querySelectorAll('video[data-src]');
+    if (!('IntersectionObserver' in window)) {
+      Array.prototype.forEach.call(all, playVideo);
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { playVideo(e.target); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '200px' });
+    Array.prototype.forEach.call(all, function (v) { io.observe(v); });
+  }
+  if (document.readyState === 'complete') { initVideo(); }
+  else { window.addEventListener('load', initVideo); }
 
   // мобильное меню
   var burger = document.querySelector('[data-burger]');
