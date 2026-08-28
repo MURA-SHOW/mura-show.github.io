@@ -50,9 +50,10 @@
     });
   }
 
-  // фильтр каталога образов
+  // фильтр каталога образов: сетка с кадрами и список тех, кого студия не снимала
   var catalog = document.querySelector('[data-catalog]');
   if (catalog) {
+    var boxes = [catalog, document.querySelector('[data-catalog-more]')].filter(Boolean);
     var buttons = document.querySelectorAll('[data-filter]');
     Array.prototype.forEach.call(buttons, function (btn) {
       btn.addEventListener('click', function () {
@@ -60,9 +61,18 @@
         Array.prototype.forEach.call(buttons, function (b) {
           b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
         });
-        Array.prototype.forEach.call(catalog.children, function (card) {
-          var show = group === 'все' || card.getAttribute('data-group') === group;
-          card.style.display = show ? '' : 'none';
+        boxes.forEach(function (box) {
+          var left = 0;
+          Array.prototype.forEach.call(box.children, function (card) {
+            var show = group === 'все' || card.getAttribute('data-group') === group;
+            card.style.display = show ? '' : 'none';
+            if (show) { left++; }
+          });
+          // пустая секция под сеткой смотрится как поломка — прячем её целиком
+          var section = box.closest('section');
+          if (section && box.hasAttribute('data-catalog-more')) {
+            section.style.display = left ? '' : 'none';
+          }
         });
       });
     });

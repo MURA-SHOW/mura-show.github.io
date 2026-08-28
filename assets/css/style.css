@@ -190,6 +190,10 @@ h1 .label {                       /* запросная строка внутр�
   justify-content: center;
 }
 .nav-burger svg { width: 22px; height: 22px; }
+/* на телефоне меню прячется под бургер — но звонок остаётся на виду:
+   аудитория звонит и пишет, прятать номер за меню нельзя (docs/BRAND.md) */
+.nav-call { display: none; }
+.nav-call svg { width: 22px; height: 22px; }
 @media (max-width: 1080px) {
   .nav-links {
     position: fixed;
@@ -204,8 +208,21 @@ h1 .label {                       /* запросная строка внутр�
   }
   .nav-links.open { display: flex; }
   .nav-links a { padding: 14px 12px; font-size: 18px; border-radius: 12px; }
-  .nav-burger { display: flex; }
+  .nav-burger { display: flex; margin-left: 8px; }
   .nav .btn, .nav-phone { display: none; }
+  .nav-call {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--cyan);
+    color: #08303a;
+    box-shadow: 0 3px 0 var(--cyan-dark);
+  }
+  .nav-call:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--cyan-dark); }
 }
 
 /* ── первый экран ── */
@@ -298,6 +315,24 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); colo
   color: var(--ink-soft);
 }
 .tag--hit { background: var(--yellow); color: #5c4c07; }
+
+/* образы без своего кадра: список вместо сетки пустых плашек */
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 11px 16px;
+  border: 2px solid var(--line);
+  border-radius: var(--r-pill);
+  background: #fff;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+}
+.chip span { font-size: 14px; font-weight: 500; color: var(--magenta); font-variant-numeric: tabular-nums; }
+.chip:hover { border-color: var(--cyan); color: var(--ink); }
 .tag--vip { background: var(--violet); color: #fff; }
 
 /* ── факты ── */
