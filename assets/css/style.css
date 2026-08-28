@@ -263,7 +263,7 @@ img.hero-video { display: block; width: 100%; height: auto; aspect-ratio: auto; 
 a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); color: inherit; }
 .card img { flex: none; width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
   object-position: center 30%; background: var(--paper-warm); }   /* лица в верхней трети */
-.card--tall img { aspect-ratio: 3 / 4; }                          /* студийные карточки ровно 3:4 */
+.card--tall img, .card--tall .card-flat { aspect-ratio: 3 / 4; }                          /* студийные карточки ровно 3:4 */
 .card-body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
 .card-body h3 { margin: 0; font-size: 21px; }
 .card-body p { margin: 0; color: var(--ink-soft); font-size: 16px; }
