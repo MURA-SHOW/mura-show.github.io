@@ -71,6 +71,11 @@ small { font-size: 14px; }
 :focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
 
 .wrap { width: min(100% - 32px, var(--wrap)); margin-inline: auto; }
+/* Секция, которой нечем занять всю ширину (один-два живых кадра у образа), сжимается
+   до колонки: одинокая картинка слева и две трети пустоты справа читались как
+   недогруженная страница, а в узкой колонке тот же кадр выглядит намеренным портретом. */
+.wrap--slim { --wrap: 560px; }   /* один кадр  */
+.wrap--mid  { --wrap: 780px; }   /* два кадра  */
 .section { padding: clamp(48px, 7vw, 88px) 0; }
 .section--warm { background: var(--paper-warm); }
 .section--violet { background: var(--violet); color: #fff; }
@@ -270,6 +275,15 @@ img.hero-video { display: block; width: 100%; height: auto; aspect-ratio: auto; 
 
 /* ── карточки ── */
 .cards { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
+/* Витрины идут максимум по три в ряд. Считано по готовым страницам: 40 блоков сайта из 46 —
+   это ровно 3 или 6 карточек («похожие образы», «ещё шоу», витрины главной), и на четырёх
+   колонках каждый такой блок обрывался дырой в четверть ряда. Заодно кадр становится шире
+   на треть: на празднике фотография и есть главный аргумент. */
+@media (min-width: 1000px) {
+  .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  /* Каталог образов — исключение: его сканируют глазами, там плотнее полезнее. */
+  .cards[data-catalog] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
 .card {
   display: flex;
   flex-direction: column;
@@ -421,6 +435,9 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); colo
 
 /* ── отзывы ── */
 .quotes { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
+/* Четвёрка отзывов на главной — в две колонки: в трёх колонках четвёртая карточка висела
+   одна в новом ряду, а строка в 380 px рвёт длинный отзыв на обрывки по три слова. */
+@media (min-width: 900px) { .quotes--duo { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .quote {
   background: #fff;
   border: 1px solid var(--line-soft);
