@@ -564,3 +564,58 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); colo
 }
 .pills a:hover, .pills button:hover { border-color: var(--cyan); color: var(--ink); }
 .pills [aria-pressed='true'] { background: var(--cyan); border-color: var(--cyan); color: #fff; }
+
+/* ── детская графика ────────────────────────────────────────────────────────
+   Канон запрещает радужную заливку на всю страницу, поэтому цвет приходит
+   пятнами, конфетти и волнами между секциями, а полотно остаётся светлым. */
+
+.hero { position: relative; overflow: hidden; }
+.hero::before {                                  /* два мягких цветных пятна */
+  content: '';
+  position: absolute;
+  inset: -20% -10% auto -14%;
+  height: 520px;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 46% at 12% 30%, rgba(25, 191, 222, .18), transparent 70%),
+    radial-gradient(34% 40% at 86% 12%, rgba(255, 114, 182, .16), transparent 70%);
+}
+.hero > .wrap { position: relative; }
+
+.confetti { position: relative; }
+.confetti::after {                               /* россыпь шариков по краям блока */
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 620' preserveAspectRatio='none'%3E%3Cg fill-opacity='.85'%3E%3Ccircle cx='58' cy='72' r='13' fill='%23F0C913'/%3E%3Ccircle cx='150' cy='40' r='8' fill='%23FF72B6'/%3E%3Ccircle cx='36' cy='300' r='10' fill='%2319BFDE'/%3E%3Ccircle cx='1142' cy='96' r='14' fill='%23C2CB1B'/%3E%3Ccircle cx='1064' cy='38' r='8' fill='%23E02C83'/%3E%3Ccircle cx='1170' cy='330' r='9' fill='%23EF8911'/%3E%3Ccircle cx='96' cy='560' r='11' fill='%23E02C83'/%3E%3Ccircle cx='1116' cy='548' r='12' fill='%2319BFDE'/%3E%3Ccircle cx='980' cy='596' r='7' fill='%23F0C913'/%3E%3Ccircle cx='260' cy='592' r='8' fill='%23C2CB1B'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.section--warm, .section--violet { position: relative; }
+.section--warm::before, .section--violet::before {   /* волна на стыке секций */
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -1px;
+  height: clamp(22px, 3vw, 38px);
+  background: var(--paper);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 40' preserveAspectRatio='none'%3E%3Cpath d='M0,0 H1200 V6 C1040,44 900,2 748,18 C600,34 470,6 316,20 C196,31 92,10 0,24 Z' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 40' preserveAspectRatio='none'%3E%3Cpath d='M0,0 H1200 V6 C1040,44 900,2 748,18 C600,34 470,6 316,20 C196,31 92,10 0,24 Z' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+}
+.section--warm + .section--warm::before { display: none; }
+
+/* номера шагов раскрашены по кругу, а не все голубые */
+.step:nth-child(6n+2)::before { background: var(--magenta); }
+.step:nth-child(6n+3)::before { background: var(--yellow); color: var(--ink); }
+.step:nth-child(6n+4)::before { background: var(--lime); color: var(--ink); }
+.step:nth-child(6n+5)::before { background: var(--orange); }
+.step:nth-child(6n)::before { background: var(--violet); }
+
+/* маскот студии */
+.mascot { display: block; height: auto; }
+.mascot--footer { width: 92px; margin-bottom: 12px; }
+.mascot--404 { width: min(280px, 62vw); margin: 0 auto 8px; }
+.split img.mascot--about { width: min(300px, 70%); justify-self: center; border-radius: 0; }
