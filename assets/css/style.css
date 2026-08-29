@@ -339,6 +339,7 @@ a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); colo
   repeating-linear-gradient(135deg, var(--paper-warm) 0 18px, #FFF1CF 18px 36px); }
 .card-flat b { font: 800 clamp(18px, 2vw, 24px)/1.15 'Unbounded', sans-serif;
   color: rgba(22, 35, 58, .38); letter-spacing: -.02em; }
+.card-flat img { width: min(58%, 190px); height: auto; opacity: .9; }
 .card--cyan .card-flat { background:
   repeating-linear-gradient(135deg, #E6F8FC 0 18px, #D2F1F8 18px 36px); }
 .card--magenta .card-flat { background:
