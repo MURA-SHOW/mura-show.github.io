@@ -17,8 +17,11 @@
 
   /* нейтральные */
   --ink: #16233A;
-  --ink-soft: #5A6B85;
-  --ink-faint: #8A97AC;
+  /* контраст к белому: 16,0 / 6,4 / 4,7 — три уровня, и все проходят WCAG AA.
+     Прежний бледный #8A97AC давал 2,96 и на солнце в телефоне пропадал:
+     этим цветом набраны даты отзывов, подписи под кадрами и шапки таблиц. */
+  --ink-soft: #4F6079;
+  --ink-faint: #66748C;
   --paper: #FFFFFF;
   --paper-warm: #FFF8E7;
   --line: rgba(22, 35, 58, .12);
@@ -76,6 +79,13 @@ small { font-size: 14px; }
    недогруженная страница, а в узкой колонке тот же кадр выглядит намеренным портретом. */
 .wrap--slim { --wrap: 560px; }   /* один кадр  */
 .wrap--mid  { --wrap: 780px; }   /* два кадра  */
+/* заголовок такой секции стоял по левому краю узкой колонки, то есть посреди экрана:
+   ни к левой сетке страницы, ни к центру. По центру колонки он читается как подпись
+   к портрету. На телефоне колонка и так во всю ширину — там левый край честнее. */
+@media (min-width: 760px) {
+  .wrap--slim > h2, .wrap--mid > h2, .wrap--slim > .lead, .wrap--mid > .lead { text-align: center; }
+  .wrap--slim > .lead, .wrap--mid > .lead { margin-inline: auto; }
+}
 .section { padding: clamp(48px, 7vw, 88px) 0; }
 .section--warm { background: var(--paper-warm); }
 .section--violet { background: var(--violet); color: #fff; }
