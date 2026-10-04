@@ -751,7 +751,10 @@
   "q": 0,
   "sm": "assets/photo/event-venue/06-sm.webp",
   "sm_w": 440,
-  "sm_h": 330
+  "sm_h": 330,
+  "md": "assets/photo/event-venue/06-md.webp",
+  "md_w": 960,
+  "md_h": 720
  },
  {
   "n": 520,
@@ -1986,7 +1989,10 @@
   "q": 0,
   "sm": "assets/photo/show-foam/05-sm.webp",
   "sm_w": 440,
-  "sm_h": 293
+  "sm_h": 293,
+  "md": "assets/photo/show-foam/05-md.webp",
+  "md_w": 960,
+  "md_h": 640
  },
  {
   "n": 487,
@@ -2116,7 +2122,10 @@
   "q": 0,
   "sm": "assets/photo/show-krio/03-sm.webp",
   "sm_w": 440,
-  "sm_h": 294
+  "sm_h": 294,
+  "md": "assets/photo/show-krio/03-md.webp",
+  "md_w": 960,
+  "md_h": 642
  },
  {
   "n": 396,
