@@ -881,6 +881,13 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
   .hero-quick b { font-size: 14px; }
   .hero-quick small { font-size: 12.5px; }
 }
+@media (max-width: 899px) {
+  .hero--home.confetti::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 190'%3E%3Ccircle cx='120' cy='26' r='14' fill='%23C2CB1B'/%3E%3Ccircle cx='56' cy='58' r='8' fill='%23E02C83'/%3E%3Ccircle cx='136' cy='118' r='9' fill='%23EF8911'/%3E%3Ccircle cx='84' cy='166' r='12' fill='%2319BFDE'/%3E%3Ccircle cx='30' cy='140' r='7' fill='%23F0C913'/%3E%3C/svg%3E");
+    background-position: right -30px bottom 8px;
+    background-size: 96px 124px;
+  }
+}
 a.price-badge { text-decoration: none; }
 a.price-badge:hover { color: var(--ink); }
 
@@ -979,7 +986,8 @@ a.price-badge:hover { color: var(--ink); }
 @media (max-width: 760px) {
   .section--strip .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .section--strip .fact { padding: 16px 14px; }
-  .section--strip .fact span { font-size: 14.5px; }
+  .section--strip .fact > span { font-size: 14.5px; }
+  .section--strip.confetti::after { display: none; }
 }
 
 /* ── три шага со стрелками ── */
@@ -1056,7 +1064,7 @@ a.price-badge:hover { color: var(--ink); }
 /* ── вкладки «Программа / Шоу» ── */
 .tabs-list {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 8px;
   max-width: 720px;
   padding: 8px;
@@ -1078,6 +1086,7 @@ a.price-badge:hover { color: var(--ink); }
   font: 700 clamp(14px, 1.9vw, 19px)/1.2 'Unbounded', sans-serif;
   letter-spacing: -.01em;
   text-align: left;
+  overflow-wrap: anywhere;
   cursor: pointer;
   transition: background-color var(--d-fast) ease, color var(--d-fast) ease,
               box-shadow var(--d-fast) ease, transform var(--d-press) var(--ease-out);
@@ -1101,7 +1110,10 @@ a.price-badge:hover { color: var(--ink); }
    до 800 px и уводил цену в середину пустого столбца */
 @media (min-width: 860px) { .tab-panel .split { grid-template-columns: 1.45fr .75fr; align-items: start; } }
 @media (max-width: 859px) { .tab-panel .split > img { display: none; } }
-@media (max-width: 480px) { .tab { padding: 10px 12px; } .tab small { font-size: 13px; } }
+@media (max-width: 480px) {
+  .tab { padding: 10px 10px; font-size: 12.5px; hyphens: auto; }
+  .tab small { font-size: 13px; }
+}
 
 /* какое шоу кому */
 .pick {
@@ -1194,7 +1206,9 @@ a.price-badge:hover { color: var(--ink); }
   font-variant-numeric: tabular-nums;
   transform-origin: left center;
 }
+.calc-total.is-word { font-size: clamp(22px, 3vw, 28px); line-height: 1.2; color: var(--ink); }
 .calc-total.is-pop { animation: calc-pop var(--d) var(--ease-out); }
+.calc-pre[hidden] { display: none; }
 @keyframes calc-pop { 0% { transform: scale(.95); } 60% { transform: scale(1.03); } }
 .calc-lines { list-style: none; display: grid; gap: 5px; padding: 0; margin: 0; font-size: 15.5px; color: var(--ink-soft); }
 .calc-lines li { display: flex; justify-content: space-between; gap: 14px; margin: 0; }
@@ -1269,14 +1283,18 @@ html.force-intro .intro { display: block; }
   justify-items: center;
   gap: 12px;
   background: radial-gradient(circle at 50% 50%, #8C3A7B 0%, #5A2250 55%, #3B1535 100%);
-  animation: intro-sea-off 1ms linear 570ms forwards;
+  animation: intro-sea-off 1ms linear 840ms forwards;
 }
-.intro-sea .balloon { font-size: clamp(34px, 9vw, 84px); animation: intro-word 420ms var(--ease-spring) both; }
+.intro-sea .balloon {
+  font-size: clamp(34px, 9vw, 84px);
+  animation: intro-word 420ms var(--ease-spring) both, intro-sea-off 1ms linear 550ms forwards;
+}
 .intro-sea > span:last-child {
   font: 600 clamp(12px, 1.5vw, 16px)/1 'Onest', sans-serif;
   letter-spacing: .26em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, .82);
+  animation: intro-sea-off 1ms linear 550ms forwards;
 }
 .intro-jaw {
   position: absolute;
@@ -1360,7 +1378,7 @@ html.force-intro .intro { display: block; }
   border-radius: 6px;
   background: #fff;
   opacity: 0;
-  animation: intro-foam 300ms var(--ease-out) 560ms both;
+  animation: intro-foam 300ms var(--ease-out) 560ms forwards;
 }
 .intro-splash i {
   position: absolute;
@@ -1394,6 +1412,7 @@ html.force-intro .intro { display: block; }
 @keyframes intro-word { from { opacity: 0; transform: scale(.92); } }
 @keyframes intro-sea-off { to { opacity: 0; } }
 @keyframes intro-off { to { visibility: hidden; pointer-events: none; } }
+@keyframes intro-fade { to { opacity: 0; visibility: hidden; pointer-events: none; } }
 @keyframes intro-shake {
   20% { transform: translate(-6px, 3px); }
   45% { transform: translate(5px, -3px); }
@@ -1420,10 +1439,14 @@ html.force-intro .intro { display: block; }
 }
 a.card:active { transform: scale(.985); }
 
-/* кто просил поменьше движения, получает страницу без него: заставки нет вовсе,
-   блоки стоят на месте, длительности обнулены токенами в :root */
+/* кто просил поменьше движения, получает страницу без него: блоки стоят на месте,
+   длительности обнулены токенами в :root, а заставка не двигается — открытая пасть
+   со знаком студии просто растворяется. Адрес с ?intro показывает полную. */
 @media (prefers-reduced-motion: reduce) {
-  html:not(.force-intro) .intro { display: none; }
+  html:not(.force-intro) .intro { animation: intro-fade 420ms ease 700ms forwards; }
+  html:not(.force-intro) .intro *, html:not(.force-intro) .intro *::before,
+  html:not(.force-intro) .intro *::after { animation: none; }
+  html:not(.force-intro) .intro-splash { display: none; }
   .rv { opacity: 1; transform: none; }
   .tab-panel.is-enter, .calc-total.is-pop, .write-menu { animation: none; }
 }

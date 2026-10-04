@@ -133,7 +133,9 @@
         next.focus();
       });
     });
-    select(box.querySelector('[aria-selected=true]') || tabs[0], false);
+    // ссылка с #panel-show открывает сразу нужную вкладку
+    var asked = location.hash && box.querySelector('[aria-controls="' + location.hash.slice(1) + '"]');
+    select(asked || box.querySelector('[aria-selected=true]') || tabs[0], false);
   });
 
   // клипы и фото в рамках: стрелки листают по паре, счётчик показывает, где мы
@@ -166,6 +168,7 @@
     var totalEl = calc.querySelector('[data-calc-total]');
     var linesEl = calc.querySelector('[data-calc-lines]');
     var preEl = calc.querySelector('[data-calc-pre]');
+    var preRow = calc.querySelector('[data-calc-pre-row]');
     var suitBox = calc.querySelector('[name=suit]').closest('fieldset');
     var recalc = function (pop) {
       var suit = calc.querySelector('[name=suit]:checked');
@@ -185,8 +188,12 @@
         total += price;
         lines.push([s.getAttribute('data-name'), price ? money(price) : 'по запросу']);
       });
-      totalEl.textContent = money(total);
+      // ноль рублей читается как «бесплатно»: пустой выбор и шоу «по запросу» пишем словами
+      var ask = lines.length && !total;
+      totalEl.textContent = total ? money(total) : ask ? 'по запросу' : 'выберите шоу';
+      totalEl.classList.toggle('is-word', !total);
       preEl.textContent = money(Math.round(total * 0.2));
+      preRow.hidden = !total;
       linesEl.innerHTML = '';
       lines.forEach(function (l) {
         var li = document.createElement('li');
@@ -200,7 +207,7 @@
       });
       calcText = lines.length
         ? 'Расчёт с сайта: ' + lines.map(function (l) { return l[0] + ' — ' + l[1]; }).join('; ') +
-          '. Предварительно ' + money(total) + '.'
+          (total ? '. Предварительно ' + money(total) + '.' : '.')
         : '';
       if (pop && !calm) {
         totalEl.classList.remove('is-pop');
