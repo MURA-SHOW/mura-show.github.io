@@ -661,7 +661,13 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
 .footer a { color: #fff; text-decoration: none; }
 .footer a:hover { color: var(--yellow); }
 .footer-grid { display: grid; gap: 28px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
-.footer h4 { color: #fff; font-size: 16px; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 12px; }
+.footer .footer-h {
+  margin: 0 0 12px;
+  color: #fff;
+  font: 700 16px/1.12 'Unbounded', 'Onest', sans-serif;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
 .footer ul { list-style: none; padding: 0; margin: 0; }
 .footer li { margin-bottom: 8px; }
 /* на телефоне строчка ссылки — 21 px высоты, палец бьёт по соседней: даём ссылкам
@@ -1087,7 +1093,7 @@ a.price-badge:hover { color: var(--ink); }
   box-shadow: 0 3px 0 rgba(22, 35, 58, .08);
 }
 .tile-ic svg { width: 24px; height: 24px; }
-.tile b { font: 700 16px/1.2 'Unbounded', sans-serif; letter-spacing: -.01em; overflow-wrap: anywhere; }
+.tile b { font: 700 16px/1.2 'Unbounded', sans-serif; letter-spacing: -.01em; overflow-wrap: break-word; hyphens: manual; }
 .tile small { font-size: 14.5px; line-height: 1.35; color: var(--ink-soft); }
 .tile--magenta { --t: #E02C83; --t-ink: #C01F6D; }
 .tile--yellow  { --t: #F0C913; --t-ink: #8A7205; }
@@ -1127,7 +1133,8 @@ a.price-badge:hover { color: var(--ink); }
   font: 700 clamp(14px, 1.9vw, 19px)/1.2 'Unbounded', sans-serif;
   letter-spacing: -.01em;
   text-align: left;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  hyphens: manual;
   cursor: pointer;
   transition: background-color var(--d-fast) ease, color var(--d-fast) ease,
               box-shadow var(--d-fast) ease, transform var(--d-press) var(--ease-out);
@@ -1152,7 +1159,7 @@ a.price-badge:hover { color: var(--ink); }
 @media (min-width: 860px) { .tab-panel .split { grid-template-columns: 1.45fr .75fr; align-items: start; } }
 @media (max-width: 859px) { .tab-panel .split > img { display: none; } }
 @media (max-width: 480px) {
-  .tab { padding: 10px 10px; font-size: 12.5px; hyphens: auto; }
+  .tab { padding: 10px 10px; font-size: 12.5px; }
   .tab small { font-size: 13px; }
 }
 
