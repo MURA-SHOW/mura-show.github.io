@@ -204,6 +204,7 @@ main:focus { outline: none; }
   top: 0;
   z-index: 50;
   background: rgba(255, 255, 255, .94);
+  -webkit-backdrop-filter: blur(8px);   /* без префикса свойство работает только с Safari 18 */
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line-soft);
 }
@@ -253,7 +254,7 @@ main:focus { outline: none; }
     box-shadow: var(--shadow-soft);
     display: none;
   }
-  .nav-links.open { display: flex; }
+  .nav-links.open { display: flex; max-height: calc(100vh - 68px); max-height: calc(100dvh - 68px); overflow-y: auto; }
   .nav-links a { padding: 14px 12px; font-size: 18px; border-radius: 12px; }
   .nav-burger { display: flex; margin-left: 8px; }
   .nav .btn, .nav-phone { display: none; }
@@ -1302,7 +1303,14 @@ a.price-badge:hover { color: var(--ink); }
 /* ── нижняя панель на телефоне: цена и «Написать» ── */
 .dock { display: none; }
 .write-menu { transform-origin: top right; animation: menu-in var(--d-fast) var(--ease-out); }
-.write-menu--up { top: auto; bottom: calc(100% + 12px); transform-origin: bottom right; }
+.write-menu--up {
+  top: auto;
+  bottom: calc(100% + 12px);
+  max-height: calc(100vh - 170px);
+  max-height: calc(100dvh - 170px);
+  overflow-y: auto;
+  transform-origin: bottom right;
+}
 @keyframes menu-in { from { opacity: 0; transform: scale(.96); } }
 @media (max-width: 1080px) {
   body { padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px)); }
@@ -1320,10 +1328,11 @@ a.price-badge:hover { color: var(--ink); }
     background: rgba(255, 255, 255, .96);
     border-top: 1px solid var(--line-soft);
     box-shadow: 0 -8px 24px rgba(22, 35, 58, .08);
+    -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     transition: transform var(--d) var(--ease-out);
   }
-  .dock.is-away { transform: translateY(110%); }
+  .dock.is-away, .dock.is-menu { transform: translateY(110%); }
   .dock-price { display: grid; gap: 1px; align-content: center; min-height: 48px; color: var(--ink); text-decoration: none; }
   .dock-price small { font-size: 12.5px; line-height: 1.2; letter-spacing: .04em; color: var(--ink-faint); }
   .dock-price b { font: 800 19px/1.1 'Unbounded', sans-serif; letter-spacing: -.02em; }

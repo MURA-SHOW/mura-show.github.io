@@ -86,15 +86,17 @@
   var burger = document.querySelector('[data-burger]');
   var menu = document.querySelector('[data-menu]');
   if (burger && menu) {
-    burger.addEventListener('click', function () {
-      var open = menu.classList.toggle('open');
+    // пока меню открыто, нижняя панель уходит: на невысоком телефоне (667 px) она
+    // ложилась поверх кнопок мессенджеров в меню, и «ВКонтакте» было не нажать
+    var setMenu = function (open) {
+      var bar = document.querySelector('[data-dock]');
+      menu.classList.toggle('open', open);
       burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
+      if (bar) { bar.classList.toggle('is-menu', open); }
+    };
+    burger.addEventListener('click', function () { setMenu(!menu.classList.contains('open')); });
     menu.addEventListener('click', function (e) {
-      if (e.target.tagName === 'A') {
-        menu.classList.remove('open');
-        burger.setAttribute('aria-expanded', 'false');
-      }
+      if (e.target.tagName === 'A') { setMenu(false); }
     });
   }
 
@@ -351,9 +353,24 @@
   // заявка уходит в тот мессенджер, который выбрал человек: сервера у сайта нет
   var LINKS = {
     wa: function (t) { return 'https://wa.me/79252081419?text=' + encodeURIComponent(t); },
-    tg: function () { return 'https://t.me/MURA_PRODUCTION'; },      // текст в личный чат не передаётся
-    vk: function () { return 'https://vk.me/mura__show'; }
+    // Telegram принимает черновик в ссылке на имя: t.me/<имя>?text= (core.telegram.org/api/links)
+    tg: function (t) { return 'https://t.me/MURA_PRODUCTION?text=' + encodeURIComponent(t); },
+    vk: function () { return 'https://vk.me/mura__show'; }           // сюда текст не передать
   };
+  // Копируем сразу, в том же нажатии: новая вкладка забирает фокус, и отложенная запись
+  // в буфер (clipboard.writeText) в Safari может не успеть. Запасной путь — она же.
+  function copyNow(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;left:-999px;top:0;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    if (!ok && navigator.clipboard) { navigator.clipboard.writeText(text).catch(function () {}); }
+  }
 
   each(document.querySelectorAll('[data-lead]'), function (f) {
     var to = 'wa';
@@ -378,10 +395,13 @@
         (about ? '\nПраздник: ' + about : '') +
         (f.dataset.subject ? '\nРаздел: ' + f.dataset.subject : '');
       var note = f.querySelector('[data-lead-note]');
-      if (to !== 'wa' && navigator.clipboard) {
-        navigator.clipboard.writeText(text).then(function () {
-          if (note) { note.textContent = 'Заявка скопирована — вставьте её в чат, который сейчас откроется.'; }
-        });
+      if (to !== 'wa') {
+        copyNow(text);
+        if (note) {
+          note.textContent = to === 'tg'
+            ? 'Заявка откроется в Telegram готовым сообщением. Если поле пустое — текст в буфере, вставьте его.'
+            : 'Заявка скопирована — вставьте её в чат, который сейчас откроется.';
+        }
       }
       var url = LINKS[to] ? LINKS[to](text) : urls[to];
       if (url) { window.open(url, '_blank', 'noopener'); }
