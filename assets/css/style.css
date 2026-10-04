@@ -1295,6 +1295,7 @@ a.price-badge:hover { color: var(--ink); }
    в один столбик читались как рваный край */
 @media (max-width: 600px) {
   .calc fieldset:last-child .opts { display: grid; grid-template-columns: 1fr; }
+  .preset { width: 100%; }
   .opt input[type='checkbox'] + span { grid-template-columns: 1fr auto; align-items: center; gap: 10px; }
 }
 .calc-sum .btn { justify-self: start; }
