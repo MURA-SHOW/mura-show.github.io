@@ -315,6 +315,9 @@ img.hero-video { display: block; width: 100%; height: auto; aspect-ratio: auto; 
   .hero-grid > div:first-child > * { order: 3; margin-top: 0; margin-bottom: 0; }
   .hero-grid > div:first-child > h1 { order: 1; }
   .hero-grid > :nth-child(2) { order: 2; }
+  /* у шоу без своей съёмки наверх поднимать нечего: чужой кадр под заголовком «Шоу сладкой
+     ваты» читался бы как фото этого шоу — он остаётся после текста */
+  .hero-grid--textfirst > :nth-child(2) { order: 4; }
   .hero-grid .hero-video { max-height: 46vh; margin-inline: auto; }
   .hero-grid img.hero-video { width: auto; max-width: 100%; }
   .hero-grid .hero-shot img { max-height: 46vh; }
