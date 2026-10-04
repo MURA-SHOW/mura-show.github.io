@@ -301,6 +301,13 @@
     var plain = function (s) {
       return s.toLowerCase().replace(/ё/g, 'е').replace(/[-–—«»"':,.]+/g, ' ').replace(/ +/g, ' ').trim();
     };
+    // «человека паука» находит «Человек-паук»: у длинных слов запроса падежный хвост
+    // (две последние буквы) не сравниваем, каждое слово запроса должно найтись в имени
+    var hit = function (name, q) {
+      return q.split(' ').every(function (w) {
+        return name.indexOf(w.length > 4 ? w.slice(0, -2) : w) >= 0;
+      });
+    };
     var apply = function () {
       var q = search ? plain(search.value.trim()) : '';
       var found = 0;
@@ -308,7 +315,7 @@
         var left = 0;
         each(box.children, function (card) {
           var show = (group === 'все' || card.getAttribute('data-group') === group) &&
-                     (!q || plain(card.getAttribute('data-name') || '').indexOf(q) >= 0);
+                     (!q || hit(plain(card.getAttribute('data-name') || ''), q));
           card.style.display = show ? '' : 'none';
           if (show) { left++; }
         });
