@@ -2,6 +2,7 @@
    Палитра снята с настоящих логотипов студии, шрифты — Unbounded + Onest. */
 
 :root {
+  color-scheme: only light;      /* тёмной темы у сайта нет: браузер не должен затемнять его сам */
   /* фирменные */
   --cyan: #19BFDE;
   --cyan-dark: #128fa8;
@@ -276,7 +277,9 @@ main:focus { outline: none; }
 /* ── первый экран ── */
 .hero { padding: clamp(28px, 4vw, 56px) 0 clamp(40px, 5vw, 72px); }
 .hero-grid { display: grid; gap: clamp(24px, 4vw, 48px); align-items: center; }
-@media (min-width: 900px) { .hero-grid { grid-template-columns: 1.05fr .95fr; } }
+/* две колонки уже с планшета: на 700–899 px вертикальный кадр в одну колонку стоял
+   узкой полосой посреди пустого экрана */
+@media (min-width: 700px) { .hero-grid { grid-template-columns: 1.05fr .95fr; } }
 .hero p { color: var(--ink-soft); font-size: clamp(17px, 1.9vw, 20px); max-width: 54ch; }
 .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0 18px; }
 .hero-cta .btn { max-width: 100%; text-align: center; }
@@ -306,7 +309,7 @@ img.hero-video { display: block; width: 100%; height: auto; aspect-ratio: auto; 
    был без единой картинки: текст шёл первым, и кадр начинался на 760–1000 px при видимых
    743 (замер второй сессии, Н20). Блок с текстом растворяется (display: contents),
    порядок задаёт сетка: заголовок, кадр, остальное. Кадр не выше 46 % экрана. */
-@media (max-width: 899px) {
+@media (max-width: 699px) {
   .hero-grid { gap: 16px; }
   .hero-grid > div:first-child { display: contents; }
   .hero-grid > div:first-child > * { order: 3; margin-top: 0; margin-bottom: 0; }
@@ -318,8 +321,6 @@ img.hero-video { display: block; width: 100%; height: auto; aspect-ratio: auto; 
   .hero-grid .gallery img { width: auto; max-width: 100%; max-height: 46vh; margin-inline: auto; }
   /* три кнопки первого экрана: звонок уже в шапке, остаются заказ и расчёт */
   .hero-cta .btn--wa:nth-child(2):not(:last-child) { display: none; }
-  /* поводы: кадры праздника над текстом блока */
-  .split--flip > :last-child { order: -1; }
 }
 .price-badge {
   position: absolute;
@@ -909,7 +910,7 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
 }
 .hero-line { display: block; font-size: clamp(23px, 6.2vw, 38px); line-height: 1.14; }
 .hero-word { display: block; margin-top: .16em; font-size: clamp(33px, 10.2vw, 72px); }
-@media (min-width: 900px) {                      /* две колонки: слово меряем по своей */
+@media (min-width: 700px) {                      /* две колонки: слово меряем по своей */
   .hero-line { font-size: clamp(26px, 3vw, 38px); }
   .hero-word { font-size: clamp(42px, 5.2vw, 68px); }
 }
@@ -1588,3 +1589,6 @@ a.card:active { transform: scale(.985); }
   .pick::-webkit-scrollbar { display: none; }
   .pick li { scroll-snap-align: start; scroll-margin-left: 16px; }
 }
+
+/* поводы на телефоне: кадры праздника над текстом блока (пока блок в одну колонку) */
+@media (max-width: 859px) { .split--flip > :last-child { order: -1; } }
