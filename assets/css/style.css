@@ -302,6 +302,25 @@ img.hero-video { display: block; width: 100%; height: auto; aspect-ratio: auto; 
   box-shadow: var(--shadow-cyan);
 }
 .hero-shot figcaption { margin-top: 10px; font-size: 14px; color: var(--ink-faint); }
+/* На телефоне кадр встаёт сразу под заголовок. Раньше первый экран почти всех посадочных
+   был без единой картинки: текст шёл первым, и кадр начинался на 760–1000 px при видимых
+   743 (замер второй сессии, Н20). Блок с текстом растворяется (display: contents),
+   порядок задаёт сетка: заголовок, кадр, остальное. Кадр не выше 46 % экрана. */
+@media (max-width: 899px) {
+  .hero-grid { gap: 16px; }
+  .hero-grid > div:first-child { display: contents; }
+  .hero-grid > div:first-child > * { order: 3; margin-top: 0; margin-bottom: 0; }
+  .hero-grid > div:first-child > h1 { order: 1; }
+  .hero-grid > :nth-child(2) { order: 2; }
+  .hero-grid .hero-video { max-height: 46vh; margin-inline: auto; }
+  .hero-grid img.hero-video { width: auto; max-width: 100%; }
+  .hero-grid .hero-shot img { max-height: 46vh; }
+  .hero-grid .gallery img { width: auto; max-width: 100%; max-height: 46vh; margin-inline: auto; }
+  /* три кнопки первого экрана: звонок уже в шапке, остаются заказ и расчёт */
+  .hero-cta .btn--wa:nth-child(2):not(:last-child) { display: none; }
+  /* поводы: кадры праздника над текстом блока */
+  .split--flip > :last-child { order: -1; }
+}
 .price-badge {
   position: absolute;
   left: 16px;
@@ -348,7 +367,7 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
   object-position: center 30%; background: var(--paper-warm); }   /* лица в верхней трети */
 .card--tall img, .card--tall .card-flat { aspect-ratio: 3 / 4; }                          /* студийные карточки ровно 3:4 */
 .card-body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
-.card-body h3 { margin: 0; font-size: 21px; }
+.card-body h3, .card-body h2 { margin: 0; font-size: 21px; font-weight: 700; }   /* в каталоге имя героя — h2: выше него только h1 */
 .card-body p { margin: 0; color: var(--ink-soft); font-size: 16px; }
 .card-price {
   margin-top: auto;
@@ -398,7 +417,7 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
 @media (max-width: 760px) {
   .cards[data-catalog], .cards[data-list] { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .cards[data-catalog] .card-body, .cards[data-list] .card-body { padding: 12px 12px 14px; gap: 6px; }
-  .cards[data-catalog] .card-body h3, .cards[data-list] .card-body h3 { font-size: 16px; }
+  .cards[data-catalog] .card-body h3, .cards[data-catalog] .card-body h2, .cards[data-list] .card-body h3 { font-size: 16px; }
   .cards[data-catalog] .card-price, .cards[data-list] .card-price { font-size: 16px; padding-top: 6px; }
   .cards[data-catalog] .tag { padding: 3px 8px; }
   /* в колонке шириной 165 px описание рвётся на строки по три слова — в перечне
@@ -1305,7 +1324,8 @@ a.price-badge:hover { color: var(--ink); }
   .preset { width: 100%; }
   .opt input[type='checkbox'] + span { grid-template-columns: 1fr auto; align-items: center; gap: 10px; }
 }
-.calc-sum .btn { justify-self: start; }
+.calc-send { display: flex; flex-wrap: wrap; gap: 8px; }
+.calc-form { justify-self: start; font-size: 15px; color: var(--ink-soft); }
 .calc-note { margin: 2px 0 0; font-size: 14px; color: var(--ink-faint); }
 
 /* ── нижняя панель на телефоне: цена и «Написать» ── */
@@ -1541,4 +1561,30 @@ a.card:active { transform: scale(.985); }
   html:not(.force-intro) .intro-splash { display: none; }
   .rv { opacity: 1; transform: none; }
   .tab-panel.is-enter, .calc-total.is-pop, .write-menu { animation: none; }
+}
+
+/* кнопки-вселенные каталога на телефоне идут одной лентой: в четыре ряда они сдвигали
+   сетку героев на второй экран. Стоит в конце файла — базовое правило .pills выше. */
+@media (max-width: 760px) {
+  .pills { flex-wrap: nowrap; overflow-x: auto; margin-inline: -16px; padding-inline: 16px; scrollbar-width: none; }
+  .pills::-webkit-scrollbar { display: none; }
+  .pills button { flex: none; }
+}
+
+/* подсказка «какое шоу кому» на телефоне — лента: пять плашек столбиком занимали
+   полтора экрана и уводили карточки шоу с первого экрана перечня */
+@media (max-width: 760px) {
+  .pick {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 72%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    margin-inline: -16px;
+    padding-inline: 16px;
+  }
+  .pick::-webkit-scrollbar { display: none; }
+  .pick li { scroll-snap-align: start; scroll-margin-left: 16px; }
 }

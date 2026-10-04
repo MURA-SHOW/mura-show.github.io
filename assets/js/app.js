@@ -253,6 +253,13 @@
       });
     });
     recalc(false);
+    // из итога — сразу в чат: имя и номер в мессенджере видны и так, форма тут лишняя
+    each(calc.querySelectorAll('[data-calc-to]'), function (a) {
+      a.addEventListener('click', function () {
+        a.href = LINKS[a.getAttribute('data-calc-to')](
+          'Здравствуйте! ' + (calcText || 'Хочу узнать про праздник.'));
+      });
+    });
     calc.querySelector('[data-calc-send]').addEventListener('click', function (e) {
       var f = document.querySelector('[data-lead]');
       if (!f) { return; }
@@ -315,7 +322,8 @@
         var left = 0;
         each(box.children, function (card) {
           var show = (group === 'все' || card.getAttribute('data-group') === group) &&
-                     (!q || hit(plain(card.getAttribute('data-name') || ''), q));
+                     (!q || hit(plain((card.getAttribute('data-name') || '') + ' ' +
+                                      (card.getAttribute('data-group') || '')), q));
           card.style.display = show ? '' : 'none';
           if (show) { left++; }
         });
