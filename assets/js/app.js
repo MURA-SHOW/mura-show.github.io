@@ -169,13 +169,32 @@
     var linesEl = calc.querySelector('[data-calc-lines]');
     var preEl = calc.querySelector('[data-calc-pre]');
     var preRow = calc.querySelector('[data-calc-pre-row]');
+    var heroEl = calc.querySelector('[name=hero]');
     var suitBox = calc.querySelector('[name=suit]').closest('fieldset');
+    var pickHours = function (h) {
+      var el = calc.querySelector('[name=hours][value="' + h + '"]');
+      if (el) { el.checked = true; }
+    };
+    var pickShows = function (slugs) {
+      each(calc.querySelectorAll('[name=show]'), function (s) {
+        s.checked = slugs.indexOf(s.getAttribute('data-slug')) >= 0;
+      });
+    };
+    // герой из каталога сам ставит костюм: у четырёх VIP-героев цена часа другая
+    var suitByHero = function () {
+      if (!heroEl.value) { return; }
+      var vip = heroEl.options[heroEl.selectedIndex].hasAttribute('data-vip');
+      calc.querySelector('[name=suit][data-kind=' + (vip ? 'vip' : 'base') + ']').checked = true;
+    };
     var recalc = function (pop) {
       var suit = calc.querySelector('[name=suit]:checked');
       var hoursEl = calc.querySelector('[name=hours]:checked');
       var hours = +hoursEl.value;
       var lines = [];
       var total = 0;
+      if (heroEl.value) {
+        lines.push(['Герой', heroEl.options[heroEl.selectedIndex].text.replace(' · VIP', '')]);
+      }
       if (hours) {
         var p = +suit.value * hours;
         total += p;
@@ -189,8 +208,8 @@
         lines.push([s.getAttribute('data-name'), price ? money(price) : 'по запросу']);
       });
       // ноль рублей читается как «бесплатно»: пустой выбор и шоу «по запросу» пишем словами
-      var ask = lines.length && !total;
-      totalEl.textContent = total ? money(total) : ask ? 'по запросу' : 'выберите шоу';
+      var priced = lines.some(function (l) { return l[0] !== 'Герой'; });
+      totalEl.textContent = total ? money(total) : priced ? 'по запросу' : 'выберите шоу';
       totalEl.classList.toggle('is-word', !total);
       preEl.textContent = money(Math.round(total * 0.2));
       preRow.hidden = !total;
@@ -205,7 +224,7 @@
         li.appendChild(b);
         linesEl.appendChild(li);
       });
-      calcText = lines.length
+      calcText = priced
         ? 'Расчёт с сайта: ' + lines.map(function (l) { return l[0] + ' — ' + l[1]; }).join('; ') +
           (total ? '. Предварительно ' + money(total) + '.' : '.')
         : '';
@@ -215,9 +234,22 @@
         totalEl.classList.add('is-pop');
       }
     };
+    // ссылка со страницы шоу или героя открывает расчёт уже заполненным
+    var q = new URLSearchParams(location.search);
+    if (q.get('hero')) { heroEl.value = q.get('hero'); suitByHero(); }
+    if (q.get('hours')) { pickHours(q.get('hours')); }
+    if (q.get('show')) { pickShows(q.get('show').split(',')); }
     calc.hidden = false;
+    heroEl.addEventListener('change', suitByHero);
     calc.addEventListener('change', function () { recalc(true); });
     calc.addEventListener('submit', function (e) { e.preventDefault(); });
+    each(calc.querySelectorAll('[data-preset]'), function (b) {
+      b.addEventListener('click', function () {
+        pickHours(b.getAttribute('data-hours'));
+        pickShows(b.getAttribute('data-shows').split(','));
+        recalc(true);
+      });
+    });
     recalc(false);
     calc.querySelector('[data-calc-send]').addEventListener('click', function (e) {
       var f = document.querySelector('[data-lead]');
