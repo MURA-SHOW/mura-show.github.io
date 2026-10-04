@@ -265,7 +265,8 @@
   each(document.querySelectorAll('[data-prefill]'), function (a) {
     a.addEventListener('click', function () {
       var f = document.querySelector('[data-lead]');
-      if (f && !f.about.value.trim()) { f.about.value = a.getAttribute('data-prefill') + ': '; }
+      var topic = a.getAttribute('data-prefill');
+      if (f && !f.about.value.trim()) { f.about.value = topic + (topic.indexOf(':') < 0 ? ': ' : '. '); }
     });
   });
 
@@ -285,32 +286,46 @@
     });
   }
 
-  // фильтр каталога образов: сетка с кадрами и список тех, кого студия не снимала
+  // каталог образов: кнопки-вселенные и поиск по имени работают вместе —
+  // и по сетке с кадрами, и по списку тех, кого студия не снимала
   var catalog = document.querySelector('[data-catalog]');
   if (catalog) {
     var boxes = [catalog, document.querySelector('[data-catalog-more]')].filter(Boolean);
     var buttons = document.querySelectorAll('[data-filter]');
+    var search = document.querySelector('[data-catalog-search]');
+    var none = document.querySelector('[data-catalog-none]');
+    var group = 'все';
+    var plain = function (s) { return s.toLowerCase().replace(/ё/g, 'е'); };
+    var apply = function () {
+      var q = search ? plain(search.value.trim()) : '';
+      var found = 0;
+      boxes.forEach(function (box) {
+        var left = 0;
+        each(box.children, function (card) {
+          var show = (group === 'все' || card.getAttribute('data-group') === group) &&
+                     (!q || plain(card.getAttribute('data-name') || '').indexOf(q) >= 0);
+          card.style.display = show ? '' : 'none';
+          if (show) { left++; }
+        });
+        found += left;
+        // пустая секция под сеткой смотрится как поломка — прячем её целиком
+        var section = box.closest('section');
+        if (section && box.hasAttribute('data-catalog-more')) {
+          section.style.display = left ? '' : 'none';
+        }
+      });
+      if (none) { none.hidden = found > 0; }
+    };
     each(buttons, function (btn) {
       btn.addEventListener('click', function () {
-        var group = btn.getAttribute('data-filter');
+        group = btn.getAttribute('data-filter');
         each(buttons, function (b) {
           b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
         });
-        boxes.forEach(function (box) {
-          var left = 0;
-          each(box.children, function (card) {
-            var show = group === 'все' || card.getAttribute('data-group') === group;
-            card.style.display = show ? '' : 'none';
-            if (show) { left++; }
-          });
-          // пустая секция под сеткой смотрится как поломка — прячем её целиком
-          var section = box.closest('section');
-          if (section && box.hasAttribute('data-catalog-more')) {
-            section.style.display = left ? '' : 'none';
-          }
-        });
+        apply();
       });
     });
+    if (search) { search.addEventListener('input', apply); }
   }
 
   // номер копируется в буфер: в MAX чат ищут по номеру, ссылки на него мессенджер не даёт
