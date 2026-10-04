@@ -783,6 +783,7 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
 .mascot { display: block; height: auto; }
 .mascot--footer { width: 92px; margin-bottom: 12px; }
 .mascot--404 { width: min(280px, 62vw); margin: 0 auto 8px; }
+.err-code { margin: 0 0 6px; font-size: clamp(56px, 14vw, 104px); line-height: 1; }
 .split img.mascot--about { width: min(300px, 70%); justify-self: center; border-radius: 0; }
 
 /* ── «Написать» в шапке: выбор мессенджера, а не сразу WhatsApp ── */
