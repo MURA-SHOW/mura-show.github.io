@@ -297,7 +297,10 @@
     var search = document.querySelector('[data-catalog-search]');
     var none = document.querySelector('[data-catalog-none]');
     var group = 'все';
-    var plain = function (s) { return s.toLowerCase().replace(/ё/g, 'е'); };
+    // «человек паук» находит «Человек-паук»: дефисы, кавычки и двойные пробелы не в счёт
+    var plain = function (s) {
+      return s.toLowerCase().replace(/ё/g, 'е').replace(/[-–—«»"':,.]+/g, ' ').replace(/ +/g, ' ').trim();
+    };
     var apply = function () {
       var q = search ? plain(search.value.trim()) : '';
       var found = 0;
