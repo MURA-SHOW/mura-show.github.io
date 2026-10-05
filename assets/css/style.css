@@ -1773,3 +1773,24 @@ html.calm .mk--peek.rv svg { transform: none; transition: none; }
 /* главная на телефоне: цена часа уже стоит в нижней панели — второй такой же ценник на кадре
    в том же экране лишний (Н46) */
 @media (max-width: 699px) { .hero .price-badge[href='#raschet'] { display: none; } }
+/* блок-приглашение в конце перечня: справа в широкой плитке было пусто — там акула с шарами */
+.card--fill { position: relative; }
+.mk--fill { display: none; }
+@media (min-width: 1024px) {
+  /* размер от высоты плитки: на 900 px фигура по ширине была выше плитки и ложилась на соседнюю карточку */
+  .card--fill:is(.fill-d2, .fill-d3) .mk--fill { display: block; position: absolute; right: clamp(20px, 4vw, 56px); top: 50%; height: min(84%, 258px); aspect-ratio: 520 / 610; transform: translateY(-50%); }
+  .mk--fill svg { width: 100%; height: 100%; }
+  .card--fill:is(.fill-d2, .fill-d3) .card-body { padding-right: calc(220px + clamp(40px, 6vw, 80px)); }
+}
+/* три шага над заявкой выходят по очереди, слева направо: порядок действий читается глазами */
+.steps3.rv { opacity: 1; transform: none; }
+.steps3.rv > li { opacity: 0; transform: translateY(10px) scale(.96); }
+.steps3.rv.rv-in > li {
+  opacity: 1; transform: none;
+  transition: opacity 320ms var(--ease-out), transform 420ms var(--ease-spring);
+}
+.steps3.rv.rv-in > li:nth-of-type(2) { transition-delay: 90ms; }
+.steps3.rv.rv-in > li:nth-of-type(3) { transition-delay: 180ms; }
+.steps3.rv > .flow-arrow { opacity: 0; }
+.steps3.rv.rv-in > .flow-arrow { opacity: 1; transition: opacity 320ms ease 240ms; }
+html.calm .steps3.rv > li { transform: none; }
