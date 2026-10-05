@@ -340,7 +340,9 @@ img.hero-video { display: block; width: 100%; height: auto; aspect-ratio: auto; 
   box-shadow: 0 4px 0 var(--yellow-dark);
   font-weight: 600;
 }
-.price-badge b { display: block; font: 800 24px/1.1 'Unbounded', sans-serif; }
+.price-badge b { display: block; font: 800 clamp(16px, 2.4vw, 24px)/1.1 'Unbounded', sans-serif; }
+/* на 700–755 px колонка кадра 174 px, ценник «от 6 000 ₽» кеглем 24 был 192 px и срезался (Н38) */
+.price-badge { max-width: calc(100% - 20px); }
 .price-badge small { display: block; font-size: 13px; color: #5A4B06; }
 
 /* ── карточки ── */
@@ -1706,3 +1708,11 @@ p:has(> .btn) { display: flex; flex-wrap: wrap; gap: 12px; }
   .cards[data-catalog] .card-body h2, .cards[data-catalog] .card-body h3, .cards[data-list] .card-body h3 { font-size: 14px; }
 }
 .card-body h2, .card-body h3 { overflow-wrap: anywhere; }
+/* карточки без кадра («Что ведём»): на телефоне в сетке по две от них оставались одни
+   названия, а в описаниях главное содержание страницы. Идут столбцом и с текстом (Н39) */
+@media (max-width: 760px) {
+  .cards--text[data-list] { grid-template-columns: 1fr; }
+  .cards--text[data-list] .card-body { padding: 16px 18px 18px; gap: 8px; }
+  .cards--text[data-list] .card-body h3 { font-size: 18px; }
+  .cards--text[data-list] .card-body p { display: block; }
+}
