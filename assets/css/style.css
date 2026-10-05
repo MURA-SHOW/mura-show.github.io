@@ -312,12 +312,13 @@ img.hero-video { display: block; width: 100%; height: auto; aspect-ratio: auto; 
 @media (max-width: 699px) {
   .hero-grid { gap: 16px; }
   .hero-grid > div:first-child { display: contents; }
-  .hero-grid > div:first-child > * { order: 3; margin-top: 0; margin-bottom: 0; }
+  .hero-grid > div:first-child > * { order: 4; margin-top: 0; margin-bottom: 0; }
   .hero-grid > div:first-child > h1 { order: 1; }
+  .hero-grid > div:first-child > .hero-cta { order: 3; }   /* действие сразу под кадром, описание ниже */
   .hero-grid > :nth-child(2) { order: 2; }
   /* у шоу без своей съёмки наверх поднимать нечего: чужой кадр под заголовком «Шоу сладкой
      ваты» читался бы как фото этого шоу — он остаётся после текста */
-  .hero-grid--textfirst > :nth-child(2) { order: 4; }
+  .hero-grid--textfirst > :nth-child(2) { order: 5; }
   .hero-grid .hero-video { max-height: 46vh; margin-inline: auto; }
   .hero-grid img.hero-video { width: auto; max-width: 100%; }
   .hero-grid .hero-shot img { max-height: 46vh; }
@@ -1595,3 +1596,6 @@ a.card:active { transform: scale(.985); }
 
 /* поводы на телефоне: кадры праздника над текстом блока (пока блок в одну колонку) */
 @media (max-width: 859px) { .split--flip > :last-child { order: -1; } }
+
+/* девять кнопок-вселенных каталога на десктопе в один ряд: «Новый год» один уходил на вторую строку */
+@media (min-width: 1000px) { .pills { gap: 6px; } .pills button { padding: 9px 13px; font-size: 15px; } }
