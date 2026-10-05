@@ -10,20 +10,6 @@
   var smooth = calm ? 'auto' : 'smooth';
   var hasIO = 'IntersectionObserver' in window;
 
-  // заставка-акула: идёт сама на CSS, здесь только пропуск по касанию и уборка за собой
-  var intro = document.querySelector('[data-intro]');
-  if (intro) {
-    var gone = function () { if (intro.parentNode) { intro.parentNode.removeChild(intro); } };
-    if (/\bno-intro\b/.test(document.documentElement.className)) {
-      gone();
-    } else {
-      var skip = function () { intro.classList.add('is-skip'); setTimeout(gone, 200); };
-      intro.addEventListener('click', skip);
-      document.addEventListener('keydown', skip, { once: true });
-      setTimeout(gone, 1700);
-    }
-  }
-
   // кнопка движения в подвале: видна, только если система просит «без анимации».
   // Выбор запоминается; тот же выбор делает адрес с ?motion=1 и ?motion=0
   var motionBtn = document.querySelector('[data-motion]');
