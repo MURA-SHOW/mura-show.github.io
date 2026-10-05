@@ -1697,3 +1697,12 @@ p:has(> .btn) { display: flex; flex-wrap: wrap; gap: 12px; }
 /* на 320 px «Наро-Фоминске» и «Мастер-классы» кеглем заголовка шире экрана: там перенос по дефису разрешён */
 @media (max-width: 343px) { h1 .nw { white-space: normal; } }
 @media (max-width: 374px) { h2 .nw { white-space: normal; } }   /* в карточке заявки строка уже: 264 px на экране 344 */
+/* в карточке слово с дефисом переносится как раньше: в сетке по две «Мастер-классы» шире
+   карточки, и её край молча обрезал заголовок (находка Н37 второй сессии) */
+.card .nw { white-space: normal; }
+/* на 320–360 px колонка сетки по две уже длинного слова («Трансформер», «мероприятие»):
+   кегль названия меньше, а если слово всё равно шире — оно переносится, но не срезается */
+@media (max-width: 360px) {
+  .cards[data-catalog] .card-body h2, .cards[data-catalog] .card-body h3, .cards[data-list] .card-body h3 { font-size: 14px; }
+}
+.card-body h2, .card-body h3 { overflow-wrap: anywhere; }
