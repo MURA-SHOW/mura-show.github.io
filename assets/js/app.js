@@ -86,15 +86,17 @@
   var burger = document.querySelector('[data-burger]');
   var menu = document.querySelector('[data-menu]');
   if (burger && menu) {
-    burger.addEventListener('click', function () {
-      var open = menu.classList.toggle('open');
+    // пока меню открыто, нижняя панель уходит: на невысоком телефоне (667 px) она
+    // ложилась поверх кнопок мессенджеров в меню, и «ВКонтакте» было не нажать
+    var setMenu = function (open) {
+      var bar = document.querySelector('[data-dock]');
+      menu.classList.toggle('open', open);
       burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
+      if (bar) { bar.classList.toggle('is-menu', open); }
+    };
+    burger.addEventListener('click', function () { setMenu(!menu.classList.contains('open')); });
     menu.addEventListener('click', function (e) {
-      if (e.target.tagName === 'A') {
-        menu.classList.remove('open');
-        burger.setAttribute('aria-expanded', 'false');
-      }
+      if (e.target.tagName === 'A') { setMenu(false); }
     });
   }
 
@@ -169,13 +171,32 @@
     var linesEl = calc.querySelector('[data-calc-lines]');
     var preEl = calc.querySelector('[data-calc-pre]');
     var preRow = calc.querySelector('[data-calc-pre-row]');
+    var heroEl = calc.querySelector('[name=hero]');
     var suitBox = calc.querySelector('[name=suit]').closest('fieldset');
+    var pickHours = function (h) {
+      var el = calc.querySelector('[name=hours][value="' + h + '"]');
+      if (el) { el.checked = true; }
+    };
+    var pickShows = function (slugs) {
+      each(calc.querySelectorAll('[name=show]'), function (s) {
+        s.checked = slugs.indexOf(s.getAttribute('data-slug')) >= 0;
+      });
+    };
+    // герой из каталога сам ставит костюм: у четырёх VIP-героев цена часа другая
+    var suitByHero = function () {
+      if (!heroEl.value) { return; }
+      var vip = heroEl.options[heroEl.selectedIndex].hasAttribute('data-vip');
+      calc.querySelector('[name=suit][data-kind=' + (vip ? 'vip' : 'base') + ']').checked = true;
+    };
     var recalc = function (pop) {
       var suit = calc.querySelector('[name=suit]:checked');
       var hoursEl = calc.querySelector('[name=hours]:checked');
       var hours = +hoursEl.value;
       var lines = [];
       var total = 0;
+      if (heroEl.value) {
+        lines.push(['Герой', heroEl.options[heroEl.selectedIndex].text.replace(' · VIP', '')]);
+      }
       if (hours) {
         var p = +suit.value * hours;
         total += p;
@@ -189,8 +210,8 @@
         lines.push([s.getAttribute('data-name'), price ? money(price) : 'по запросу']);
       });
       // ноль рублей читается как «бесплатно»: пустой выбор и шоу «по запросу» пишем словами
-      var ask = lines.length && !total;
-      totalEl.textContent = total ? money(total) : ask ? 'по запросу' : 'выберите шоу';
+      var priced = lines.some(function (l) { return l[0] !== 'Герой'; });
+      totalEl.textContent = total ? money(total) : priced ? 'по запросу' : 'выберите шоу';
       totalEl.classList.toggle('is-word', !total);
       preEl.textContent = money(Math.round(total * 0.2));
       preRow.hidden = !total;
@@ -205,7 +226,7 @@
         li.appendChild(b);
         linesEl.appendChild(li);
       });
-      calcText = lines.length
+      calcText = priced
         ? 'Расчёт с сайта: ' + lines.map(function (l) { return l[0] + ' — ' + l[1]; }).join('; ') +
           (total ? '. Предварительно ' + money(total) + '.' : '.')
         : '';
@@ -215,10 +236,30 @@
         totalEl.classList.add('is-pop');
       }
     };
+    // ссылка со страницы шоу или героя открывает расчёт уже заполненным
+    var q = new URLSearchParams(location.search);
+    if (q.get('hero')) { heroEl.value = q.get('hero'); suitByHero(); }
+    if (q.get('hours')) { pickHours(q.get('hours')); }
+    if (q.get('show')) { pickShows(q.get('show').split(',')); }
     calc.hidden = false;
+    heroEl.addEventListener('change', suitByHero);
     calc.addEventListener('change', function () { recalc(true); });
     calc.addEventListener('submit', function (e) { e.preventDefault(); });
+    each(calc.querySelectorAll('[data-preset]'), function (b) {
+      b.addEventListener('click', function () {
+        pickHours(b.getAttribute('data-hours'));
+        pickShows(b.getAttribute('data-shows').split(','));
+        recalc(true);
+      });
+    });
     recalc(false);
+    // из итога — сразу в чат: имя и номер в мессенджере видны и так, форма тут лишняя
+    each(calc.querySelectorAll('[data-calc-to]'), function (a) {
+      a.addEventListener('click', function () {
+        a.href = LINKS[a.getAttribute('data-calc-to')](
+          'Здравствуйте! ' + (calcText || 'Хочу узнать про праздник.'));
+      });
+    });
     calc.querySelector('[data-calc-send]').addEventListener('click', function (e) {
       var f = document.querySelector('[data-lead]');
       if (!f) { return; }
@@ -233,7 +274,8 @@
   each(document.querySelectorAll('[data-prefill]'), function (a) {
     a.addEventListener('click', function () {
       var f = document.querySelector('[data-lead]');
-      if (f && !f.about.value.trim()) { f.about.value = a.getAttribute('data-prefill') + ': '; }
+      var topic = a.getAttribute('data-prefill');
+      if (f && !f.about.value.trim()) { f.about.value = topic + (topic.indexOf(':') < 0 ? ': ' : '. '); }
     });
   });
 
@@ -253,32 +295,57 @@
     });
   }
 
-  // фильтр каталога образов: сетка с кадрами и список тех, кого студия не снимала
+  // каталог образов: кнопки-вселенные и поиск по имени работают вместе —
+  // и по сетке с кадрами, и по списку тех, кого студия не снимала
   var catalog = document.querySelector('[data-catalog]');
   if (catalog) {
     var boxes = [catalog, document.querySelector('[data-catalog-more]')].filter(Boolean);
     var buttons = document.querySelectorAll('[data-filter]');
+    var search = document.querySelector('[data-catalog-search]');
+    var none = document.querySelector('[data-catalog-none]');
+    var group = 'все';
+    // «человек паук» находит «Человек-паук»: дефисы, кавычки и двойные пробелы не в счёт
+    var plain = function (s) {
+      return s.toLowerCase().replace(/ё/g, 'е').replace(/[-–—«»"':,.]+/g, ' ').replace(/ +/g, ' ').trim();
+    };
+    // «человека паука» находит «Человек-паук»: у длинных слов запроса падежный хвост
+    // (две последние буквы) не сравниваем, каждое слово запроса должно найтись в имени
+    var hit = function (name, q) {
+      return q.split(' ').every(function (w) {
+        return name.indexOf(w.length > 4 ? w.slice(0, -2) : w) >= 0;
+      });
+    };
+    var apply = function () {
+      var q = search ? plain(search.value.trim()) : '';
+      var found = 0;
+      boxes.forEach(function (box) {
+        var left = 0;
+        each(box.children, function (card) {
+          var show = (group === 'все' || card.getAttribute('data-group') === group) &&
+                     (!q || hit(plain((card.getAttribute('data-name') || '') + ' ' +
+                                      (card.getAttribute('data-group') || '')), q));
+          card.style.display = show ? '' : 'none';
+          if (show) { left++; }
+        });
+        found += left;
+        // пустая секция под сеткой смотрится как поломка — прячем её целиком
+        var section = box.closest('section');
+        if (section && box.hasAttribute('data-catalog-more')) {
+          section.style.display = left ? '' : 'none';
+        }
+      });
+      if (none) { none.hidden = found > 0; }
+    };
     each(buttons, function (btn) {
       btn.addEventListener('click', function () {
-        var group = btn.getAttribute('data-filter');
+        group = btn.getAttribute('data-filter');
         each(buttons, function (b) {
           b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
         });
-        boxes.forEach(function (box) {
-          var left = 0;
-          each(box.children, function (card) {
-            var show = group === 'все' || card.getAttribute('data-group') === group;
-            card.style.display = show ? '' : 'none';
-            if (show) { left++; }
-          });
-          // пустая секция под сеткой смотрится как поломка — прячем её целиком
-          var section = box.closest('section');
-          if (section && box.hasAttribute('data-catalog-more')) {
-            section.style.display = left ? '' : 'none';
-          }
-        });
+        apply();
       });
     });
+    if (search) { search.addEventListener('input', apply); }
   }
 
   // номер копируется в буфер: в MAX чат ищут по номеру, ссылки на него мессенджер не даёт
@@ -304,9 +371,24 @@
   // заявка уходит в тот мессенджер, который выбрал человек: сервера у сайта нет
   var LINKS = {
     wa: function (t) { return 'https://wa.me/79252081419?text=' + encodeURIComponent(t); },
-    tg: function () { return 'https://t.me/MURA_PRODUCTION'; },      // текст в личный чат не передаётся
-    vk: function () { return 'https://vk.me/mura__show'; }
+    // Telegram принимает черновик в ссылке на имя: t.me/<имя>?text= (core.telegram.org/api/links)
+    tg: function (t) { return 'https://t.me/MURA_PRODUCTION?text=' + encodeURIComponent(t); },
+    vk: function () { return 'https://vk.me/mura__show'; }           // сюда текст не передать
   };
+  // Копируем сразу, в том же нажатии: новая вкладка забирает фокус, и отложенная запись
+  // в буфер (clipboard.writeText) в Safari может не успеть. Запасной путь — она же.
+  function copyNow(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;left:-999px;top:0;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    if (!ok && navigator.clipboard) { navigator.clipboard.writeText(text).catch(function () {}); }
+  }
 
   each(document.querySelectorAll('[data-lead]'), function (f) {
     var to = 'wa';
@@ -331,10 +413,13 @@
         (about ? '\nПраздник: ' + about : '') +
         (f.dataset.subject ? '\nРаздел: ' + f.dataset.subject : '');
       var note = f.querySelector('[data-lead-note]');
-      if (to !== 'wa' && navigator.clipboard) {
-        navigator.clipboard.writeText(text).then(function () {
-          if (note) { note.textContent = 'Заявка скопирована — вставьте её в чат, который сейчас откроется.'; }
-        });
+      if (to !== 'wa') {
+        copyNow(text);
+        if (note) {
+          note.textContent = to === 'tg'
+            ? 'Заявка откроется в Telegram готовым сообщением. Если поле пустое — текст в буфере, вставьте его.'
+            : 'Заявка скопирована — вставьте её в чат, который сейчас откроется.';
+        }
       }
       var url = LINKS[to] ? LINKS[to](text) : urls[to];
       if (url) { window.open(url, '_blank', 'noopener'); }

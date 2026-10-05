@@ -2,9 +2,12 @@
    Палитра снята с настоящих логотипов студии, шрифты — Unbounded + Onest. */
 
 :root {
+  color-scheme: only light;      /* тёмной темы у сайта нет: браузер не должен затемнять его сам */
   /* фирменные */
   --cyan: #19BFDE;
   --cyan-dark: #128fa8;
+  --cyan-ink: #0E768C;      /* бирюзовый для мелкого текста: 5,3 к белому, 5,0 к тёплому */
+  --link: #1A6BBF;          /* ссылки в тексте: 5,4 к белому, 5,1 к тёплому */
   --magenta: #E02C83;
   --magenta-dark: #b01f66;
   --yellow: #F0C913;
@@ -79,7 +82,7 @@ h2 { font-size: clamp(26px, 4.4vw, 40px); }
 h3 { font-size: clamp(20px, 2.6vw, 26px); font-weight: 700; }
 h4 { font-size: 19px; font-weight: 700; }
 p { margin: 0 0 1em; }
-a { color: var(--blue); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+a { color: var(--link); text-decoration-thickness: 2px; text-underline-offset: 3px; }
 a:hover { color: var(--magenta); }
 img, video { max-width: 100%; height: auto; display: block; }
 figure { margin: 0; }
@@ -112,7 +115,7 @@ small { font-size: 14px; }
   font: 700 13px/1 'Onest', sans-serif;
   letter-spacing: .1em;
   text-transform: uppercase;
-  color: var(--cyan-dark);
+  color: var(--cyan-ink);
   margin-bottom: 14px;
   display: block;
 }
@@ -122,7 +125,7 @@ h1 .label {                       /* запросная строка внутр�
   font: 700 13px/1.4 'Onest', sans-serif;
   letter-spacing: .1em;
   text-transform: uppercase;
-  color: var(--cyan-dark);
+  color: var(--cyan-ink);
   margin-bottom: 12px;
 }
 
@@ -181,12 +184,30 @@ h1 .label {                       /* запросная строка внутр�
 .btn--sm { min-height: 44px; padding: 10px 18px; font-size: 16px; }
 @media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
 
+/* ссылка «к содержимому»: видна только с клавиатуры, первым нажатием Tab */
+.skip {
+  position: absolute;
+  left: 12px;
+  top: 8px;
+  z-index: 120;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-160%);
+}
+.skip:focus { transform: none; color: #fff; }
+main:focus { outline: none; }
+
 /* ── шапка ── */
 .nav {
   position: sticky;
   top: 0;
   z-index: 50;
   background: rgba(255, 255, 255, .94);
+  -webkit-backdrop-filter: blur(8px);   /* без префикса свойство работает только с Safari 18 */
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line-soft);
 }
@@ -236,7 +257,7 @@ h1 .label {                       /* запросная строка внутр�
     box-shadow: var(--shadow-soft);
     display: none;
   }
-  .nav-links.open { display: flex; }
+  .nav-links.open { display: flex; max-height: calc(100vh - 68px); max-height: calc(100dvh - 68px); overflow-y: auto; }
   .nav-links a { padding: 14px 12px; font-size: 18px; border-radius: 12px; }
   .nav-burger { display: flex; margin-left: 8px; }
   .nav .btn, .nav-phone { display: none; }
@@ -258,9 +279,12 @@ h1 .label {                       /* запросная строка внутр�
 /* ── первый экран ── */
 .hero { padding: clamp(28px, 4vw, 56px) 0 clamp(40px, 5vw, 72px); }
 .hero-grid { display: grid; gap: clamp(24px, 4vw, 48px); align-items: center; }
-@media (min-width: 900px) { .hero-grid { grid-template-columns: 1.05fr .95fr; } }
+/* две колонки уже с планшета: на 700–899 px вертикальный кадр в одну колонку стоял
+   узкой полосой посреди пустого экрана */
+@media (min-width: 700px) { .hero-grid { grid-template-columns: 1.05fr .95fr; } }
 .hero p { color: var(--ink-soft); font-size: clamp(17px, 1.9vw, 20px); max-width: 54ch; }
 .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0 18px; }
+.hero-cta .btn { max-width: 100%; text-align: center; }
 .hero-note { font-size: 15px; color: var(--ink-faint); }
 .hero-video {
   position: relative;
@@ -283,6 +307,27 @@ img.hero-video { display: block; width: 100%; height: auto; aspect-ratio: auto; 
   box-shadow: var(--shadow-cyan);
 }
 .hero-shot figcaption { margin-top: 10px; font-size: 14px; color: var(--ink-faint); }
+/* На телефоне кадр встаёт сразу под заголовок. Раньше первый экран почти всех посадочных
+   был без единой картинки: текст шёл первым, и кадр начинался на 760–1000 px при видимых
+   743 (замер второй сессии, Н20). Блок с текстом растворяется (display: contents),
+   порядок задаёт сетка: заголовок, кадр, остальное. Кадр не выше 46 % экрана. */
+@media (max-width: 699px) {
+  .hero-grid { gap: 16px; }
+  .hero-grid > div:first-child { display: contents; }
+  .hero-grid > div:first-child > * { order: 4; margin-top: 0; margin-bottom: 0; }
+  .hero-grid > div:first-child > h1 { order: 1; }
+  .hero-grid > div:first-child > .hero-cta { order: 3; }   /* действие сразу под кадром, описание ниже */
+  .hero-grid > :nth-child(2) { order: 2; }
+  /* у шоу без своей съёмки наверх поднимать нечего: чужой кадр под заголовком «Шоу сладкой
+     ваты» читался бы как фото этого шоу — он остаётся после текста */
+  .hero-grid--textfirst > :nth-child(2) { order: 5; }
+  .hero-grid .hero-video { max-height: 46vh; margin-inline: auto; }
+  .hero-grid img.hero-video { width: auto; max-width: 100%; }
+  .hero-grid .hero-shot img { max-height: 46vh; }
+  .hero-grid .gallery img { width: auto; max-width: 100%; max-height: 46vh; margin-inline: auto; }
+  /* три кнопки первого экрана: звонок уже в шапке, остаются заказ и расчёт */
+  .hero-cta .btn--wa:nth-child(2):not(:last-child) { display: none; }
+}
 .price-badge {
   position: absolute;
   left: 16px;
@@ -295,8 +340,10 @@ img.hero-video { display: block; width: 100%; height: auto; aspect-ratio: auto; 
   box-shadow: 0 4px 0 var(--yellow-dark);
   font-weight: 600;
 }
-.price-badge b { display: block; font: 800 24px/1.1 'Unbounded', sans-serif; }
-.price-badge small { display: block; font-size: 13px; color: #6b5a08; }
+.price-badge b { display: block; font: 800 clamp(16px, 2.4vw, 24px)/1.1 'Unbounded', sans-serif; }
+/* на 700–755 px колонка кадра 174 px, ценник «от 6 000 ₽» кеглем 24 был 192 px и срезался (Н38) */
+.price-badge { max-width: calc(100% - 20px); }
+.price-badge small { display: block; font-size: 13px; color: #5A4B06; }
 
 /* ── карточки ── */
 .cards { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
@@ -329,7 +376,7 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
   object-position: center 30%; background: var(--paper-warm); }   /* лица в верхней трети */
 .card--tall img, .card--tall .card-flat { aspect-ratio: 3 / 4; }                          /* студийные карточки ровно 3:4 */
 .card-body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
-.card-body h3 { margin: 0; font-size: 21px; }
+.card-body h3, .card-body h2 { margin: 0; font-size: 21px; font-weight: 700; }   /* в каталоге имя героя — h2: выше него только h1 */
 .card-body p { margin: 0; color: var(--ink-soft); font-size: 16px; }
 .card-price {
   margin-top: auto;
@@ -379,7 +426,7 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
 @media (max-width: 760px) {
   .cards[data-catalog], .cards[data-list] { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .cards[data-catalog] .card-body, .cards[data-list] .card-body { padding: 12px 12px 14px; gap: 6px; }
-  .cards[data-catalog] .card-body h3, .cards[data-list] .card-body h3 { font-size: 16px; }
+  .cards[data-catalog] .card-body h3, .cards[data-catalog] .card-body h2, .cards[data-list] .card-body h3 { font-size: 16px; }
   .cards[data-catalog] .card-price, .cards[data-list] .card-price { font-size: 16px; padding-top: 6px; }
   .cards[data-catalog] .tag { padding: 3px 8px; }
   /* в колонке шириной 165 px описание рвётся на строки по три слова — в перечне
@@ -412,6 +459,22 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
   .cards:not([data-catalog]):not([data-list]) .card-body { padding: 14px 16px 16px; }
   .cards:not([data-catalog]):not([data-list]) .card-body h3 { font-size: 18px; }
 }
+
+/* поиск героя в каталоге: 56 имён глазами не пролистать */
+.catalog-search { display: grid; gap: 6px; max-width: 420px; margin-bottom: 14px; font-weight: 600; font-size: 16px; }
+.catalog-search input {
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 14px;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper-warm);
+  color: var(--ink);
+  font: 400 17px/1.4 'Onest', sans-serif;
+}
+.catalog-search input:focus { border-color: var(--cyan); outline: none; }
+.catalog-none { margin: 0 0 18px; padding: 14px 16px; border-radius: 14px; background: var(--paper-warm); }
+.catalog-none[hidden] { display: none; }
 
 /* образы без своего кадра: список вместо сетки пустых плашек */
 .chips { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -452,7 +515,7 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
 }
 .section--violet .fact b { color: var(--yellow); }
 /* плашка со словом вместо числа: «Наро-Фоминск» кеглем цены ломается переносом */
-.fact--word b { font-size: clamp(22px, 2.4vw, 28px); }
+.fact--word b { font-size: clamp(20px, 1.9vw, 23px); }
 .fact span { font-size: 16px; color: var(--ink-soft); }
 .section--violet .fact span { color: rgba(255, 255, 255, .82); }
 
@@ -565,7 +628,7 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
 .faq summary::after {
   content: '+';
   font: 700 24px/1 'Onest', sans-serif;
-  color: var(--cyan-dark);
+  color: var(--cyan-ink);
   flex: none;
 }
 .faq details[open] summary::after { content: '−'; }
@@ -626,7 +689,13 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
 .footer a { color: #fff; text-decoration: none; }
 .footer a:hover { color: var(--yellow); }
 .footer-grid { display: grid; gap: 28px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
-.footer h4 { color: #fff; font-size: 16px; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 12px; }
+.footer .footer-h {
+  margin: 0 0 12px;
+  color: #fff;
+  font: 700 16px/1.12 'Unbounded', 'Onest', sans-serif;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
 .footer ul { list-style: none; padding: 0; margin: 0; }
 .footer li { margin-bottom: 8px; }
 /* на телефоне строчка ссылки — 21 px высоты, палец бьёт по соседней: даём ссылкам
@@ -683,7 +752,7 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
   min-height: 44px;
 }
 .pills a:hover, .pills button:hover { border-color: var(--cyan); color: var(--ink); }
-.pills [aria-pressed='true'] { background: var(--cyan); border-color: var(--cyan); color: #fff; }
+.pills [aria-pressed='true'] { background: var(--cyan); border-color: var(--cyan); color: var(--ink); }
 
 /* ── детская графика ────────────────────────────────────────────────────────
    Канон запрещает радужную заливку на всю страницу, поэтому цвет приходит
@@ -749,6 +818,7 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
 .mascot { display: block; height: auto; }
 .mascot--footer { width: 92px; margin-bottom: 12px; }
 .mascot--404 { width: min(280px, 62vw); margin: 0 auto 8px; }
+.err-code { margin: 0 0 6px; font-size: clamp(56px, 14vw, 104px); line-height: 1; }
 .split img.mascot--about { width: min(300px, 70%); justify-self: center; border-radius: 0; }
 
 /* ── «Написать» в шапке: выбор мессенджера, а не сразу WhatsApp ── */
@@ -808,11 +878,14 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
   background:
     radial-gradient(ellipse 62% 36% at 30% 22%, rgba(255, 255, 255, .92), rgba(255, 255, 255, 0) 64%),
     linear-gradient(172deg, var(--hi) 0%, var(--b) 46%, var(--lo) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 .05em 0 var(--lo)) drop-shadow(0 .13em .1em rgba(22, 35, 58, .2));
   transform: rotate(-3deg) translateY(.02em);
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .balloon i { -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+}
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .balloon i { background: none; }
 }
 .balloon i:nth-child(even) { transform: rotate(2.5deg) translateY(-.03em); }
 .balloon i.sp { padding: 0; filter: none; background: none; }
@@ -845,7 +918,7 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
 }
 .hero-line { display: block; font-size: clamp(23px, 6.2vw, 38px); line-height: 1.14; }
 .hero-word { display: block; margin-top: .16em; font-size: clamp(33px, 10.2vw, 72px); }
-@media (min-width: 900px) {                      /* две колонки: слово меряем по своей */
+@media (min-width: 700px) {                      /* две колонки: слово меряем по своей */
   .hero-line { font-size: clamp(26px, 3vw, 38px); }
   .hero-word { font-size: clamp(42px, 5.2vw, 68px); }
 }
@@ -1033,6 +1106,8 @@ a.price-badge:hover { color: var(--ink); }
   transition: transform var(--d-fast) var(--ease-out), box-shadow var(--d-fast) ease;
 }
 .tile:hover { color: var(--ink); }
+/* четыре плитки в перечне поводов: в сетке на пять пятая колонка стояла бы пустой */
+@media (min-width: 1000px) { .tiles--row { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .tile:active { transform: scale(.98); }
 .tile-ic {
   display: grid;
@@ -1046,7 +1121,7 @@ a.price-badge:hover { color: var(--ink); }
   box-shadow: 0 3px 0 rgba(22, 35, 58, .08);
 }
 .tile-ic svg { width: 24px; height: 24px; }
-.tile b { font: 700 16px/1.2 'Unbounded', sans-serif; letter-spacing: -.01em; overflow-wrap: anywhere; }
+.tile b { font: 700 16px/1.2 'Unbounded', sans-serif; letter-spacing: -.01em; overflow-wrap: break-word; hyphens: manual; }
 .tile small { font-size: 14.5px; line-height: 1.35; color: var(--ink-soft); }
 .tile--magenta { --t: #E02C83; --t-ink: #C01F6D; }
 .tile--yellow  { --t: #F0C913; --t-ink: #8A7205; }
@@ -1086,7 +1161,8 @@ a.price-badge:hover { color: var(--ink); }
   font: 700 clamp(14px, 1.9vw, 19px)/1.2 'Unbounded', sans-serif;
   letter-spacing: -.01em;
   text-align: left;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  hyphens: manual;
   cursor: pointer;
   transition: background-color var(--d-fast) ease, color var(--d-fast) ease,
               box-shadow var(--d-fast) ease, transform var(--d-press) var(--ease-out);
@@ -1111,7 +1187,7 @@ a.price-badge:hover { color: var(--ink); }
 @media (min-width: 860px) { .tab-panel .split { grid-template-columns: 1.45fr .75fr; align-items: start; } }
 @media (max-width: 859px) { .tab-panel .split > img { display: none; } }
 @media (max-width: 480px) {
-  .tab { padding: 10px 10px; font-size: 12.5px; hyphens: auto; }
+  .tab { padding: 10px 10px; font-size: 12.5px; }
   .tab small { font-size: 13px; }
 }
 
@@ -1126,7 +1202,7 @@ a.price-badge:hover { color: var(--ink); }
 }
 .pick li { display: grid; gap: 5px; align-content: start; margin: 0; padding: 14px 16px; border-radius: 16px; background: var(--paper-warm); }
 .section--warm > .wrap > .pick li { background: #fff; }
-.pick b { font: 700 13px/1.2 'Onest', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--cyan-dark); }
+.pick b { font: 700 13px/1.2 'Onest', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--cyan-ink); }
 .pick span { font-size: 16px; line-height: 1.45; }
 
 /* ── расчёт праздника ── */
@@ -1156,6 +1232,41 @@ a.price-badge:hover { color: var(--ink); }
   color: var(--ink-faint);
 }
 .calc fieldset.is-off { opacity: .45; }
+/* герой — обычный системный список: 56 имён с группами, на телефоне открывается
+   родным колесом выбора, своего выпадающего меню тут не нужно */
+.calc select {
+  width: 100%;
+  max-width: 420px;
+  min-height: 52px;
+  padding: 12px 14px;
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--ink);
+  font: 600 16px/1.3 'Onest', sans-serif;
+  cursor: pointer;
+}
+.calc select:focus-visible { border-color: var(--cyan); outline: 3px solid var(--blue); outline-offset: 2px; }
+/* примеры наборов: кнопка-стикер, по нажатию расставляет часы и шоу */
+.preset {
+  display: grid;
+  gap: 2px;
+  justify-items: start;
+  min-height: 52px;
+  padding: 9px 16px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--yellow);
+  color: var(--ink);
+  box-shadow: 0 4px 0 var(--yellow-dark);
+  font: 700 15px/1.2 'Unbounded', sans-serif;
+  letter-spacing: -.01em;
+  text-align: left;
+  cursor: pointer;
+  transition: transform var(--d-press) var(--ease-out), box-shadow var(--d-press) ease;
+}
+.preset small { font: 500 14px/1.3 'Onest', sans-serif; letter-spacing: 0; color: #5C4C07; font-variant-numeric: tabular-nums; }
+.preset:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--yellow-dark); }
 .opts { display: flex; flex-wrap: wrap; gap: 8px; }
 .opt { position: relative; cursor: pointer; }
 .opt input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
@@ -1191,8 +1302,8 @@ a.price-badge:hover { color: var(--ink); }
   background: #fff center/14px no-repeat;
 }
 .opt input[type='checkbox']:checked + span::before {
-  border-color: var(--cyan-dark);
-  background-color: var(--cyan-dark);
+  border-color: var(--cyan-ink);
+  background-color: var(--cyan-ink);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
 }
 .calc-hint { margin: 9px 0 0; font-size: 14.5px; color: var(--ink-faint); }
@@ -1219,15 +1330,24 @@ a.price-badge:hover { color: var(--ink); }
    в один столбик читались как рваный край */
 @media (max-width: 600px) {
   .calc fieldset:last-child .opts { display: grid; grid-template-columns: 1fr; }
+  .preset { width: 100%; }
   .opt input[type='checkbox'] + span { grid-template-columns: 1fr auto; align-items: center; gap: 10px; }
 }
-.calc-sum .btn { justify-self: start; }
+.calc-send { display: flex; flex-wrap: wrap; gap: 8px; }
+.calc-form { justify-self: start; font-size: 15px; color: var(--ink-soft); }
 .calc-note { margin: 2px 0 0; font-size: 14px; color: var(--ink-faint); }
 
 /* ── нижняя панель на телефоне: цена и «Написать» ── */
 .dock { display: none; }
 .write-menu { transform-origin: top right; animation: menu-in var(--d-fast) var(--ease-out); }
-.write-menu--up { top: auto; bottom: calc(100% + 12px); transform-origin: bottom right; }
+.write-menu--up {
+  top: auto;
+  bottom: calc(100% + 12px);
+  max-height: calc(100vh - 170px);
+  max-height: calc(100dvh - 170px);
+  overflow-y: auto;
+  transform-origin: bottom right;
+}
 @keyframes menu-in { from { opacity: 0; transform: scale(.96); } }
 @media (max-width: 1080px) {
   body { padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px)); }
@@ -1245,10 +1365,11 @@ a.price-badge:hover { color: var(--ink); }
     background: rgba(255, 255, 255, .96);
     border-top: 1px solid var(--line-soft);
     box-shadow: 0 -8px 24px rgba(22, 35, 58, .08);
+    -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
     transition: transform var(--d) var(--ease-out);
   }
-  .dock.is-away { transform: translateY(110%); }
+  .dock.is-away, .dock.is-menu { transform: translateY(110%); }
   .dock-price { display: grid; gap: 1px; align-content: center; min-height: 48px; color: var(--ink); text-decoration: none; }
   .dock-price small { font-size: 12.5px; line-height: 1.2; letter-spacing: .04em; color: var(--ink-faint); }
   .dock-price b { font: 800 19px/1.1 'Unbounded', sans-serif; letter-spacing: -.02em; }
@@ -1449,4 +1570,149 @@ a.card:active { transform: scale(.985); }
   html:not(.force-intro) .intro-splash { display: none; }
   .rv { opacity: 1; transform: none; }
   .tab-panel.is-enter, .calc-total.is-pop, .write-menu { animation: none; }
+}
+
+/* кнопки-вселенные каталога на телефоне идут одной лентой: в четыре ряда они сдвигали
+   сетку героев на второй экран. Стоит в конце файла — базовое правило .pills выше. */
+@media (max-width: 760px) {
+  .pills { flex-wrap: nowrap; overflow-x: auto; margin-inline: -16px; padding-inline: 16px; scrollbar-width: none; }
+  .pills::-webkit-scrollbar { display: none; }
+  .pills button { flex: none; }
+}
+
+/* подсказка «какое шоу кому» на телефоне — лента: пять плашек столбиком занимали
+   полтора экрана и уводили карточки шоу с первого экрана перечня */
+@media (max-width: 760px) {
+  .pick {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 72%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    margin-inline: -16px;
+    padding-inline: 16px;
+  }
+  .pick::-webkit-scrollbar { display: none; }
+  .pick li { scroll-snap-align: start; scroll-margin-left: 16px; }
+}
+
+/* поводы на телефоне: кадры праздника над текстом блока (пока блок в одну колонку) */
+@media (max-width: 859px) { .split--flip > :last-child { order: -1; } }
+
+/* девять кнопок-вселенных каталога на десктопе в один ряд: «Новый год» один уходил на вторую строку */
+@media (min-width: 1000px) { .pills { gap: 6px; } .pills button { padding: 9px 13px; font-size: 15px; } }
+
+/* ── единый каркас страниц (05.10.2026) ─────────────────────────────────────── */
+/* Заявка сразу после белой секции: два отступа подряд давали 176 px пустоты */
+.section--tight { padding-top: 0; }
+/* Страница без кадра на первом экране (цены, отзывы, перечни, поводы) открывается теми же
+   цветными пятнами, что и страница с кадром: верх у всех страниц один */
+.section--top { position: relative; overflow: hidden; }
+.section--top::before {
+  content: '';
+  position: absolute;
+  inset: -90px -10% auto -14%;
+  height: 520px;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 46% at 12% 30%, rgba(25, 191, 222, .18), transparent 70%),
+    radial-gradient(34% 40% at 86% 12%, rgba(255, 114, 182, .16), transparent 70%);
+}
+.section--top > .wrap { position: relative; }
+
+/* ценник-стикер на кадре героя и шоу: рамка по самому кадру */
+.hero-pic, .hero-shot { position: relative; }
+.price-badge { text-decoration: none; transition: transform var(--d-press) var(--ease-out); }
+.price-badge:active { transform: rotate(-2.5deg) scale(.97); }
+@media (max-width: 699px) {
+  .hero-grid .hero-pic { width: fit-content; max-width: 100%; margin-inline: auto; }
+  .price-badge { left: 10px; bottom: 10px; padding: 8px 12px; }
+  .price-badge b { font-size: 19px; }
+}
+
+/* один отзыв и два отзыва: кладка в три колонки оставляла рядом пустоту */
+.quotes--one { columns: 1; }
+.quotes--one .quote { margin-bottom: 0; }
+.quotes--one .quote p { font-size: clamp(17px, 1.7vw, 19px); }
+.quotes--pair { columns: 2; }
+@media (max-width: 640px) { .quotes--pair { columns: 1; } }
+.review-band { display: grid; gap: 18px; align-items: start; }
+@media (min-width: 860px) { .review-band { grid-template-columns: minmax(0, 1.75fr) minmax(250px, .8fr); } }
+.rate-card {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  background: #fff;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-card);
+  padding: 22px;
+}
+.rate-card b { font: 800 clamp(40px, 5vw, 56px)/1 'Unbounded', sans-serif; color: var(--magenta); font-variant-numeric: tabular-nums; }
+.rate-card .stars { font-size: 18px; }
+.rate-card p { margin: 0 0 6px; color: var(--ink-soft); font-size: 16px; }
+
+/* плитка-призыв закрывает пустые клетки в конце перечня */
+@media (max-width: 999px) { .cards[data-list] { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.card--fill { grid-column: span 2; background: var(--paper-warm); border-color: transparent; }
+.card--fill.fill-m1 { grid-column: span 1; }
+.card--fill::before { display: none; }
+.card--fill .card-body { justify-content: center; align-items: flex-start; gap: 12px; padding: clamp(16px, 3vw, 32px); }
+.card--fill .card-body h3 { font-size: clamp(18px, 2.4vw, 28px); }
+.card--fill .card-body p { font-size: 17px; max-width: 42ch; }
+.card--fill .btn { max-width: 100%; text-align: center; white-space: normal; }
+@media (min-width: 1000px) {
+  .card--fill.fill-d1 { grid-column: span 1; }
+  .card--fill.fill-d2 { grid-column: span 2; }
+  .card--fill.fill-d3 { grid-column: span 3; }
+}
+@media (max-width: 760px) {
+  .cards[data-list] .card--fill:not(.fill-m1) .card-body p { display: block; }
+  .card--fill.fill-m1 .btn { padding-inline: 10px; font-size: 15px; width: 100%; }
+}
+
+/* прайс в две колонки: слева программа и условия, справа шоу. В одну колонку таблицы
+   занимали левую половину экрана, правая стояла пустой на три экрана вниз */
+.price-cols { display: grid; gap: clamp(24px, 4vw, 48px); align-items: start; }
+@media (min-width: 1000px) { .price-cols { grid-template-columns: 1fr 1fr; } }
+.price-cols h2 { font-size: clamp(24px, 3vw, 30px); }
+.price-cols .price-table { max-width: none; }
+.section--top .note, .section:not(.section--warm) .note { background: var(--paper-warm); }
+
+/* кнопки мессенджеров в заявке делят ряд поровну: на телефоне они стояли столбиком
+   разной ширины */
+.form-send .btn { flex: 1 1 130px; justify-content: center; }
+.cta-band > h2 { font-size: clamp(24px, 3.2vw, 34px); }
+/* номер телефона и цена не рвутся на две строки */
+.nw { white-space: nowrap; }
+/* кнопка «Позвонить + номер»: на узком экране номер уходит на вторую строку целиком */
+.btn:has(.nw) { flex-wrap: wrap; row-gap: 2px; }
+/* на 320 px таблица условий не помещалась на 20 px: «не возвращается» держится одним словом */
+@media (max-width: 360px) {
+  .price-table { font-size: 15.5px; }
+  .price-table th, .price-table td { padding-inline: 8px; }
+}
+/* две кнопки в одном абзаце: на телефоне вторая вставала вплотную под первую */
+p:has(> .btn) { display: flex; flex-wrap: wrap; gap: 12px; }
+.center p:has(> .btn) { justify-content: center; }   /* на 404 кнопки стоят по центру, как всё остальное */
+/* на 320 px «Наро-Фоминске» и «Мастер-классы» кеглем заголовка шире экрана: там перенос по дефису разрешён */
+@media (max-width: 343px) { h1 .nw { white-space: normal; } }
+@media (max-width: 374px) { h2 .nw { white-space: normal; } }   /* в карточке заявки строка уже: 264 px на экране 344 */
+/* в карточке слово с дефисом переносится как раньше: в сетке по две «Мастер-классы» шире
+   карточки, и её край молча обрезал заголовок (находка Н37 второй сессии) */
+.card .nw { white-space: normal; }
+/* на 320–360 px колонка сетки по две уже длинного слова («Трансформер», «мероприятие»):
+   кегль названия меньше, а если слово всё равно шире — оно переносится, но не срезается */
+@media (max-width: 360px) {
+  .cards[data-catalog] .card-body h2, .cards[data-catalog] .card-body h3, .cards[data-list] .card-body h3 { font-size: 14px; }
+}
+.card-body h2, .card-body h3 { overflow-wrap: anywhere; }
+/* карточки без кадра («Что ведём»): на телефоне в сетке по две от них оставались одни
+   названия, а в описаниях главное содержание страницы. Идут столбцом и с текстом (Н39) */
+@media (max-width: 760px) {
+  .cards--text[data-list] { grid-template-columns: 1fr; }
+  .cards--text[data-list] .card-body { padding: 16px 18px 18px; gap: 8px; }
+  .cards--text[data-list] .card-body h3 { font-size: 18px; }
+  .cards--text[data-list] .card-body p { display: block; }
 }
