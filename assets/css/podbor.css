@@ -1,0 +1,89 @@
+/* MURA SHOW — страница «Собери праздник». Вид плиток, карточек, пилюль и блока суммы берётся
+   из style.css (.tile, .card, .opt, .calc-sum, .flow): здесь только то, чего там нет —
+   выбранное состояние, сетка героев, полоска шагов и появление панели. */
+
+.pb[hidden], .pb [hidden] { display: none !important; }
+
+/* ── полоска шагов ── */
+.pb-step h3 a { color: inherit; text-decoration: none; }
+.pb-step h3 a:hover { color: var(--cyan-ink); }
+.pb-step p { min-height: 1.5em; }
+.pb-step.is-done { border-color: var(--cyan); box-shadow: 0 4px 0 var(--cyan-dark); }
+.pb-step.is-done p { color: var(--ink); font-weight: 600; }
+
+/* На телефоне три большие карточки шагов увели бы первый выбор на второй экран: полоска
+   сжимается в ряд коротких пилюль (цифра-шар и слово), без стрелок и без подписи выбора —
+   сумму там держит нижняя панель. Шапка страницы поджата, чтобы плитки тем были на первом экране. */
+.pb-short { display: none; }
+@media (max-width: 859px) {
+  .pb-long { display: none; }
+  .pb-short { display: inline; }
+  .pb-head { padding-bottom: 14px; }
+  .pb [data-pb-panel="1"] { padding-top: 26px; }
+  .pb-steps { display: flex; gap: 8px; margin-top: 16px; }
+  .pb-steps .flow-arrow { display: none; }
+  .pb-step { display: flex; align-items: center; gap: 7px; flex: 1 1 0; min-width: 0; padding: 8px 10px; border-radius: 14px; }
+  .pb-step .balloon { flex: none; margin: 0; font-size: 26px; }
+  .pb-step h3 { margin: 0; font-size: 14px; line-height: 1.1; }
+  .pb-step p { display: none; }
+}
+
+/* на большом экране шапку и карточки шагов тоже поджимаем: плитки тем должны выглядывать на первом экране */
+@media (min-width: 860px) {
+  .pb-head { padding-bottom: 28px; }
+  .pb [data-pb-panel="1"] { padding-top: 36px; }
+  .pb-step { padding: 16px 20px 18px; }
+  .pb-step .balloon { font-size: 40px; margin-bottom: 4px; }
+}
+
+/* ── выбор: плитка темы и карточка героя — это подписи к настоящим радиокнопкам ── */
+.pb-pick, .pb-hero { position: relative; cursor: pointer; }
+.pb-pick input, .pb-hero input {
+  position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; margin: 0;
+  opacity: 0; cursor: pointer;
+}
+.pb-pick:focus-within, .pb-hero:focus-within { outline: 3px solid var(--blue); outline-offset: 2px; }
+@supports selector(:has(a)) {
+  .pb-pick:focus-within, .pb-hero:focus-within { outline: 0; }
+  .pb-pick:has(input:focus-visible), .pb-hero:has(input:focus-visible) { outline: 3px solid var(--blue); outline-offset: 2px; }
+}
+.pb-pick.is-on { border-color: var(--t); background: #fff; box-shadow: 0 4px 0 var(--t); }
+.pb-pick.is-on .tile-ic { background: var(--t); color: #fff; }
+.tile--yellow.pb-pick.is-on .tile-ic, .tile--lime.pb-pick.is-on .tile-ic { color: var(--ink); }
+
+/* сетка героев своя: у .cards[data-list] последняя карточка ставится по центру счётом детей,
+   а здесь часть карточек скрыта фильтром темы */
+.pb-heroes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.pb-hero .card-body { padding: 12px 12px 14px; gap: 6px; }
+.pb-hero .card-body h3 { font-size: 16px; overflow-wrap: anywhere; }
+.pb-hero .card-price { font-size: 16px; padding-top: 6px; }
+.pb-hero .tag { padding: 3px 8px; }
+.pb-hero.is-on { border-color: var(--cyan); box-shadow: 0 0 0 3px var(--cyan), 0 6px 0 var(--cyan-dark); }
+.pb-hero.is-on::after {            /* отметка «выбран» на кадре */
+  content: ''; position: absolute; top: 10px; right: 10px; width: 34px; height: 34px;
+  border-radius: 50%; border: 3px solid #fff; background: var(--cyan-ink) center/18px no-repeat
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E");
+}
+.pb-hero:active { transform: scale(.98); }
+@media (min-width: 700px) {
+  .pb-heroes { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .pb-hero .card-body { padding: 14px 16px 16px; }
+  .pb-hero .card-body h3 { font-size: 18px; }
+}
+@media (min-width: 1000px) { .pb-heroes { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (hover: hover) and (pointer: fine) {
+  .pb-hero:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); }
+  .pb-hero.is-on:hover { box-shadow: 0 0 0 3px var(--cyan), 0 6px 0 var(--cyan-dark); }
+}
+
+.pb-any span { border-style: dashed; }
+
+/* ── панель следующего шага появляется под выбором ── */
+.pb [data-pb-panel] { scroll-margin-top: 76px; }
+.pb [data-pb-panel].is-in > .wrap { animation: pb-in var(--d-slow, 480ms) var(--ease-out, ease-out) both; }
+@keyframes pb-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+html.calm .pb [data-pb-panel].is-in > .wrap { animation: none; }
+@media (prefers-reduced-motion: reduce) { .pb [data-pb-panel].is-in > .wrap { animation: none; } }
