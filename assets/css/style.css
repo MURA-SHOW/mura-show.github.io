@@ -1531,7 +1531,7 @@ p:has(> .btn) { display: flex; flex-wrap: wrap; gap: 12px; }
 .card .nw { white-space: normal; }
 /* на 320–360 px колонка сетки по две уже длинного слова («Трансформер», «мероприятие»):
    кегль названия меньше, а если слово всё равно шире — оно переносится, но не срезается */
-@media (max-width: 360px) {
+@media (max-width: 400px) {   /* до 400, а не до 360: на 375 «Трансформер» в 16 px рвался по мягкому переносу (Н47) */
   .cards[data-catalog] .card-body h2, .cards[data-catalog] .card-body h3, .cards[data-list] .card-body h3 { font-size: 14px; }
 }
 .card-body h2, .card-body h3 { overflow-wrap: anywhere; }
@@ -1770,3 +1770,6 @@ html:not(.calm) .mk.is-live[data-mk='oy'] .mk-over { transform-origin: 50% 100%;
 html.calm .mk--peek.rv svg { transform: none; transition: none; }
 /* цифры-шары в полосе фактов мерятся по плитке: «2023» на 320 px вылезало из неё на 22 px */
 @supports (font-size: 1cqi) { .section--strip .fact b .balloon { font-size: clamp(24px, 19cqi, 52px); } }
+/* главная на телефоне: цена часа уже стоит в нижней панели — второй такой же ценник на кадре
+   в том же экране лишний (Н46) */
+@media (max-width: 699px) { .hero .price-badge[href='#raschet'] { display: none; } }
