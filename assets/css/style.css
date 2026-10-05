@@ -50,14 +50,11 @@
   --d: 220ms;
   --d-slow: 480ms;
 }
-@media (prefers-reduced-motion: reduce) {
-  :root { --d-press: 0ms; --d-fast: 0ms; --d: 0ms; --d-slow: 0ms; }
-}
 
 *, *::before, *::after { box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+html.calm { scroll-behavior: auto; }
 
 body {
   margin: 0;
@@ -182,7 +179,6 @@ h1 .label {                       /* запросная строка внутр�
 .btn--ghost:hover { border-color: var(--cyan); color: var(--ink); }
 .section--violet .btn--ghost { color: #fff; border-color: rgba(255, 255, 255, .35); }
 .btn--sm { min-height: 44px; padding: 10px 18px; font-size: 16px; }
-@media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
 
 /* ссылка «к содержимому»: видна только с клавиатуры, первым нажатием Tab */
 .skip {
@@ -1563,14 +1559,12 @@ a.card:active { transform: scale(.985); }
 /* кто просил поменьше движения, получает страницу без него: блоки стоят на месте,
    длительности обнулены токенами в :root, а заставка не двигается — открытая пасть
    со знаком студии просто растворяется. Адрес с ?intro показывает полную. */
-@media (prefers-reduced-motion: reduce) {
-  html:not(.force-intro) .intro { animation: intro-fade 420ms ease 700ms forwards; }
-  html:not(.force-intro) .intro *, html:not(.force-intro) .intro *::before,
-  html:not(.force-intro) .intro *::after { animation: none; }
-  html:not(.force-intro) .intro-splash { display: none; }
-  .rv { opacity: 1; transform: none; }
-  .tab-panel.is-enter, .calc-total.is-pop, .write-menu { animation: none; }
-}
+/* спокойный режим (html.calm): заставка играет укус без брызг и тряски, блоки
+   проявляются без сдвига, панели и сумма не подпрыгивают */
+html.calm:not(.force-intro) .intro { animation: intro-off 1ms linear 1340ms forwards; }
+html.calm:not(.force-intro) .intro-splash { display: none; }
+html.calm .rv { transform: none; }
+html.calm .tab-panel.is-enter, html.calm .calc-total.is-pop, html.calm .write-menu { animation: none; }
 
 /* кнопки-вселенные каталога на телефоне идут одной лентой: в четыре ряда они сдвигали
    сетку героев на второй экран. Стоит в конце файла — базовое правило .pills выше. */
@@ -1678,7 +1672,7 @@ a.card:active { transform: scale(.985); }
 @media (min-width: 1000px) { .price-cols { grid-template-columns: 1fr 1fr; } }
 .price-cols h2 { font-size: clamp(24px, 3vw, 30px); }
 .price-cols .price-table { max-width: none; }
-.section--top .note, .section:not(.section--warm) .note { background: var(--paper-warm); }
+.section--top .note, .section:not(.section--warm) .note { background-color: var(--paper-warm); }
 
 /* кнопки мессенджеров в заявке делят ряд поровну: на телефоне они стояли столбиком
    разной ширины */
@@ -1715,4 +1709,182 @@ p:has(> .btn) { display: flex; flex-wrap: wrap; gap: 12px; }
   .cards--text[data-list] .card-body { padding: 16px 18px 18px; gap: 8px; }
   .cards--text[data-list] .card-body h3 { font-size: 18px; }
   .cards--text[data-list] .card-body p { display: block; }
+}
+
+/* ══ Стиль главной на весь сайт (05.10.2026, слово владельца) ═══════════════════════
+   Стикер над заголовком, цифры-шары в ценах, три шага и акула у заявки, подсказки от
+   акулы, графика на полях, плавник в подвале. Движение выключается классом html.calm. */
+
+/* ── стикер над заголовком страницы: приём «О-оу!» ── */
+.sticker {
+  display: block;
+  width: fit-content;
+  margin: 0 0 14px 2px;
+  padding: 7px 14px 8px;
+  border-radius: 16px 16px 16px 5px;
+  background: var(--yellow);
+  box-shadow: 0 4px 0 var(--yellow-dark);
+  color: var(--ink);
+  font: 700 clamp(13px, 1.4vw, 16px)/1 'Unbounded', 'Onest', sans-serif;
+  letter-spacing: -.01em;
+  transform: rotate(-3deg);
+  transform-origin: left bottom;
+}
+.sticker--cyan { background: #9BE6F5; box-shadow: 0 4px 0 #57BDD2; }
+.sticker--pink { background: #FFB9DA; box-shadow: 0 4px 0 #E983B5; }
+.sticker--lime { background: #DFE56F; box-shadow: 0 4px 0 #A9B02B; }
+.center .sticker { margin-inline: auto; }
+@media (max-width: 699px) {
+  .hero-grid > div:first-child > .sticker { order: 0; margin-bottom: -4px; }
+}
+
+/* ── цена цифрами-шарами в плитках фактов ── */
+.fact b .balloon { font-size: clamp(28px, 3.4vw, 38px); }
+.section--strip .fact b .balloon { font-size: clamp(34px, 4.6vw, 52px); }
+.fact .rub { font: 800 .7em/1 'Unbounded', sans-serif; color: var(--magenta); }
+.rate-card b .balloon { font-size: 1em; }
+
+/* ── три шага строкой над заявкой ── */
+.steps3 {
+  list-style: none;
+  margin: 0 0 clamp(18px, 3vw, 30px);
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+}
+.steps3 li {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 8px 18px 8px 12px;
+  background: #fff;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-pill);
+  box-shadow: 0 3px 0 rgba(22, 35, 58, .07);
+  font: 700 15px/1.2 'Unbounded', 'Onest', sans-serif;
+  letter-spacing: -.01em;
+}
+.steps3 .balloon { font-size: 26px; }
+.steps3 .flow-arrow { height: auto; flex: none; }
+.steps3 .flow-arrow svg { width: 46px; height: 26px; transform: none; }
+@media (max-width: 760px) {
+  .steps3 .flow-arrow { display: none; }
+  .steps3 { gap: 8px; }
+  .steps3 li { flex: 1 1 100%; font-size: 14px; }
+}
+
+/* ── акула выглядывает из-за карточки заявки ── */
+.cta-wrap { --pw: clamp(140px, 19vw, 230px); position: relative; padding-top: calc(var(--pw) * .636 - 22px); }
+.cta-wrap .cta-band { position: relative; z-index: 1; }
+.peek {
+  position: absolute;
+  top: 0;
+  right: clamp(14px, 6vw, 72px);
+  width: var(--pw);
+  height: auto;
+  z-index: 0;
+  transform-origin: 50% 100%;
+  transition: transform 720ms var(--ease-spring);
+}
+.cta-wrap.peek-wait .peek { transform: translateY(78%); }
+html.calm .peek { transition: none; }
+
+/* ── подсказка от акулы ── */
+.note {
+  position: relative;
+  min-height: 60px;
+  padding: 12px 16px 12px 66px;
+  border-left: 0;
+  border-radius: 16px;
+  background-image: url("../obraz/shark-face-96.webp");
+  background-repeat: no-repeat;
+  background-position: 10px 50%;
+  background-size: 44px 44px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: .35em;
+}
+
+/* ── графика на полях: шары справа, пузыри слева (широкий экран, поля свободны) ── */
+.section[class*='decor-'] { position: relative; }
+.section[class*='decor-'] > .wrap { position: relative; z-index: 1; }
+@media (min-width: 1360px) {
+  .decor-a::after, .decor-b::after {
+    content: '';
+    position: absolute;
+    top: clamp(40px, 5vw, 72px);
+    z-index: 0;
+    pointer-events: none;
+    background: no-repeat center / contain;
+    animation: decor-float 7s ease-in-out infinite alternate;
+  }
+  .decor-a::after { right: max(12px, calc((100vw - 1180px) / 2 - 150px)); width: 96px; height: 172px; background-image: url("../decor/balloons.svg"); }
+  .decor-b::after { left: max(12px, calc((100vw - 1180px) / 2 - 140px)); width: 84px; height: 148px; background-image: url("../decor/bubbles.svg"); animation-duration: 9s; }
+  #zayavka.decor-a::after, #zayavka.decor-b::after { display: none; }
+}
+@keyframes decor-float { from { transform: translateY(0) rotate(-2deg); } to { transform: translateY(-14px) rotate(2deg); } }
+html.calm .decor-a::after, html.calm .decor-b::after { animation: none; }
+
+/* ── подвал — море: волна и плавник акулы ── */
+.footer { position: relative; }
+.footer::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(100% - 1px);
+  height: clamp(18px, 2.6vw, 34px);
+  background: var(--ink);
+  transform: scaleY(-1);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 40' preserveAspectRatio='none'%3E%3Cpath d='M0,0 H1200 V6 C1040,44 900,2 748,18 C600,34 470,6 316,20 C196,31 92,10 0,24 Z' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 40' preserveAspectRatio='none'%3E%3Cpath d='M0,0 H1200 V6 C1040,44 900,2 748,18 C600,34 470,6 316,20 C196,31 92,10 0,24 Z' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+}
+.footer::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 2px);
+  width: clamp(34px, 4vw, 50px);
+  aspect-ratio: 64 / 46;
+  background: url("../decor/fin.svg") no-repeat center / contain;
+  pointer-events: none;
+  animation: fin-swim 26s linear infinite;
+}
+@keyframes fin-swim {
+  0% { transform: translateX(-70px) translateY(4px); }
+  46% { transform: translateX(46vw) translateY(-2px); }
+  50% { transform: translateX(50vw) translateY(18px); }      /* нырок */
+  54% { transform: translateX(54vw) translateY(-2px); }
+  100% { transform: translateX(104vw) translateY(4px); }
+}
+html.calm .footer::after { animation: none; transform: translateX(68vw); }
+
+/* ── кнопка движения в подвале ── */
+.motion-toggle {
+  border: 1px solid rgba(255, 255, 255, .3);
+  border-radius: var(--r-pill);
+  background: none;
+  color: #fff;
+  font: 500 14px/1 'Onest', sans-serif;
+  padding: 8px 14px;
+  min-height: 36px;
+  cursor: pointer;
+}
+.motion-toggle:hover { border-color: var(--yellow); color: var(--yellow); }
+
+/* ── живые мелочи под курсором ── */
+@media (hover: hover) and (pointer: fine) {
+  .balloon i { transition: transform 280ms var(--ease-spring); }
+  .balloon:hover i { transform: translateY(-.1em) rotate(-6deg) scale(1.06); }
+  .balloon:hover i:nth-child(even) { transform: translateY(-.05em) rotate(6deg) scale(1.06); transition-delay: 45ms; }
+  .sticker { transition: transform 220ms var(--ease-spring); }
+  .sticker:hover { transform: rotate(2deg) scale(1.06); }
+  .price-badge:hover { transform: rotate(-5deg) scale(1.05); }
+  .steps3 li { transition: transform var(--d-fast) var(--ease-out); }
+  .steps3 li:hover { transform: translateY(-2px); }
+  .cta-wrap:hover .peek { transform: translateY(-5%) rotate(-2deg); }
 }
