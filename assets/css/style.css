@@ -50,14 +50,11 @@
   --d: 220ms;
   --d-slow: 480ms;
 }
-@media (prefers-reduced-motion: reduce) {
-  :root { --d-press: 0ms; --d-fast: 0ms; --d: 0ms; --d-slow: 0ms; }
-}
 
 *, *::before, *::after { box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+html.calm { scroll-behavior: auto; }
 
 body {
   margin: 0;
@@ -182,7 +179,6 @@ h1 .label {                       /* запросная строка внутр�
 .btn--ghost:hover { border-color: var(--cyan); color: var(--ink); }
 .section--violet .btn--ghost { color: #fff; border-color: rgba(255, 255, 255, .35); }
 .btn--sm { min-height: 44px; padding: 10px 18px; font-size: 16px; }
-@media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
 
 /* ссылка «к содержимому»: видна только с клавиатуры, первым нажатием Tab */
 .skip {
@@ -895,12 +891,12 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
 .balloon i:nth-child(6n+5) { --b: #8C3A7B; --hi: #CC84BC; --lo: #5A2250; }
 .balloon i:nth-child(6n)   { --b: #E9BD08; --hi: #FFEA7A; --lo: #A98608; }
 /* на тёмном — светлая гамма: тёмные шары на фиолетовом сливаются */
-.section--violet .balloon i, .intro .balloon i { --b: #F0C913; --hi: #FFF1A6; --lo: #B8960A; }
-.section--violet .balloon i:nth-child(6n+2), .intro .balloon i:nth-child(6n+2) { --b: #19BFDE; --hi: #A6F1FF; --lo: #0E8BA3; }
-.section--violet .balloon i:nth-child(6n+3), .intro .balloon i:nth-child(6n+3) { --b: #FF72B6; --hi: #FFC6E1; --lo: #C93F85; }
-.section--violet .balloon i:nth-child(6n+4), .intro .balloon i:nth-child(6n+4) { --b: #C2CB1B; --hi: #F0F68F; --lo: #8C930C; }
-.section--violet .balloon i:nth-child(6n+5), .intro .balloon i:nth-child(6n+5) { --b: #FFFFFF; --hi: #FFFFFF; --lo: #B9C6D8; }
-.section--violet .balloon i:nth-child(6n), .intro .balloon i:nth-child(6n) { --b: #EF8911; --hi: #FFC56E; --lo: #B36002; }
+.section--violet .balloon i { --b: #F0C913; --hi: #FFF1A6; --lo: #B8960A; }
+.section--violet .balloon i:nth-child(6n+2):nth-child(6n+2) { --b: #19BFDE; --hi: #A6F1FF; --lo: #0E8BA3; }
+.section--violet .balloon i:nth-child(6n+3):nth-child(6n+3) { --b: #FF72B6; --hi: #FFC6E1; --lo: #C93F85; }
+.section--violet .balloon i:nth-child(6n+4):nth-child(6n+4) { --b: #C2CB1B; --hi: #F0F68F; --lo: #8C930C; }
+.section--violet .balloon i:nth-child(6n+5):nth-child(6n+5) { --b: #FFFFFF; --hi: #FFFFFF; --lo: #B9C6D8; }
+.section--violet .balloon i:nth-child(6n):nth-child(6n) { --b: #EF8911; --hi: #FFC56E; --lo: #B36002; }
 
 /* ── первый экран главной ── */
 .hero--home h1 { margin-bottom: 18px; }
@@ -1377,179 +1373,6 @@ a.price-badge:hover { color: var(--ink); }
   .dock .btn { min-height: 48px; padding: 11px 28px; }
 }
 
-/* ── заставка: пасть акулы ──────────────────────────────────────────────────
-   Счёт от первой отрисовки: 0–420 мс пасть открыта, внутри знак студии; 420–560 —
-   челюсти смыкаются; 560 — удар, брызги, лёгкая встряска; 840–1340 — пасть
-   распахивается и открывает сайт. Двигаются только transform и opacity. */
-.intro {
-  --tooth-w: clamp(54px, 9vw, 108px);
-  --tooth-h: calc(var(--tooth-w) * .82);
-  --gum: clamp(10px, 1.6vw, 16px);
-  --open: 24vh;
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  overflow: hidden;
-  cursor: pointer;
-  animation: intro-shake 240ms linear 560ms, intro-off 1ms linear 1340ms forwards;
-}
-.no-intro .intro { display: none; }
-html.force-intro .intro { display: block; }
-.intro.is-skip { animation: none; opacity: 0; pointer-events: none; transition: opacity var(--d-fast) ease; }
-.intro-sea {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-content: center;
-  justify-items: center;
-  gap: 12px;
-  background: radial-gradient(circle at 50% 50%, #8C3A7B 0%, #5A2250 55%, #3B1535 100%);
-  animation: intro-sea-off 1ms linear 840ms forwards;
-}
-.intro-sea .balloon {
-  font-size: clamp(34px, 9vw, 84px);
-  animation: intro-word 420ms var(--ease-spring) both, intro-sea-off 1ms linear 550ms forwards;
-}
-.intro-sea > span:last-child {
-  font: 600 clamp(12px, 1.5vw, 16px)/1 'Onest', sans-serif;
-  letter-spacing: .26em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, .82);
-  animation: intro-sea-off 1ms linear 550ms forwards;
-}
-.intro-jaw {
-  position: absolute;
-  left: -12px;
-  right: -12px;
-  height: calc(50% - var(--tooth-h) / 2);
-}
-.intro-jaw--top {
-  top: 0;
-  background: linear-gradient(180deg, #155A9C, #1F7DD2 68%);
-  transform: translateY(calc(-1 * var(--open)));
-  animation: jaw-top 920ms linear 420ms forwards;
-}
-.intro-jaw--bot {
-  bottom: 0;
-  background: linear-gradient(0deg, #0F86A0, #19BFDE 68%);
-  transform: translateY(var(--open));
-  animation: jaw-bot 920ms linear 420ms forwards;
-}
-.intro-jaw::before {                             /* десна */
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: var(--gum);
-  background: #FF72B6;
-}
-.intro-jaw--top::before { bottom: 0; }
-.intro-jaw--bot::before { top: 0; }
-.intro-jaw::after {                              /* зубы: верхние и нижние входят друг в друга */
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: var(--tooth-h);
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 82' preserveAspectRatio='none'%3E%3Cpath d='M3 0H97L57 72Q50 84 43 72Z' fill='%23fff'/%3E%3Cpath d='M50 0H97L57 72Q53.500 79 50 80Z' fill='%23DCE9F3'/%3E%3Cpath d='M3 0L43 72Q50 84 57 72L97 0' fill='none' stroke='%23A9C4DA' stroke-width='2.500' stroke-linejoin='round'/%3E%3C/svg%3E") repeat-x 0 0 / var(--tooth-w) var(--tooth-h);
-}
-.intro-jaw--top::after { top: 100%; }
-.intro-jaw--bot::after { bottom: 100%; transform: scaleY(-1); background-position-x: calc(var(--tooth-w) / 2); }
-.intro-eye {
-  position: absolute;
-  bottom: calc(var(--gum) + 4.5vh);
-  width: clamp(34px, 6vw, 66px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: inset 0 -5px 0 #CFE3F2;
-  overflow: hidden;
-}
-.intro-eye:first-child { left: calc(50% - clamp(90px, 17vw, 190px)); }
-.intro-eye:last-child { right: calc(50% - clamp(90px, 17vw, 190px)); }
-.intro-eye::after {                              /* зрачок */
-  content: '';
-  position: absolute;
-  left: 28%;
-  top: 40%;
-  width: 44%;
-  height: 44%;
-  border-radius: 50%;
-  background: var(--ink);
-}
-.intro-eye::before {                             /* веко: взгляд выходит хитрым */
-  content: '';
-  position: absolute;
-  left: -20%;
-  right: -20%;
-  top: -34%;
-  height: 62%;
-  background: #1F7DD2;
-  transform: rotate(16deg);
-}
-.intro-eye:last-child::before { transform: rotate(-16deg); }
-.intro-splash::before {                          /* пена по линии укуса */
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  height: 12px;
-  margin-top: -6px;
-  border-radius: 6px;
-  background: #fff;
-  opacity: 0;
-  animation: intro-foam 300ms var(--ease-out) 560ms forwards;
-}
-.intro-splash i {
-  position: absolute;
-  top: 50%;
-  left: var(--x);
-  width: calc(13px * var(--s));
-  height: calc(17px * var(--s));
-  margin: -8px 0 0 -6px;
-  border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%;
-  background: #E6FAFF;
-  box-shadow: inset -3px -3px 0 #7AD3EC, 0 0 0 2px rgba(255, 255, 255, .55);
-  opacity: 0;
-  animation: intro-drop 640ms var(--ease-out) calc(560ms + var(--t)) both;
-}
-@keyframes jaw-top {
-  0%   { transform: translateY(calc(-1 * var(--open))); animation-timing-function: cubic-bezier(.6, 0, .9, .4); }
-  15%  { transform: translateY(0); animation-timing-function: var(--ease-out); }
-  24%  { transform: translateY(-1.4vh); animation-timing-function: ease-in; }
-  32%  { transform: translateY(0); }
-  46%  { transform: translateY(0); animation-timing-function: var(--ease-in-out); }
-  100% { transform: translateY(calc(-100% - var(--tooth-h) - 24px)); }
-}
-@keyframes jaw-bot {
-  0%   { transform: translateY(var(--open)); animation-timing-function: cubic-bezier(.6, 0, .9, .4); }
-  15%  { transform: translateY(0); animation-timing-function: var(--ease-out); }
-  24%  { transform: translateY(1.4vh); animation-timing-function: ease-in; }
-  32%  { transform: translateY(0); }
-  46%  { transform: translateY(0); animation-timing-function: var(--ease-in-out); }
-  100% { transform: translateY(calc(100% + var(--tooth-h) + 24px)); }
-}
-@keyframes intro-word { from { opacity: 0; transform: scale(.92); } }
-@keyframes intro-sea-off { to { opacity: 0; } }
-@keyframes intro-off { to { visibility: hidden; pointer-events: none; } }
-@keyframes intro-fade { to { opacity: 0; visibility: hidden; pointer-events: none; } }
-@keyframes intro-shake {
-  20% { transform: translate(-6px, 3px); }
-  45% { transform: translate(5px, -3px); }
-  70% { transform: translate(-3px, 2px); }
-}
-@keyframes intro-foam {
-  0%   { opacity: .95; transform: scaleY(1); }
-  100% { opacity: 0; transform: scaleY(9); }
-}
-@keyframes intro-drop {
-  0%   { opacity: 0; transform: translate(0, 0) scale(.5); }
-  12%  { opacity: 1; }
-  70%  { opacity: 1; }
-  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1); }
-}
-
 /* наведение — только там, где есть настоящий курсор: на телефоне оно залипает после тапа */
 @media (hover: hover) and (pointer: fine) {
   a.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); color: inherit; }
@@ -1560,17 +1383,10 @@ html.force-intro .intro { display: block; }
 }
 a.card:active { transform: scale(.985); }
 
-/* кто просил поменьше движения, получает страницу без него: блоки стоят на месте,
-   длительности обнулены токенами в :root, а заставка не двигается — открытая пасть
-   со знаком студии просто растворяется. Адрес с ?intro показывает полную. */
-@media (prefers-reduced-motion: reduce) {
-  html:not(.force-intro) .intro { animation: intro-fade 420ms ease 700ms forwards; }
-  html:not(.force-intro) .intro *, html:not(.force-intro) .intro *::before,
-  html:not(.force-intro) .intro *::after { animation: none; }
-  html:not(.force-intro) .intro-splash { display: none; }
-  .rv { opacity: 1; transform: none; }
-  .tab-panel.is-enter, .calc-total.is-pop, .write-menu { animation: none; }
-}
+/* спокойный режим (html.calm): блоки проявляются без сдвига, панели и сумма не
+   подпрыгивают. Заставку ведёт assets/js/intro.js, у неё свой тихий вариант */
+html.calm .rv { transform: none; }
+html.calm .tab-panel.is-enter, html.calm .calc-total.is-pop, html.calm .write-menu { animation: none; }
 
 /* кнопки-вселенные каталога на телефоне идут одной лентой: в четыре ряда они сдвигали
    сетку героев на второй экран. Стоит в конце файла — базовое правило .pills выше. */
@@ -1678,7 +1494,7 @@ a.card:active { transform: scale(.985); }
 @media (min-width: 1000px) { .price-cols { grid-template-columns: 1fr 1fr; } }
 .price-cols h2 { font-size: clamp(24px, 3vw, 30px); }
 .price-cols .price-table { max-width: none; }
-.section--top .note, .section:not(.section--warm) .note { background: var(--paper-warm); }
+.section--top .note, .section:not(.section--warm) .note { background-color: var(--paper-warm); }
 
 /* кнопки мессенджеров в заявке делят ряд поровну: на телефоне они стояли столбиком
    разной ширины */
@@ -1715,4 +1531,151 @@ p:has(> .btn) { display: flex; flex-wrap: wrap; gap: 12px; }
   .cards--text[data-list] .card-body { padding: 16px 18px 18px; gap: 8px; }
   .cards--text[data-list] .card-body h3 { font-size: 18px; }
   .cards--text[data-list] .card-body p { display: block; }
+}
+
+/* ══ Стиль главной на весь сайт (05.10.2026, слово владельца) ═══════════════════════
+   Стикер над заголовком, цифры-шары в ценах, три шага и акула у заявки, подсказки от
+   акулы, графика на полях, плавник в подвале. Движение выключается классом html.calm. */
+
+/* ── стикер над заголовком страницы: приём «О-оу!» ── */
+.sticker {
+  display: block;
+  width: fit-content;
+  margin: 0 0 14px 2px;
+  padding: 7px 14px 8px;
+  border-radius: 16px 16px 16px 5px;
+  background: var(--yellow);
+  box-shadow: 0 4px 0 var(--yellow-dark);
+  color: var(--ink);
+  font: 700 clamp(13px, 1.4vw, 16px)/1 'Unbounded', 'Onest', sans-serif;
+  letter-spacing: -.01em;
+  transform: rotate(-3deg);
+  transform-origin: left bottom;
+}
+.sticker--cyan { background: #9BE6F5; box-shadow: 0 4px 0 #57BDD2; }
+.sticker--pink { background: #FFB9DA; box-shadow: 0 4px 0 #E983B5; }
+.sticker--lime { background: #DFE56F; box-shadow: 0 4px 0 #A9B02B; }
+.center .sticker { margin-inline: auto; }
+@media (max-width: 699px) {
+  .hero-grid > div:first-child > .sticker { order: 0; margin-bottom: -4px; }
+}
+
+/* ── цена цифрами-шарами в плитках фактов ── */
+.fact b .balloon { font-size: clamp(28px, 3.4vw, 38px); }
+.section--strip .fact b .balloon { font-size: clamp(34px, 4.6vw, 52px); }
+.fact .rub { font: 800 .7em/1 'Unbounded', sans-serif; color: var(--magenta); }
+.rate-card b .balloon { font-size: 1em; }
+
+/* ── три шага строкой над заявкой ── */
+.steps3 {
+  list-style: none;
+  margin: 0 0 clamp(18px, 3vw, 30px);
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 12px;
+}
+.steps3 li {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 8px 18px 8px 12px;
+  background: #fff;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-pill);
+  box-shadow: 0 3px 0 rgba(22, 35, 58, .07);
+  font: 700 15px/1.2 'Unbounded', 'Onest', sans-serif;
+  letter-spacing: -.01em;
+}
+.steps3 .balloon { font-size: 26px; }
+.steps3 .flow-arrow { height: auto; flex: none; }
+.steps3 .flow-arrow svg { width: 46px; height: 26px; transform: none; }
+@media (max-width: 760px) {
+  .steps3 .flow-arrow { display: none; }
+  .steps3 { gap: 8px; }
+  .steps3 li { flex: 1 1 100%; font-size: 14px; }
+}
+
+/* ── подсказка: карточка с цветной кромкой ── */
+.note { padding: 12px 16px; border-left: 4px solid var(--cyan); border-radius: 0 14px 14px 0; }
+
+/* ── графика на полях: шары справа, пузыри слева (широкий экран, поля свободны) ── */
+.section[class*='decor-'] { position: relative; }
+.section[class*='decor-'] > .wrap { position: relative; z-index: 1; }
+@media (min-width: 1360px) {
+  .decor-a::after, .decor-b::after {
+    content: '';
+    position: absolute;
+    top: clamp(40px, 5vw, 72px);
+    z-index: 0;
+    pointer-events: none;
+    background: no-repeat center / contain;
+    animation: decor-float 7s ease-in-out infinite alternate;
+  }
+  .decor-a::after { right: max(12px, calc((100vw - 1180px) / 2 - 150px)); width: 96px; height: 172px; background-image: url("../decor/balloons.svg"); }
+  .decor-b::after { left: max(12px, calc((100vw - 1180px) / 2 - 140px)); width: 84px; height: 148px; background-image: url("../decor/bubbles.svg"); animation-duration: 9s; }
+  #zayavka.decor-a::after, #zayavka.decor-b::after { display: none; }
+}
+@keyframes decor-float { from { transform: translateY(0) rotate(-2deg); } to { transform: translateY(-14px) rotate(2deg); } }
+html.calm .decor-a::after, html.calm .decor-b::after { animation: none; }
+
+/* ── подвал — море: волна и плавник акулы ── */
+.footer { position: relative; }
+.footer::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(100% - 1px);
+  height: clamp(18px, 2.6vw, 34px);
+  background: var(--ink);
+  transform: scaleY(-1);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 40' preserveAspectRatio='none'%3E%3Cpath d='M0,0 H1200 V6 C1040,44 900,2 748,18 C600,34 470,6 316,20 C196,31 92,10 0,24 Z' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 40' preserveAspectRatio='none'%3E%3Cpath d='M0,0 H1200 V6 C1040,44 900,2 748,18 C600,34 470,6 316,20 C196,31 92,10 0,24 Z' fill='%23000'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+}
+.footer::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 2px);
+  width: clamp(34px, 4vw, 50px);
+  aspect-ratio: 64 / 46;
+  background: url("../decor/fin.svg") no-repeat center / contain;
+  pointer-events: none;
+  animation: fin-swim 26s linear infinite;
+}
+@keyframes fin-swim {
+  0% { transform: translateX(-70px) translateY(4px); }
+  46% { transform: translateX(46vw) translateY(-2px); }
+  50% { transform: translateX(50vw) translateY(18px); }      /* нырок */
+  54% { transform: translateX(54vw) translateY(-2px); }
+  100% { transform: translateX(104vw) translateY(4px); }
+}
+html.calm .footer::after { animation: none; transform: translateX(68vw); }
+
+/* ── кнопка движения в подвале ── */
+.motion-toggle {
+  border: 1px solid rgba(255, 255, 255, .3);
+  border-radius: var(--r-pill);
+  background: none;
+  color: #fff;
+  font: 500 14px/1 'Onest', sans-serif;
+  padding: 8px 14px;
+  min-height: 36px;
+  cursor: pointer;
+}
+.motion-toggle:hover { border-color: var(--yellow); color: var(--yellow); }
+
+/* ── живые мелочи под курсором ── */
+@media (hover: hover) and (pointer: fine) {
+  .balloon i { transition: transform 280ms var(--ease-spring); }
+  .balloon:hover i { transform: translateY(-.1em) rotate(-6deg) scale(1.06); }
+  .balloon:hover i:nth-child(even) { transform: translateY(-.05em) rotate(6deg) scale(1.06); transition-delay: 45ms; }
+  .sticker { transition: transform 220ms var(--ease-spring); }
+  .sticker:hover { transform: rotate(2deg) scale(1.06); }
+  .price-badge:hover { transform: rotate(-5deg) scale(1.05); }
+  .steps3 li { transition: transform var(--d-fast) var(--ease-out); }
+  .steps3 li:hover { transform: translateY(-2px); }
 }

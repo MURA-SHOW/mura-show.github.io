@@ -3,22 +3,25 @@
   'use strict';
 
   function each(list, fn) { Array.prototype.forEach.call(list, fn); }
-  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // спокойный режим ставит скрипт в <head> (класс calm): система просит «без анимации»
+  // и посетитель не включил движение сам. Тогда блоки проявляются без сдвига, циклов нет
+  var root = document.documentElement;
+  var calm = /\bcalm\b/.test(root.className);
   var smooth = calm ? 'auto' : 'smooth';
   var hasIO = 'IntersectionObserver' in window;
 
-  // заставка-акула: идёт сама на CSS, здесь только пропуск по касанию и уборка за собой
-  var intro = document.querySelector('[data-intro]');
-  if (intro) {
-    var gone = function () { if (intro.parentNode) { intro.parentNode.removeChild(intro); } };
-    if (/\bno-intro\b/.test(document.documentElement.className)) {
-      gone();
-    } else {
-      var skip = function () { intro.classList.add('is-skip'); setTimeout(gone, 200); };
-      intro.addEventListener('click', skip);
-      document.addEventListener('keydown', skip, { once: true });
-      setTimeout(gone, 1700);
-    }
+  // кнопка движения в подвале: видна, только если система просит «без анимации».
+  // Выбор запоминается; тот же выбор делает адрес с ?motion=1 и ?motion=0
+  var motionBtn = document.querySelector('[data-motion]');
+  if (motionBtn && /\bos-calm\b/.test(root.className)) {
+    motionBtn.hidden = false;
+    motionBtn.textContent = calm ? 'Включить анимацию' : 'Выключить анимацию';
+    motionBtn.addEventListener('click', function () {
+      try {
+        if (calm) { localStorage.setItem('mura-motion', '1'); } else { localStorage.removeItem('mura-motion'); }
+      } catch (e) { /* хранилище закрыто — останется как есть */ }
+      location.replace(location.pathname + location.hash);
+    });
   }
 
   // видео подключается после текста и картинок: первый экран не ждёт мегабайты.
@@ -281,7 +284,7 @@
 
   // блок выезжает при прокрутке — но только тот, что ниже экрана на момент загрузки:
   // видимое не прячем, чтобы страница не мигала
-  if (hasIO && !calm) {
+  if (hasIO) {
     var seen = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add('rv-in'); seen.unobserve(e.target); }
