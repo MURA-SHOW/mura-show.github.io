@@ -1794,3 +1794,15 @@ html.calm .mk--peek.rv svg { transform: none; transition: none; }
 .steps3.rv > .flow-arrow { opacity: 0; }
 .steps3.rv.rv-in > .flow-arrow { opacity: 1; transition: opacity 320ms ease 240ms; }
 html.calm .steps3.rv > li { transform: none; }
+/* прайс: таблицы на карточках с цветной кромкой — страница с деньгами была самой сухой на сайте */
+.price-cols > div {
+  background: #fff;
+  border: 1px solid var(--line-soft);
+  border-top: 5px solid var(--cyan);
+  border-radius: var(--r-card);
+  padding: clamp(16px, 2.4vw, 28px);
+  box-shadow: var(--shadow-soft);
+}
+.price-cols > div:nth-child(2) { border-top-color: var(--magenta); }
+.price-cols .price-table tr:last-child td { border-bottom: 0; }
+.section--top .facts .fact { background: var(--paper-warm); border-color: transparent; }
