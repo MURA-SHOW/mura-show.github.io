@@ -1,6 +1,7 @@
 /* MURA SHOW — страница «Собери праздник». Вид плиток, карточек, пилюль и блока суммы берётся
    из style.css (.tile, .card, .opt, .calc-sum, .flow): здесь только то, чего там нет —
-   выбранное состояние, сетка героев, полоска шагов и появление панели. */
+   лицо темы, выбранное состояние, сетка героев, полоска шагов и движение.
+   Движение выключается классом html.calm (переключатель в подвале), как на всём сайте. */
 
 .pb[hidden], .pb [hidden] { display: none !important; }
 
@@ -10,6 +11,10 @@
 .pb-step p { min-height: 1.5em; }
 .pb-step.is-done { border-color: var(--cyan); box-shadow: 0 4px 0 var(--cyan-dark); }
 .pb-step.is-done p { color: var(--ink); font-weight: 600; }
+.pb-step.is-done .balloon { animation: pb-bounce 420ms var(--ease-spring) backwards; }
+.pb-step.is-done + .flow-arrow { color: var(--cyan-ink); }
+.pb-steps .flow-arrow { transition: color var(--d) ease; }
+@keyframes pb-bounce { from { transform: translateY(4px) scale(.8); } }
 
 /* На телефоне три большие карточки шагов увели бы первый выбор на второй экран: полоска
    сжимается в ряд коротких пилюль (цифра-шар и слово), без стрелок и без подписи выбора —
@@ -30,7 +35,8 @@
 
 /* на большом экране шапку и карточки шагов тоже поджимаем: плитки тем должны выглядывать на первом экране */
 @media (min-width: 860px) {
-  .pb-head { padding-bottom: 28px; }
+  .pb-head { padding-top: 34px; padding-bottom: 28px; }
+  .pb-head .pb-steps { margin-top: 22px; }
   .pb [data-pb-panel="1"] { padding-top: 36px; }
   .pb-step { padding: 16px 20px 18px; }
   .pb-step .balloon { font-size: 40px; margin-bottom: 4px; }
@@ -47,9 +53,28 @@
   .pb-pick:focus-within, .pb-hero:focus-within { outline: 0; }
   .pb-pick:has(input:focus-visible), .pb-hero:has(input:focus-visible) { outline: 3px solid var(--blue); outline-offset: 2px; }
 }
+
+/* лицо темы: кадр первого героя группы в белой рамке, чуть наклонён, как снимки в «Праздниках нашими глазами» */
+.pb-pick { grid-template-columns: minmax(0, 1fr); padding: 10px 10px 14px; }
+.pb-pick b, .pb-pick small { padding: 0 4px; }
+/* «Мультфильмы» шрифтом заголовков — 140 px при 14,5 px, а в плитке на 320 px места 118: кегль
+   названия идёт за шириной экрана, иначе слово распирало плитку и уводило кадр за край */
+@media (max-width: 420px) {
+  .pb-pick b { padding: 0; font-size: clamp(12px, 3.75vw, 14.5px); }
+  .pb-pick small { padding: 0; }
+}
+@media (max-width: 359px) { .pb-pick { padding: 8px 8px 12px; } }
+.pb-face {
+  display: block; aspect-ratio: 4 / 3; margin-bottom: 8px; overflow: hidden;
+  border: 4px solid #fff; border-radius: 14px; background: #fff;
+  box-shadow: 0 3px 0 rgba(22, 35, 58, .1);
+  transform: rotate(-1.4deg);
+  transition: transform var(--d) var(--ease-out), border-color var(--d-fast) ease;
+}
+.pb-pick:nth-child(even) .pb-face { transform: rotate(1.4deg); }
+.pb-face img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .pb-pick.is-on { border-color: var(--t); background: #fff; box-shadow: 0 4px 0 var(--t); }
-.pb-pick.is-on .tile-ic { background: var(--t); color: #fff; }
-.tile--yellow.pb-pick.is-on .tile-ic, .tile--lime.pb-pick.is-on .tile-ic { color: var(--ink); }
+.pb-pick.is-on .pb-face { transform: none; border-color: var(--t); }
 
 /* сетка героев своя: у .cards[data-list] последняя карточка ставится по центру счётом детей,
    а здесь часть карточек скрыта фильтром темы */
@@ -59,12 +84,14 @@
 .pb-hero .card-price { font-size: 16px; padding-top: 6px; }
 .pb-hero .tag { padding: 3px 8px; }
 .pb-hero.is-on { border-color: var(--cyan); box-shadow: 0 0 0 3px var(--cyan), 0 6px 0 var(--cyan-dark); }
-.pb-hero.is-on::after {            /* отметка «выбран» на кадре */
+.pb-pick.is-on::after, .pb-hero.is-on::after {            /* отметка «выбрано» на кадре */
   content: ''; position: absolute; top: 10px; right: 10px; width: 34px; height: 34px;
   border-radius: 50%; border: 3px solid #fff; background: var(--cyan-ink) center/18px no-repeat
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E");
+  animation: pb-check var(--d) var(--ease-spring) backwards;
 }
-.pb-hero:active { transform: scale(.98); }
+.pb-pick.is-on::after { top: 16px; right: 16px; width: 30px; height: 30px; background-size: 16px; }
+@keyframes pb-check { from { opacity: 0; transform: scale(.6); } }
 @media (min-width: 700px) {
   .pb-heroes { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
   .pb-hero .card-body { padding: 14px 16px 16px; }
@@ -72,18 +99,48 @@
 }
 @media (min-width: 1000px) { .pb-heroes { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @media (hover: hover) and (pointer: fine) {
-  .pb-hero:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); }
+  .pb-pick:hover, .pb-hero:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); }
+  .pb-pick:hover .pb-face { transform: scale(1.03); }
+  .pb-pick.is-on:hover { box-shadow: 0 4px 0 var(--t); }
   .pb-hero.is-on:hover { box-shadow: 0 0 0 3px var(--cyan), 0 6px 0 var(--cyan-dark); }
 }
+.pb-pick:active, .pb-hero:active { transform: scale(.98); }
 
 .pb-any span { border-style: dashed; }
 
-/* ── панель следующего шага появляется под выбором ── */
-.pb [data-pb-panel] { scroll-margin-top: 76px; }
-.pb [data-pb-panel].is-in > .wrap { animation: pb-in var(--d-slow, 480ms) var(--ease-out, ease-out) both; }
-@keyframes pb-in {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: none; }
+/* ── блок суммы: шаг 3 стоит на кремовой полосе, кремовая карточка на ней пропадала ── */
+.pb .calc-sum { background: #fff; border: 1px solid var(--line-soft); box-shadow: 0 4px 0 rgba(22, 35, 58, .06); }
+@media (max-width: 520px) {
+  .pb .calc-send .btn { flex: 1 1 100%; justify-content: center; }
 }
-html.calm .pb [data-pb-panel].is-in > .wrap { animation: none; }
-@media (prefers-reduced-motion: reduce) { .pb [data-pb-panel].is-in > .wrap { animation: none; } }
+
+/* ── выбранный герой в блоке суммы ── */
+.pb-chosen {
+  display: flex; align-items: center; gap: 14px;
+  padding-bottom: 14px; margin-bottom: 4px; border-bottom: 2px dashed rgba(22, 35, 58, .12);
+}
+.pb-chosen .pb-face { flex: none; width: 66px; aspect-ratio: 4 / 5; margin: 0; transform: rotate(-3deg); }
+.pb-chosen p { display: grid; gap: 4px; margin: 0; min-width: 0; }
+.pb-chosen small { font: 700 13px/1 'Onest', sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint); }
+.pb-chosen b { font: 700 17px/1.2 'Unbounded', sans-serif; letter-spacing: -.01em; overflow-wrap: anywhere; }
+.pb-chosen.is-new .pb-face { animation: pb-check var(--d-slow) var(--ease-spring) backwards; }
+
+/* ── движение: панель следующего шага, герои новой темы, строки и сумма ── */
+.pb [data-pb-panel] { scroll-margin-top: 76px; }
+.pb [data-pb-panel].is-in > .wrap { animation: pb-in var(--d-slow) var(--ease-out) backwards; }
+@keyframes pb-in { from { opacity: 0; transform: translateY(14px); } }
+/* герои темы входят по очереди: видно, что набор сменился. backwards, а не both: после входа
+   карточка снова слушается наведения и нажатия */
+.is-swap > :not([hidden]) {
+  animation: pb-card 360ms var(--ease-out) backwards;
+  animation-delay: calc(var(--i, 0) * 35ms);
+}
+@keyframes pb-card { from { opacity: 0; transform: translateY(12px) scale(.98); } }
+.pb .calc-lines li.is-new { animation: pb-line var(--d) var(--ease-out) backwards; }
+@keyframes pb-line { from { opacity: 0; transform: translateX(-8px); } }
+.dock-price b.pb-pop { animation: calc-pop var(--d) var(--ease-out); }
+
+html.calm .pb [data-pb-panel].is-in > .wrap, html.calm .is-swap > *, html.calm .pb .is-new,
+html.calm .pb-chosen.is-new .pb-face, html.calm .pb-step .balloon, html.calm .dock-price b.pb-pop,
+html.calm .pb-pick.is-on::after, html.calm .pb-hero.is-on::after { animation: none; }
+html.calm .pb-face, html.calm .pb-steps .flow-arrow { transition: none; }

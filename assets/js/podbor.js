@@ -21,6 +21,7 @@
   var panel2 = one('[data-pb-panel="2"]'), panel3 = one('[data-pb-panel="3"]');
   var totalEl = one('[data-pb-total]'), linesEl = one('[data-pb-lines]');
   var preEl = one('[data-pb-pre]'), preRow = one('[data-pb-pre-row]'), moreCap = one('[data-pb-more]');
+  var chosen = one('[data-pb-chosen]'), heroesBox = one('.pb-heroes'), moreBox = one('.pb-more');
   var said = {}, steps = {};
   each(document.querySelectorAll('[data-pb-said]'), function (el) {
     said[el.getAttribute('data-pb-said')] = { el: el, hint: el.textContent };
@@ -55,21 +56,51 @@
     panel.hidden = false;
     if (was && !calm) {
       panel.classList.add('is-in');
-      setTimeout(function () { panel.classList.remove('is-in'); }, 400);
+      panel.firstElementChild.addEventListener('animationend', function end(e) {
+        if (e.target !== this) { return; }
+        panel.classList.remove('is-in');
+        this.removeEventListener('animationend', end);
+      });
     }
     if (byPointer) { panel.scrollIntoView({ behavior: smooth, block: 'start' }); }
   }
 
+  // сумма докручивается от прежнего числа к новому за 0,32 с. Скрытая вкладка кадров не рисует —
+  // там число ставится сразу, иначе оно застряло бы на старом
+  var sum = BASE, raf = 0;
+  function roll(to) {
+    cancelAnimationFrame(raf);
+    if (calm || document.hidden || to === sum) { sum = to; totalEl.textContent = money(to, NB); return; }
+    var from = sum, t0 = performance.now();
+    totalEl.setAttribute('aria-busy', 'true');           // читалка назовёт только итог
+    (function tick(now) {
+      var k = Math.min(1, (now - t0) / 320);
+      sum = k < 1 ? Math.round((from + (to - from) * (1 - Math.pow(1 - k, 3))) / 100) * 100 : to;
+      totalEl.textContent = money(sum, NB);
+      if (k < 1) { raf = requestAnimationFrame(tick); } else { totalEl.removeAttribute('aria-busy'); }
+    })(t0);
+  }
+  var had = null;           // подписи строк прошлого расчёта
+
   function onGroup() {
     var g = picked('group');
     if (!g) { return; }
-    var hero = picked('hero'), listed = 0;
+    var hero = picked('hero'), listed = 0, shown = 0;
     each(panel2.querySelectorAll('[data-group]'), function (el) {
       var on = el.getAttribute('data-group') === g.value;
       el.hidden = !on;
-      if (on && el.classList.contains('opt')) { listed++; }
+      if (!on) { return; }
+      if (el.classList.contains('opt')) { listed++; }
+      el.style.setProperty('--i', Math.min(shown++, 8));     // очередь входа, не длиннее 0,65 с
     });
     moreCap.hidden = !listed;
+    if (!calm) {
+      [heroesBox, moreBox].forEach(function (b) {
+        b.classList.remove('is-swap');
+        void b.offsetWidth;
+        b.classList.add('is-swap');
+      });
+    }
     // герой из прошлой темы остался бы выбранным, но невидимым
     if (hero && hero.value && hero.closest('[data-group]').hidden) { hero.checked = false; }
     say(1, g.value);
@@ -95,15 +126,33 @@
       extra.push(s.getAttribute('data-name').toLowerCase());
     });
 
-    totalEl.textContent = money(total, NB);
+    roll(total);
     preEl.textContent = money(Math.round(total * 0.2), NB);
     linesEl.innerHTML = '';
+    var now = {};
     lines.forEach(function (l) {
       var li = document.createElement('li'), a = document.createElement('span'), b = document.createElement('span');
       a.textContent = l[0];
       b.textContent = typeof l[1] === 'number' ? money(l[1], NB) : l[1];
+      if (had && !had[l[0]]) { li.className = 'is-new'; }
+      now[l[0]] = 1;
       li.appendChild(a); li.appendChild(b); linesEl.appendChild(li);
     });
+    had = now;
+
+    // кадр выбранного героя встаёт в блок суммы: видно, кто приедет
+    var shot = hero && hero.value && hero.parentNode.querySelector('img');
+    if (shot) {
+      var img = chosen.querySelector('img'), src = shot.getAttribute('src');
+      if (img.getAttribute('src') !== src) {
+        img.src = src;
+        chosen.classList.remove('is-new');          // сменился герой — кадр «вклеивается» заново
+        void chosen.offsetWidth;
+        chosen.classList.add('is-new');
+      }
+      chosen.querySelector('b').textContent = hero.getAttribute('data-name');
+    }
+    chosen.hidden = !shot;
     text = 'Расчёт с сайта: ' + lines.map(function (l) {
       return l[0] + ' — ' + (typeof l[1] === 'number' ? money(l[1], ' ') : l[1]);
     }).join('; ') + '. Предварительно ' + money(total, ' ') + '.';
@@ -111,6 +160,11 @@
     mark('group'); mark('hero');
     if (hero && dockSum) {
       dockCap.textContent = 'ваш набор';
+      if (dockSum.textContent !== money(total, NB) && !calm) {
+        dockSum.classList.remove('pb-pop');
+        void dockSum.offsetWidth;
+        dockSum.classList.add('pb-pop');
+      }
       dockSum.textContent = money(total, NB);
       dock.setAttribute('href', '#shag-3');
     }
