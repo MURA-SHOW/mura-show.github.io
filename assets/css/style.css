@@ -281,7 +281,7 @@ main:focus { outline: none; }
 .hero p { color: var(--ink-soft); font-size: clamp(17px, 1.9vw, 20px); max-width: 54ch; }
 .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0 18px; }
 .hero-cta .btn { max-width: 100%; text-align: center; }
-.hero-note { font-size: 15px; color: var(--ink-faint); }
+.hero-note { font-size: 15px; color: var(--ink-faint); margin-top: 14px; }
 .hero-video {
   position: relative;
   border-radius: 24px;
@@ -514,9 +514,13 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
    колонки на 1024 px оно вылезало за край на 19 px, на 1440 упиралось в рамку */
 .fact { container-type: inline-size; }
 .fact b { overflow-wrap: anywhere; }
-@supports (font-size: 1cqi) { .fact b { font-size: clamp(20px, 11cqi, 36px); } }
+@supports (font-size: 1cqi) {
+  .fact b { font-size: clamp(20px, 13cqi, 36px); }
+  .fact--long b { font-size: clamp(16px, 9.4cqi, 28px); }      /* слово от девяти букв: класс ставит sitelib.dress */
+}
 /* плашка со словом вместо числа: «Наро-Фоминск» кеглем цены ломается переносом */
 .fact--word b { font-size: clamp(20px, 1.9vw, 23px); }
+@supports (font-size: 1cqi) { .fact--word b { font-size: clamp(16px, 9.4cqi, 23px); } }   /* «Наро-Фоминск» на 1024 px был шире плитки на 5 px */
 .fact span { font-size: 16px; color: var(--ink-soft); }
 .section--violet .fact span { color: rgba(255, 255, 255, .82); }
 
@@ -1712,6 +1716,13 @@ html.calm .footer::after { animation: none; transform: translateX(68vw); }
 .mk--peek.rv.rv-in svg { transform: none; transition: transform 620ms var(--ease-spring) 120ms; }
 
 /* целые фигуры */
+/* справа от заголовка страницы без кадра: только там, где справа свободно */
+.mk--top { display: none; }
+@media (min-width: 1100px) {
+  .mk--top { display: block; position: absolute; right: 8px; top: -8px; width: clamp(150px, 14vw, 190px); }
+  .wrap--mk > :is(h1, p, .sticker, .eyebrow, .crumbs, nav) { max-width: calc(100% - 240px); }
+}
+.card-flat .mk--card { width: min(72%, 220px); }
 .mk--404 { width: min(230px, 54vw); margin: 0 auto 4px; }
 .split .mk--about { width: min(270px, 62%); justify-self: center; }
 .head-mk { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
@@ -1757,3 +1768,5 @@ html:not(.calm) .mk.is-live:is([data-mk='klass'], [data-mk='privet'], [data-mk='
 html:not(.calm) .mk.is-live[data-mk='oy'] .mk-arml { transform-origin: 80% 90%; animation: mk-flail 1.1s ease-in-out infinite; }
 html:not(.calm) .mk.is-live[data-mk='oy'] .mk-over { transform-origin: 50% 100%; animation: mk-sway 1.6s ease-in-out infinite; }
 html.calm .mk--peek.rv svg { transform: none; transition: none; }
+/* цифры-шары в полосе фактов мерятся по плитке: «2023» на 320 px вылезало из неё на 22 px */
+@supports (font-size: 1cqi) { .section--strip .fact b .balloon { font-size: clamp(24px, 19cqi, 52px); } }
