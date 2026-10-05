@@ -1599,3 +1599,95 @@ a.card:active { transform: scale(.985); }
 
 /* девять кнопок-вселенных каталога на десктопе в один ряд: «Новый год» один уходил на вторую строку */
 @media (min-width: 1000px) { .pills { gap: 6px; } .pills button { padding: 9px 13px; font-size: 15px; } }
+
+/* ── единый каркас страниц (05.10.2026) ─────────────────────────────────────── */
+/* Заявка сразу после белой секции: два отступа подряд давали 176 px пустоты */
+.section--tight { padding-top: 0; }
+/* Страница без кадра на первом экране (цены, отзывы, перечни, поводы) открывается теми же
+   цветными пятнами, что и страница с кадром: верх у всех страниц один */
+.section--top { position: relative; overflow: hidden; }
+.section--top::before {
+  content: '';
+  position: absolute;
+  inset: -90px -10% auto -14%;
+  height: 520px;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 46% at 12% 30%, rgba(25, 191, 222, .18), transparent 70%),
+    radial-gradient(34% 40% at 86% 12%, rgba(255, 114, 182, .16), transparent 70%);
+}
+.section--top > .wrap { position: relative; }
+
+/* ценник-стикер на кадре героя и шоу: рамка по самому кадру */
+.hero-pic, .hero-shot { position: relative; }
+.price-badge { text-decoration: none; transition: transform var(--d-press) var(--ease-out); }
+.price-badge:active { transform: rotate(-2.5deg) scale(.97); }
+@media (max-width: 699px) {
+  .hero-grid .hero-pic { width: fit-content; max-width: 100%; margin-inline: auto; }
+  .price-badge { left: 10px; bottom: 10px; padding: 8px 12px; }
+  .price-badge b { font-size: 19px; }
+}
+
+/* один отзыв и два отзыва: кладка в три колонки оставляла рядом пустоту */
+.quotes--one { columns: 1; }
+.quotes--one .quote { margin-bottom: 0; }
+.quotes--one .quote p { font-size: clamp(17px, 1.7vw, 19px); }
+.quotes--pair { columns: 2; }
+@media (max-width: 640px) { .quotes--pair { columns: 1; } }
+.review-band { display: grid; gap: 18px; align-items: start; }
+@media (min-width: 860px) { .review-band { grid-template-columns: minmax(0, 1.75fr) minmax(250px, .8fr); } }
+.rate-card {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  background: #fff;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-card);
+  padding: 22px;
+}
+.rate-card b { font: 800 clamp(40px, 5vw, 56px)/1 'Unbounded', sans-serif; color: var(--magenta); font-variant-numeric: tabular-nums; }
+.rate-card .stars { font-size: 18px; }
+.rate-card p { margin: 0 0 6px; color: var(--ink-soft); font-size: 16px; }
+
+/* плитка-призыв закрывает пустые клетки в конце перечня */
+@media (max-width: 999px) { .cards[data-list] { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.card--fill { grid-column: span 2; background: var(--paper-warm); border-color: transparent; }
+.card--fill.fill-m1 { grid-column: span 1; }
+.card--fill::before { display: none; }
+.card--fill .card-body { justify-content: center; align-items: flex-start; gap: 12px; padding: clamp(16px, 3vw, 32px); }
+.card--fill .card-body h3 { font-size: clamp(18px, 2.4vw, 28px); }
+.card--fill .card-body p { font-size: 17px; max-width: 42ch; }
+.card--fill .btn { max-width: 100%; text-align: center; white-space: normal; }
+@media (min-width: 1000px) {
+  .card--fill.fill-d1 { grid-column: span 1; }
+  .card--fill.fill-d2 { grid-column: span 2; }
+  .card--fill.fill-d3 { grid-column: span 3; }
+}
+@media (max-width: 760px) {
+  .cards[data-list] .card--fill:not(.fill-m1) .card-body p { display: block; }
+  .card--fill.fill-m1 .btn { padding-inline: 10px; font-size: 15px; width: 100%; }
+}
+
+/* прайс в две колонки: слева программа и условия, справа шоу. В одну колонку таблицы
+   занимали левую половину экрана, правая стояла пустой на три экрана вниз */
+.price-cols { display: grid; gap: clamp(24px, 4vw, 48px); align-items: start; }
+@media (min-width: 1000px) { .price-cols { grid-template-columns: 1fr 1fr; } }
+.price-cols h2 { font-size: clamp(24px, 3vw, 30px); }
+.price-cols .price-table { max-width: none; }
+.section--top .note, .section:not(.section--warm) .note { background: var(--paper-warm); }
+
+/* кнопки мессенджеров в заявке делят ряд поровну: на телефоне они стояли столбиком
+   разной ширины */
+.form-send .btn { flex: 1 1 130px; justify-content: center; }
+.cta-band > h2 { font-size: clamp(24px, 3.2vw, 34px); }
+/* номер телефона и цена не рвутся на две строки */
+.nw { white-space: nowrap; }
+/* кнопка «Позвонить + номер»: на узком экране номер уходит на вторую строку целиком */
+.btn:has(.nw) { flex-wrap: wrap; row-gap: 2px; }
+/* на 320 px таблица условий не помещалась на 20 px: «не возвращается» держится одним словом */
+@media (max-width: 360px) {
+  .price-table { font-size: 15.5px; }
+  .price-table th, .price-table td { padding-inline: 8px; }
+}
+/* две кнопки в одном абзаце: на телефоне вторая вставала вплотную под первую */
+p:has(> .btn) { display: flex; flex-wrap: wrap; gap: 12px; }
