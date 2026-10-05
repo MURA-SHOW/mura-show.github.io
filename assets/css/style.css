@@ -6,6 +6,8 @@
   /* фирменные */
   --cyan: #19BFDE;
   --cyan-dark: #128fa8;
+  --cyan-ink: #0E768C;      /* бирюзовый для мелкого текста: 5,3 к белому, 5,0 к тёплому */
+  --link: #1A6BBF;          /* ссылки в тексте: 5,4 к белому, 5,1 к тёплому */
   --magenta: #E02C83;
   --magenta-dark: #b01f66;
   --yellow: #F0C913;
@@ -80,7 +82,7 @@ h2 { font-size: clamp(26px, 4.4vw, 40px); }
 h3 { font-size: clamp(20px, 2.6vw, 26px); font-weight: 700; }
 h4 { font-size: 19px; font-weight: 700; }
 p { margin: 0 0 1em; }
-a { color: var(--blue); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+a { color: var(--link); text-decoration-thickness: 2px; text-underline-offset: 3px; }
 a:hover { color: var(--magenta); }
 img, video { max-width: 100%; height: auto; display: block; }
 figure { margin: 0; }
@@ -113,7 +115,7 @@ small { font-size: 14px; }
   font: 700 13px/1 'Onest', sans-serif;
   letter-spacing: .1em;
   text-transform: uppercase;
-  color: var(--cyan-dark);
+  color: var(--cyan-ink);
   margin-bottom: 14px;
   display: block;
 }
@@ -123,7 +125,7 @@ h1 .label {                       /* запросная строка внутр�
   font: 700 13px/1.4 'Onest', sans-serif;
   letter-spacing: .1em;
   text-transform: uppercase;
-  color: var(--cyan-dark);
+  color: var(--cyan-ink);
   margin-bottom: 12px;
 }
 
@@ -339,7 +341,7 @@ img.hero-video { display: block; width: 100%; height: auto; aspect-ratio: auto; 
   font-weight: 600;
 }
 .price-badge b { display: block; font: 800 24px/1.1 'Unbounded', sans-serif; }
-.price-badge small { display: block; font-size: 13px; color: #6b5a08; }
+.price-badge small { display: block; font-size: 13px; color: #5A4B06; }
 
 /* ── карточки ── */
 .cards { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
@@ -511,7 +513,7 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
 }
 .section--violet .fact b { color: var(--yellow); }
 /* плашка со словом вместо числа: «Наро-Фоминск» кеглем цены ломается переносом */
-.fact--word b { font-size: clamp(22px, 2.4vw, 28px); }
+.fact--word b { font-size: clamp(20px, 1.9vw, 23px); }
 .fact span { font-size: 16px; color: var(--ink-soft); }
 .section--violet .fact span { color: rgba(255, 255, 255, .82); }
 
@@ -624,7 +626,7 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
 .faq summary::after {
   content: '+';
   font: 700 24px/1 'Onest', sans-serif;
-  color: var(--cyan-dark);
+  color: var(--cyan-ink);
   flex: none;
 }
 .faq details[open] summary::after { content: '−'; }
@@ -748,7 +750,7 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
   min-height: 44px;
 }
 .pills a:hover, .pills button:hover { border-color: var(--cyan); color: var(--ink); }
-.pills [aria-pressed='true'] { background: var(--cyan); border-color: var(--cyan); color: #fff; }
+.pills [aria-pressed='true'] { background: var(--cyan); border-color: var(--cyan); color: var(--ink); }
 
 /* ── детская графика ────────────────────────────────────────────────────────
    Канон запрещает радужную заливку на всю страницу, поэтому цвет приходит
@@ -1198,7 +1200,7 @@ a.price-badge:hover { color: var(--ink); }
 }
 .pick li { display: grid; gap: 5px; align-content: start; margin: 0; padding: 14px 16px; border-radius: 16px; background: var(--paper-warm); }
 .section--warm > .wrap > .pick li { background: #fff; }
-.pick b { font: 700 13px/1.2 'Onest', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--cyan-dark); }
+.pick b { font: 700 13px/1.2 'Onest', sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--cyan-ink); }
 .pick span { font-size: 16px; line-height: 1.45; }
 
 /* ── расчёт праздника ── */
@@ -1298,8 +1300,8 @@ a.price-badge:hover { color: var(--ink); }
   background: #fff center/14px no-repeat;
 }
 .opt input[type='checkbox']:checked + span::before {
-  border-color: var(--cyan-dark);
-  background-color: var(--cyan-dark);
+  border-color: var(--cyan-ink);
+  background-color: var(--cyan-ink);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
 }
 .calc-hint { margin: 9px 0 0; font-size: 14.5px; color: var(--ink-faint); }
