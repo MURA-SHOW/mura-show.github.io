@@ -1693,3 +1693,4 @@ a.card:active { transform: scale(.985); }
 }
 /* две кнопки в одном абзаце: на телефоне вторая вставала вплотную под первую */
 p:has(> .btn) { display: flex; flex-wrap: wrap; gap: 12px; }
+.center p:has(> .btn) { justify-content: center; }   /* на 404 кнопки стоят по центру, как всё остальное */
