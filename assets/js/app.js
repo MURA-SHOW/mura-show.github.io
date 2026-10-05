@@ -6,14 +6,17 @@
   // спокойный режим ставит скрипт в <head> (класс calm): система просит «без анимации»
   // и посетитель не включил движение сам. Тогда блоки проявляются без сдвига, циклов нет
   var root = document.documentElement;
-  var calm = /\bcalm\b/.test(root.className);
+  // не /\bcalm\b/: оно находит calm и внутри os-calm — после «Включить анимацию» сайт оставался
+  // спокойным, а кнопка не переключалась обратно (05.10.2026)
+  var calm = root.classList.contains('calm');
   var smooth = calm ? 'auto' : 'smooth';
   var hasIO = 'IntersectionObserver' in window;
 
   // кнопка движения в подвале: видна, только если система просит «без анимации».
   // Выбор запоминается; тот же выбор делает адрес с ?motion=1 и ?motion=0
-  var motionBtn = document.querySelector('[data-motion]');
-  if (motionBtn && /\bos-calm\b/.test(root.className)) {
+  var motionBtn = document.querySelector('button.motion-toggle');   // не [data-motion]: тот же атрибут
+  // после включения движения стоит на <html>, и textContent ниже стирал всю страницу (Н40, 05.10.2026)
+  if (motionBtn && root.classList.contains('os-calm')) {
     motionBtn.hidden = false;
     motionBtn.textContent = calm ? 'Включить анимацию' : 'Выключить анимацию';
     motionBtn.addEventListener('click', function () {

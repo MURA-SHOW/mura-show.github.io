@@ -317,10 +317,10 @@ img.hero-video { display: block; width: 100%; height: auto; aspect-ratio: auto; 
   /* у шоу без своей съёмки наверх поднимать нечего: чужой кадр под заголовком «Шоу сладкой
      ваты» читался бы как фото этого шоу — он остаётся после текста */
   .hero-grid--textfirst > :nth-child(2) { order: 5; }
-  .hero-grid .hero-video { max-height: 46vh; margin-inline: auto; }
+  .hero-grid .hero-video { max-height: 42vh; margin-inline: auto; }
   .hero-grid img.hero-video { width: auto; max-width: 100%; }
-  .hero-grid .hero-shot img { max-height: 46vh; }
-  .hero-grid .gallery img { width: auto; max-width: 100%; max-height: 46vh; margin-inline: auto; }
+  .hero-grid .hero-shot img { max-height: 42vh; }
+  .hero-grid .gallery img { width: auto; max-width: 100%; max-height: 42vh; margin-inline: auto; }
   /* три кнопки первого экрана: звонок уже в шапке, остаются заказ и расчёт */
   .hero-cta .btn--wa:nth-child(2):not(:last-child) { display: none; }
 }
@@ -787,6 +787,8 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
     background-size: 104px 132px, 96px 124px;
     background-position: left -34px top 64px, right -30px bottom 8px;
   }
+  /* у внутренних страниц слева сразу текст: точки ложились на первую букву надзаголовка (Н41) */
+  .hero:not(.hero--home).confetti::after { display: none; }
 }
 
 .section--warm, .section--violet { position: relative; }
@@ -1557,7 +1559,10 @@ p:has(> .btn) { display: flex; flex-wrap: wrap; gap: 12px; }
 .sticker--lime { background: #DFE56F; box-shadow: 0 4px 0 #A9B02B; }
 .center .sticker { margin-inline: auto; }
 @media (max-width: 699px) {
-  .hero-grid > div:first-child > .sticker { order: 0; margin-bottom: -4px; }
+  /* На телефоне стикер садится на левый верхний угол кадра, как наклейка на фото: строку
+     не занимает. Отдельной строкой он увёл первую кнопку под нижнюю панель на 24 страницах (Н42). */
+  .hero-grid > div:first-child > .sticker { order: 2; position: relative; z-index: 2; margin: 0 0 -44px 10px; }
+  .hero-grid--textfirst > div:first-child > .sticker { order: 0; margin: 0 0 -4px 2px; }
 }
 
 /* ── цена цифрами-шарами в плитках фактов ── */
