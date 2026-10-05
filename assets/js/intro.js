@@ -1,15 +1,17 @@
-// MURA SHOW — заставка: акула раскрывает пасть и кусает экран, из-под зубов летят брызги.
-// Один раз за визит. Подключается синхронно в <head>: первый же кадр — уже пасть,
-// страница под ней не мигает. Сети не трогает: зубы, глаза и брызги рисуются здесь же.
+// MURA SHOW — заставка: акула держит в открытой пасти знак студии, кусает экран, летят брызги,
+// акула моргает и отпускает — под пастью сайт. Около 2,7 секунды, один раз за визит.
+// Подключается синхронно в <head>: первый же кадр — уже пасть, страница под ней не мигает.
+// Сети не трогает: зубы, глаза, знак и брызги рисуются здесь же.
 //
-//   …/?intro      показать в любом случае и с полным движением (показ заказчику)
+//   …/?intro      показать в любом случае (показ заказчику, сколько угодно раз)
 //   …/?intro=0    не показывать (так страницу снимает scripts/shot.py и приборы приёмки)
-//   …/?intro=540  стоп-кадр на 540-й миллисекунде (приёмка снимками)
+//   …/?intro=1200 стоп-кадр на 1200-й миллисекунде (приёмка снимками)
 //
-// Тем, у кого движение приглушено (класс html.calm; если переключатель сайта ещё не отработал —
-// системная настройка), достаётся короткий укус без брызг, пружины и встряски: челюсти
-// смыкаются и растворяются. Совсем прятать заставку нельзя: на ПК с выключенными эффектами
-// Windows браузер отвечает reduce, и владелец на своей машине акулу не видел вовсе.
+// Заставка играет целиком у всех. Раньше при системной настройке «меньше движения» она
+// показывала неподвижную пасть на полсекунды — и владелец студии на своём ПК (в Windows выключены
+// эффекты анимации, браузер отвечает reduce) дважды её не разглядел: «увидел начало, и загрузилась
+// страница». У тех, кто просил поменьше движения (класс html.calm или системная настройка),
+// убирается только встряска экрана в момент укуса. Любое касание или клавиша снимают заставку.
 (function () {
   'use strict';
   var d = document, root = d.documentElement, KEY = 'mura-intro';
@@ -27,16 +29,8 @@
   var W = window.innerWidth, H = window.innerHeight;
   if (!root.animate || !W || !H || (!force && d.visibilityState === 'hidden')) { return; }
 
-  // Движение. Решение переключателя сайта главнее системной настройки: класс calm — тихо,
-  // data-motion на <html> — переключатель уже решил, верим ему. Нет ни того ни другого —
-  // спрашиваем систему сами (?motion=1 включает полный вариант).
-  var calm = /[?&]calm(&|$)/.test(location.search);   // ?intro=500&calm — стоп-кадр тихого варианта
-  if (!force) {
-    if (/(^|\s)calm(\s|$)/.test(root.className)) { calm = true; }
-    else if (!root.hasAttribute('data-motion') && !/[?&]motion=1(&|$)/.test(location.search)) {
-      calm = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
-    }
-  }
+  var calm = /(^|\s)calm(\s|$)/.test(root.className) ||
+    (!root.hasAttribute('data-motion') && !!window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
 
   var INK = '#16233A', BLUE = '#1F7DD2', LIP = '#1968B3', CREAM = '#FFF1D6', PINK = '#FF72B6';
 
@@ -68,15 +62,29 @@
       '<path d="' + teeth(base, tip, shift) + '" fill="#fff' + ink + '</svg>';
   }
 
-  // брызги: вылетают из линии укуса вверх и вниз и падают
-  var WATER = ['#19BFDE', '#8FE3F2', '#fff'], drops = '', i;
-  if (!calm) {
-    for (i = 0; i < 22; i++) {
-      var size = Math.max(10, Math.round(Math.min(W, H) * (0.022 + Math.random() * 0.04)));
-      drops += '<b style="left:' + (4 + 92 * Math.random()) + '%;width:' + size + 'px;height:' + size +
-               'px;margin:' + -size / 2 + 'px;background:radial-gradient(circle at 34% 30%,#fff 0 15%,transparent 16%),' +
-               WATER[i % 3] + '"></b>';
+  // Знак студии в пасти: буквы цветов логотипа с тёмным контуром, как наклейка. На узком экране
+  // в две строки. Шрифт сайта (Unbounded) к этому моменту обычно уже предзагружен; если нет —
+  // буквы встанут системным жирным, а знак проявляется за 0,2 с, и подмена не бросается в глаза.
+  var COLORS = ['#E02C83', '#19BFDE', '#F0C913', '#C2CB1B', '#EF8911', '#1F7DD2', '#FF72B6', '#19BFDE'];
+  var tall = H > W * 1.1;
+  var fs = Math.round(tall ? Math.min(W * 0.2, wide * 0.42) : Math.min(W * 0.1, wide * 0.62));
+  function word(text, from) {
+    var s = '';
+    for (var i = 0; i < text.length; i++) {
+      s += '<span style="color:' + COLORS[(from + i) % COLORS.length] + '">' + text.charAt(i) + '</span>';
     }
+    return s;
+  }
+  var sign = '<div class="jaw-w"><div>' + word('MURA', 0) + (tall ? '</div><div>' : '<span>&nbsp;</span>') +
+             word('SHOW', 4) + '</div><small>студия праздника</small></div>';
+
+  // брызги: вылетают из линии укуса вверх и вниз и падают
+  var WATER = ['#19BFDE', '#8FE3F2', '#fff'], drops = '', i, DROPS = 34;
+  for (i = 0; i < DROPS; i++) {
+    var size = Math.max(10, Math.round(Math.min(W, H) * (0.02 + Math.random() * 0.05)));
+    drops += '<b style="left:' + (3 + 94 * Math.random()) + '%;width:' + size + 'px;height:' + size +
+             'px;margin:' + -size / 2 + 'px;background:radial-gradient(circle at 34% 30%,#fff 0 15%,transparent 16%),' +
+             WATER[i % 3] + '"></b>';
   }
 
   var css = d.createElement('style');
@@ -100,16 +108,21 @@
     '.jaw-in{top:0;height:100%;background:radial-gradient(120% 90% at 50% 55%,#4A0A22 0,#8E1238 38%,#C91F52 78%,#DB2F63 100%)}' +
     '.jaw-in:after{content:"";position:absolute;left:50%;bottom:-20%;width:min(72%,760px);height:52%;' +
     'transform:translateX(-50%);border-radius:50%;background:radial-gradient(60% 70% at 50% 30%,#FF9BCB 0,' + PINK + ' 70%)}' +
+    '.jaw-w{position:absolute;left:0;right:0;top:50%;z-index:1;margin-top:' + -(tall ? fs * 1.35 : fs * 0.85) + 'px;' +
+    'text-align:center;white-space:nowrap;opacity:0;font:800 ' + fs + 'px/1.05 Unbounded,"Arial Black",Impact,sans-serif;' +
+    'letter-spacing:-.02em;-webkit-text-stroke:' + Math.max(3, Math.round(fs * 0.09)) + 'px ' + INK + ';paint-order:stroke fill;' +
+    'text-shadow:0 ' + Math.round(fs * 0.07) + 'px 0 ' + INK + '}' +
+    '.jaw-w small{display:block;margin-top:' + Math.round(fs * 0.22) + 'px;font:600 ' + Math.max(15, Math.round(fs * 0.24)) +
+    'px/1 Onest,Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#fff;-webkit-text-stroke:0;text-shadow:none}' +
     '.jaw b{position:absolute;top:50%;border-radius:50%;opacity:0;border:' + Math.max(2, sw - 2) + 'px solid ' + INK + '}';
 
-  var from = calm ? wide : wide * 0.45;            // тихий вариант начинает с открытой пасти
   var jaw = d.createElement('div');
   jaw.className = 'jaw';
   jaw.setAttribute('aria-hidden', 'true');
-  jaw.innerHTML = '<i class="jaw-in"></i>' +
-    '<i class="jaw-b" style="transform:translateY(' + from + 'px)"><u></u>' +
+  jaw.innerHTML = '<i class="jaw-in">' + sign + '</i>' +
+    '<i class="jaw-b" style="transform:translateY(' + wide + 'px)"><u></u>' +
       strip(th, row, th, 0, 0.5) + '</i>' +
-    '<i class="jaw-t" style="transform:translateY(' + -from + 'px)"><u></u>' +
+    '<i class="jaw-t" style="transform:translateY(' + -wide + 'px)"><u></u>' +
       '<em style="left:28%"></em><em style="left:72%"></em>' +
       '<s style="margin-left:' + -p * 0.3 + 'px"></s><s style="margin-left:' + p * 0.3 + 'px"></s>' +
       strip(0, 0, gum, row, 0) + '</i>' + drops;
@@ -129,28 +142,25 @@
                 { duration: 140, easing: 'ease-out', fill: 'forwards' }).onfinish = kill;
   }
 
-  var T = calm ? 980 : 1380;                       // вся заставка, мс
+  // Раскадровка, мс: знак в открытой пасти 0–760 → замах 760–1040 → укус 1040–1220 →
+  // акула держит и моргает 1220–1960 → отпускает 1960–2700.
+  var T = 2700, WIND = 760, BITE_AT = 1040, SHUT = 1220, OPEN = 1960;
   function at(ms) { return ms / T; }
   function ty(v) { return 'translateY(' + v + ')'; }
-  var OUT = 'cubic-bezier(.23,1,.32,1)';           // раскрытие: резкий старт, мягкий хвост
+  var OUT = 'cubic-bezier(.23,1,.32,1)';           // резкий старт, мягкий хвост
+  var SOFT = 'cubic-bezier(.45,0,.55,1)';          // дыхание пасти
   var BITE = 'cubic-bezier(.6,0,.9,.4)';           // укус разгоняется и упирается
 
   function halfFrames(dir) {                       // dir: -1 верхняя челюсть, +1 нижняя
-    if (calm) {
-      return [
-        { transform: ty(dir * wide + 'px'), easing: 'linear' },                        // пасть открыта
-        { transform: ty(dir * wide + 'px'), offset: at(180), easing: 'cubic-bezier(.45,0,.55,1)' },
-        { transform: ty('0px'), offset: at(500) },                                     // сомкнулась, без отскока
-        { transform: ty('0px'), offset: 1 }
-      ];
-    }
+    var w = dir * wide, over = dir * (wide + th * 0.5);
     return [
-      { transform: ty(dir * wide * 0.45 + 'px'), easing: OUT },                        // приоткрыта
-      { transform: ty(dir * (wide + th * 0.4) + 'px'), offset: at(260), easing: 'linear' },   // распахнулась
-      { transform: ty(dir * (wide + th * 0.4) + 'px'), offset: at(330), easing: BITE },
-      { transform: ty(dir * -6 + 'px'), offset: at(540), easing: 'ease-out' },         // щёлк, зубы вдавились
-      { transform: ty('0px'), offset: at(600), easing: 'linear' },
-      { transform: ty('0px'), offset: at(760), easing: OUT },                          // держит укус
+      { transform: ty(w + 'px'), easing: SOFT },                                       // пасть открыта
+      { transform: ty(w * 0.9 + 'px'), offset: at(WIND * 0.5), easing: SOFT },         // «дышит»
+      { transform: ty(w + 'px'), offset: at(WIND), easing: OUT },
+      { transform: ty(over + 'px'), offset: at(BITE_AT), easing: BITE },               // замах
+      { transform: ty(dir * -6 + 'px'), offset: at(SHUT - 40), easing: 'ease-out' },   // щёлк, зубы вдавились
+      { transform: ty('0px'), offset: at(SHUT), easing: 'linear' },
+      { transform: ty('0px'), offset: at(OPEN), easing: OUT },                         // держит укус
       { transform: ty(dir * 108 + '%'), offset: 1 }                                    // отпустила — под ней сайт
     ];
   }
@@ -158,34 +168,46 @@
   function play() {
     if (gone) { return; }
     var opt = { duration: T, fill: 'forwards' };
-    var parts = jaw.children;                      // глотка, низ, верх, дальше капли
-    var shut = calm ? 500 : 560;                   // с этой миллисекунды зубы сомкнуты
+    var parts = jaw.children;                      // глотка со знаком, низ, верх, дальше капли
     parts[1].animate(halfFrames(1), opt);
     var last = parts[2].animate(halfFrames(-1), opt);
     // глотка видна, пока пасть открыта; за сомкнутыми зубами её уже нет — дальше под ними сайт
-    parts[0].animate([{ opacity: 1 }, { opacity: 1, offset: at(shut) }, { opacity: 0, offset: at(shut + 1) }, { opacity: 0 }], opt);
-    if (calm) {
-      // сомкнутая пасть постояла и растворилась: ни разлёта челюстей, ни встряски, ни брызг
-      last = jaw.animate([{ opacity: 1 }, { opacity: 1, offset: at(720) }, { opacity: 0 }], opt);
-    } else {
-      jaw.animate([{ transform: ty('0px') }, { transform: ty('7px') }, { transform: ty('-4px') }, { transform: ty('0px') }],
-                  { duration: 170, delay: 540, easing: 'ease-out' });               // экран вздрогнул от укуса
-      for (var k = 3; k < parts.length; k++) {
-        var up = k % 3 ? -1 : 1;                     // две капли из трёх летят вверх
-        var dx = (Math.random() - 0.5) * W * 0.22;
-        var dy = up * H * (0.1 + Math.random() * 0.22);
-        parts[k].animate([
-          { opacity: 0, transform: 'translate(0,0) scale(.4)' },
-          { opacity: 1, transform: 'translate(' + dx * 0.2 + 'px,' + dy * 0.3 + 'px) scale(1)', offset: 0.1 },
-          { opacity: 1, transform: 'translate(' + dx * 0.75 + 'px,' + dy + 'px) scale(1)', offset: 0.5 },
-          { opacity: 0, transform: 'translate(' + dx + 'px,' + (dy + H * 0.16) + 'px) scale(.7)' }
-        ], { duration: 640 + Math.random() * 160, delay: 535 + Math.random() * 50,
-             easing: 'cubic-bezier(.2,.6,.35,1)', fill: 'both' });
-      }
+    parts[0].animate([{ opacity: 1 }, { opacity: 1, offset: at(SHUT - 30) }, { opacity: 0, offset: at(SHUT - 29) }, { opacity: 0 }], opt);
+    // знак проявляется, стоит, а на замахе сжимается: его «проглатывают»
+    parts[0].firstChild.animate([
+      { opacity: 0, transform: 'scale(.92)', easing: OUT },
+      { opacity: 1, transform: 'scale(1)', offset: at(220), easing: 'linear' },
+      { opacity: 1, transform: 'scale(1)', offset: at(WIND), easing: 'ease-in' },
+      { opacity: 1, transform: 'scale(.82)', offset: at(BITE_AT), easing: 'ease-in' },
+      { opacity: 0, transform: 'scale(.5)', offset: at(SHUT - 60) },
+      { opacity: 0, transform: 'scale(.5)' }
+    ], opt);
+    // акула моргает, пока держит укус
+    var eyes = parts[2].querySelectorAll('em');
+    for (var e = 0; e < eyes.length; e++) {
+      eyes[e].animate([{ transform: 'scaleY(1)' }, { transform: 'scaleY(.08)' }, { transform: 'scaleY(1)' }],
+                      { duration: 170, delay: SHUT + 330, easing: 'ease-in-out' });
+    }
+    if (!calm) {
+      jaw.animate([{ transform: ty('0px') }, { transform: ty('8px') }, { transform: ty('-5px') }, { transform: ty('0px') }],
+                  { duration: 180, delay: SHUT - 40, easing: 'ease-out' });            // экран вздрогнул от укуса
+    }
+    for (var k = 3; k < parts.length; k++) {
+      var up = k % 3 ? -1 : 1;                     // две капли из трёх летят вверх
+      var dx = (Math.random() - 0.5) * W * 0.24;
+      var dy = up * H * (0.1 + Math.random() * 0.26);
+      parts[k].animate([
+        { opacity: 0, transform: 'translate(0,0) scale(.4)' },
+        { opacity: 1, transform: 'translate(' + dx * 0.2 + 'px,' + dy * 0.3 + 'px) scale(1)', offset: 0.1 },
+        { opacity: 1, transform: 'translate(' + dx * 0.75 + 'px,' + dy + 'px) scale(1)', offset: 0.5 },
+        { opacity: 0, transform: 'translate(' + dx + 'px,' + (dy + H * 0.18) + 'px) scale(.7)' }
+      ], { duration: 760 + Math.random() * 240, delay: SHUT - 45 + Math.random() * 70,
+           easing: 'cubic-bezier(.2,.6,.35,1)', fill: 'both' });
     }
     if (freeze) {                                  // стоп-кадр: всё замирает на заданной миллисекунде
       held = true;
-      [jaw].concat(Array.prototype.slice.call(parts)).forEach(function (el) {
+      var all = jaw.querySelectorAll('*');
+      [jaw].concat(Array.prototype.slice.call(all)).forEach(function (el) {
         el.getAnimations().forEach(function (a) { a.pause(); a.currentTime = freeze; });
       });
       return;
@@ -201,6 +223,6 @@
     window.addEventListener('keydown', skip, true);
     // отсчёт идёт от первого нарисованного кадра, а не от разбора <head>
     requestAnimationFrame(function () { requestAnimationFrame(play); });
-    setTimeout(kill, 6000);                        // вкладка в фоне или кадр так и не пришёл
+    setTimeout(kill, 8000);                        // вкладка в фоне или кадр так и не пришёл
   } catch (e) { kill(); }
 })();
