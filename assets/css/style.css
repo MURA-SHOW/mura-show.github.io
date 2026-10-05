@@ -1806,3 +1806,14 @@ html.calm .steps3.rv > li { transform: none; }
 .price-cols > div:nth-child(2) { border-top-color: var(--magenta); }
 .price-cols .price-table tr:last-child td { border-bottom: 0; }
 .section--top .facts .fact { background: var(--paper-warm); border-color: transparent; }
+/* кадры сбоку от текста — мозаика по числу кадров: пара, большой и два малых, 2×2.
+   Прежняя кладка по колонкам в узком столбце оставляла дыры под короткими кадрами */
+.mosaic { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+.mosaic img {
+  display: block; width: 100%; height: 100%;
+  aspect-ratio: 4 / 5; object-fit: cover; object-position: center 30%;
+  border-radius: 16px; background: var(--paper-warm);
+}
+.mosaic--1 { grid-template-columns: 1fr; max-width: 460px; }
+.mosaic--3 img:first-child { grid-row: span 2; aspect-ratio: auto; }
+.mosaic--3 img:not(:first-child), .mosaic--4 img { aspect-ratio: 1 / 1; }
