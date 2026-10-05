@@ -299,6 +299,11 @@
         seen.observe(el);
       }
     });
+    // акула-маскот живёт (моргает, машет), только пока её видно: вне экрана анимация стоит
+    var live = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { e.target.classList.toggle('is-live', e.isIntersecting); });
+    });
+    each(document.querySelectorAll('.mk'), function (el) { live.observe(el); });
   }
 
   // каталог образов: кнопки-вселенные и поиск по имени работают вместе —

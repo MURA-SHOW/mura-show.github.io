@@ -510,6 +510,11 @@ a.card:hover { color: inherit; }   /* подъём при наведении —
   margin-bottom: 6px;
 }
 .section--violet .fact b { color: var(--yellow); }
+/* слово в плитке («Выдержка», «56 образов») мерится по самой плитке, а не по экрану: в четыре
+   колонки на 1024 px оно вылезало за край на 19 px, на 1440 упиралось в рамку */
+.fact { container-type: inline-size; }
+.fact b { overflow-wrap: anywhere; }
+@supports (font-size: 1cqi) { .fact b { font-size: clamp(20px, 11cqi, 36px); } }
 /* плашка со словом вместо числа: «Наро-Фоминск» кеглем цены ломается переносом */
 .fact--word b { font-size: clamp(20px, 1.9vw, 23px); }
 .fact span { font-size: 16px; color: var(--ink-soft); }
@@ -1684,3 +1689,71 @@ html.calm .footer::after { animation: none; transform: translateX(68vw); }
   .steps3 li { transition: transform var(--d-fast) var(--ease-out); }
   .steps3 li:hover { transform: translateY(-2px); }
 }
+
+/* ── акула-маскот (рисует scripts/mascot.py, ставит sitelib.mascot) ─────────────────────
+   Фигура инлайном: части лежат в группах mk-*. Декор: кликов не ловит, текста не закрывает. */
+.mk { display: block; line-height: 0; pointer-events: none; }
+.mk svg { display: block; width: 100%; height: auto; }
+.mk [class^='mk-'] { transform-box: fill-box; }
+
+/* выглядывает из-за верхнего края карточки заявки; ряд шагов уступает ей место справа */
+.cta-band--mk { position: relative; --mk-w: clamp(120px, 14vw, 176px); --mk-r: clamp(24px, 6vw, 72px); }
+.mk--peek { position: absolute; right: var(--mk-r); bottom: 100%; width: var(--mk-w); overflow: hidden; }
+.steps3--mk { padding-right: calc(clamp(120px, 14vw, 176px) + clamp(24px, 6vw, 72px) + 12px); }
+.cta-band--solo { margin-top: clamp(96px, 11vw, 132px); }
+@media (max-width: 760px) {
+  .cta-band--mk { --mk-w: 112px; --mk-r: 20px; }
+  .steps3--mk { padding-right: 0; }
+  .steps3--mk + .cta-band--mk, .cta-band--solo { margin-top: 104px; }
+}
+/* выезд: акула поднимается из-за края, когда блок дошёл до экрана */
+.mk--peek.rv { opacity: 1; transform: none; }
+.mk--peek.rv svg { transform: translateY(102%); }
+.mk--peek.rv.rv-in svg { transform: none; transition: transform 620ms var(--ease-spring) 120ms; }
+
+/* целые фигуры */
+.mk--404 { width: min(230px, 54vw); margin: 0 auto 4px; }
+.split .mk--about { width: min(270px, 62%); justify-self: center; }
+.head-mk { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+.head-mk h2 { margin-bottom: 0; }
+.mk--head { flex: none; width: clamp(84px, 10vw, 124px); margin-bottom: -6px; }
+
+/* плашка-подсказка с акулой: вход на «Собери праздник» */
+.guide {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: clamp(14px, 3vw, 32px);
+  margin-top: clamp(40px, 5vw, 56px);
+  padding: clamp(16px, 2.4vw, 22px) clamp(18px, 3vw, 32px);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: var(--shadow-soft);
+}
+.guide h3 { margin: 0 0 4px; }
+.guide p { margin: 0; color: var(--ink-soft); max-width: 56ch; }
+.mk--guide { width: clamp(88px, 10vw, 124px); margin: -44px 0 -6px; }
+@media (max-width: 760px) {
+  .guide { grid-template-columns: 76px 1fr; }
+  .guide .btn { grid-column: 1 / -1; justify-content: center; }
+  .mk--guide { width: 76px; margin: 0; align-self: start; }
+}
+
+/* жизнь фигуры: только пока она на экране (класс is-live ставит app.js) и не в тихом режиме */
+@keyframes mk-blink { 0%, 92%, 100% { transform: scaleY(1); } 95.5% { transform: scaleY(.08); } }
+@keyframes mk-wave { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-10deg); } }
+@keyframes mk-flail { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(9deg); } }
+@keyframes mk-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.2%); } }
+@keyframes mk-sway { 0%, 100% { transform: rotate(-2.5deg); } 50% { transform: rotate(3deg); } }
+@keyframes mk-wag { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(7deg); } }
+html:not(.calm) .mk.is-live .mk-eyes { transform-origin: 50% 62%; animation: mk-blink 4.6s infinite; }
+html:not(.calm) .mk.is-live .mk-tail { transform-origin: 100% 0; animation: mk-wag 2.4s ease-in-out infinite; }
+html:not(.calm) .mk.is-live .mk-under { transform-origin: 30% 100%; animation: mk-sway 4s ease-in-out infinite; }
+html:not(.calm) .mk.is-live:not(.mk--peek) svg { animation: mk-bob 3.4s ease-in-out infinite; }
+html:not(.calm) .mk.is-live:is([data-mk='klass'], [data-mk='privet'], [data-mk='kolpak'], [data-mk='vedushchiy']) .mk-arm {
+  transform-origin: 6% 88%; animation: mk-wave 2.2s var(--ease-in-out) infinite;
+}
+html:not(.calm) .mk.is-live[data-mk='oy'] .mk-arml { transform-origin: 80% 90%; animation: mk-flail 1.1s ease-in-out infinite; }
+html:not(.calm) .mk.is-live[data-mk='oy'] .mk-over { transform-origin: 50% 100%; animation: mk-sway 1.6s ease-in-out infinite; }
+html.calm .mk--peek.rv svg { transform: none; transition: none; }
