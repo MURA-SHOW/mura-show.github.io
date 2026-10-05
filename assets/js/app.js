@@ -285,18 +285,6 @@
   // блок выезжает при прокрутке — но только тот, что ниже экрана на момент загрузки:
   // видимое не прячем, чтобы страница не мигала
   if (hasIO) {
-    // акула выглядывает из-за карточки заявки, когда блок доходит до экрана
-    var peeks = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.remove('peek-wait'); peeks.unobserve(e.target); }
-      });
-    }, { rootMargin: '0px 0px -18% 0px' });
-    each(document.querySelectorAll('[data-peek]'), function (el) {
-      if (!calm && el.getBoundingClientRect().top > window.innerHeight * 0.6) {
-        el.classList.add('peek-wait');
-        peeks.observe(el);
-      }
-    });
     var seen = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add('rv-in'); seen.unobserve(e.target); }
