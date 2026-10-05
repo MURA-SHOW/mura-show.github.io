@@ -1694,3 +1694,6 @@ a.card:active { transform: scale(.985); }
 /* две кнопки в одном абзаце: на телефоне вторая вставала вплотную под первую */
 p:has(> .btn) { display: flex; flex-wrap: wrap; gap: 12px; }
 .center p:has(> .btn) { justify-content: center; }   /* на 404 кнопки стоят по центру, как всё остальное */
+/* на 320 px «Наро-Фоминске» и «Мастер-классы» кеглем заголовка шире экрана: там перенос по дефису разрешён */
+@media (max-width: 343px) { h1 .nw { white-space: normal; } }
+@media (max-width: 374px) { h2 .nw { white-space: normal; } }   /* в карточке заявки строка уже: 264 px на экране 344 */
